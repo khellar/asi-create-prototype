@@ -244,7 +244,11 @@
 
   // ===== deep links: ?agent= , ?flow= =====
   if(document.getElementById('thread')){
-    var _qag=new URLSearchParams(location.search).get('agent'); if(_qag) renderAgent(_qag);
-    if(new URLSearchParams(location.search).get('flow')) openFlow();
+    var _p=new URLSearchParams(location.search);
+    if(_p.get('agent')) renderAgent(_p.get('agent'));
+    if(_p.get('flow')) openFlow();
+    if(_p.get('flowview')==='code'){ var cb=document.querySelector('[data-fpview="code"]'); if(cb) cb.click(); }
+    if(_p.get('kg')==='modal'){ var m=document.getElementById('kgModal'); if(m) m.classList.add('open'); }
+    if(_p.get('kg')==='on') subscribeGenomics();
   }
 })();
