@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASI:Create — Get started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="proto.css">
+</head><body>
+<div class="obtop">
+  <a class="brand" href="home.html"><span class="mark"><i class="ti ti-hexagon"></i></span> ASI:Create</a>
+  <span class="ctrls"><span class="navskins"><button class="sw-skin sw-violet" data-skin="violet" title="Violet"></button><button class="sw-skin sw-teal" data-skin="teal" title="Teal"></button><button class="sw-skin sw-emerald" data-skin="emerald" title="Emerald"></button><button class="sw-skin sw-amber" data-skin="amber" title="Amber"></button><button class="sw-skin sw-rose" data-skin="rose" title="Rose"></button><button class="sw-skin sw-copper" data-skin="copper" title="Copper"></button></span><span class="navic" data-themebtn title="Toggle theme"><i class="ti ti-moon"></i></span></span>
+</div>
+
+<div class="ob-wrap" id="ob">
+  <div class="stepper">
+    <div class="s"><span class="b" data-dot="1">1</span></div><span class="ln"></span>
+    <div class="s"><span class="b" data-dot="2">2</span></div><span class="ln"></span>
+    <div class="s"><span class="b" data-dot="3">3</span></div>
+  </div>
+
+  <!-- step 1 : account -->
+  <div class="ob-card" data-step="1">
+    <h1>Create your account</h1>
+    <p class="sub">You’ll have a live agent in under a minute. Your chats and agents stay yours.</p>
+    <div class="choices">
+      <div class="choice sel"><span class="ci" style="background:#5B50E8"><i class="ti ti-shield-check"></i></span><div><div class="ct">Continue with DEEP ID</div><div class="cs">Decentralized identity — recommended</div></div><span class="rad"></span></div>
+      <div class="choice"><span class="ci" style="background:#1A1A1E"><i class="ti ti-mail"></i></span><div><div class="ct">Continue with email</div><div class="cs">Classic email &amp; password</div></div><span class="rad"></span></div>
+    </div>
+    <div class="fgroup" style="margin-top:18px"><input class="field" placeholder="you@email.com"></div>
+    <div class="ob-actions"><button class="btn btn-primary btn-lg grow" data-next>Continue <i class="ti ti-arrow-right"></i></button></div>
+    <p class="hint center" style="margin-top:16px">Model-agnostic · Anthropic · OpenAI · open weights · ASI Cloud</p>
+  </div>
+
+  <!-- step 2 : your agent -->
+  <div class="ob-card" data-step="2" style="display:none">
+    <h1>Name your agent</h1>
+    <p class="sub">This one’s already deployed and waiting. Give it a name and a goal — you can change everything later.</p>
+    <div class="fgroup"><label class="lbl">Agent name</label><input class="field" value="Omega"></div>
+    <div class="fgroup"><label class="lbl">What should it focus on?</label><textarea class="field" placeholder="e.g. Track promising web3 projects, summarize my Drive, and draft weekly memos.">Track promising web3 projects, summarize my Drive, and draft weekly memos.</textarea><p class="hint">High-level is fine — your agent will ask for specifics in chat.</p></div>
+    <div class="ob-actions"><button class="btn btn-ghost btn-lg" data-back><i class="ti ti-arrow-left"></i> Back</button><button class="btn btn-primary btn-lg grow" data-next>Continue <i class="ti ti-arrow-right"></i></button></div>
+  </div>
+
+  <!-- step 3 : model + connectors -->
+  <div class="ob-card" data-step="3" style="display:none">
+    <h1>Pick a model &amp; starter tools</h1>
+    <p class="sub">Sensible defaults are already chosen. Change the model anytime, and switch connectors on or off from the chat.</p>
+    <div class="fgroup"><label class="lbl">Model</label>
+      <div class="modelgrid">
+        <div class="mchip sel" data-m="Claude Sonnet 4.6"><span class="md"></span> Claude Sonnet 4.6</div>
+        <div class="mchip" data-m="Claude Opus 4.8"><span class="md"></span> Claude Opus 4.8</div>
+        <div class="mchip" data-m="GPT-5.1"><span class="md"></span> GPT-5.1</div>
+        <div class="mchip" data-m="ASI-1 (ASI Cloud)"><span class="md"></span> ASI-1 · ASI Cloud</div>
+      </div>
+    </div>
+    <div class="fgroup"><label class="lbl">Starter connectors</label>
+      <div class="conn" style="border:1px solid var(--line2);border-radius:12px;margin-bottom:8px"><span class="ci" style="background:#1A73E8"><i class="ti ti-brand-google-drive"></i></span><div><div class="cn">Google Drive</div><div class="cd">Read your files</div></div><span class="toggle on"><b></b></span></div>
+      <div class="conn" style="border:1px solid var(--line2);border-radius:12px"><span class="ci" style="background:#24292F"><i class="ti ti-brand-github"></i></span><div><div class="cn">GitHub</div><div class="cd">Read your repos</div></div><span class="toggle"><b></b></span></div>
+    </div>
+    <div class="ob-actions"><button class="btn btn-ghost btn-lg" data-back><i class="ti ti-arrow-left"></i> Back</button><button class="btn btn-primary btn-lg grow" data-next>Deploy agent <i class="ti ti-rocket"></i></button></div>
+  </div>
+
+  <!-- step 4 : deploy -->
+  <div class="ob-card" data-step="4" style="display:none">
+    <div class="deploy">
+      <div class="spinner"></div>
+      <h1 style="margin-top:24px;font-size:24px">Deploying your agent…</h1>
+      <p class="sub" style="margin-bottom:0">Everything’s being sorted for you. This takes a few seconds.</p>
+      <div class="deploylog" id="deploylog"></div>
+    </div>
+  </div>
+</div>
+
+<script src="proto.js"></script>
+</body></html>
