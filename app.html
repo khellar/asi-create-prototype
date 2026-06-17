@@ -13,9 +13,10 @@
     <div class="newagent" id="newAgent"><i class="ti ti-plus"></i> New agent</div>
     <div class="sec">Your agents</div>
     <div id="agentList">
-      <div class="agent active"><span class="ad" style="background:var(--accent)">O</span> Omega <small>now</small></div>
-      <div class="agent"><span class="ad" style="background:#E07A4B">R</span> Research scout <small>2h</small></div>
-      <div class="agent"><span class="ad" style="background:#3BA37A">$</span> Rent tracker <small>1d</small></div>
+      <div class="agent active" data-agent="Omega"><span class="ad">O</span> Omega <small>now</small></div>
+      <div class="agent" data-agent="Research scout"><span class="ad">R</span> Research scout <small>2h</small></div>
+      <div class="agent" data-agent="Genome explorer"><span class="ad">G</span> Genome explorer <small>3d</small></div>
+      <div class="agent" data-agent="Rent tracker"><span class="ad">$</span> Rent tracker <small>1d</small></div>
     </div>
     <div class="railctrls">
       <div class="navskins">
@@ -69,6 +70,7 @@
       <span class="dtab active" data-dtab="Connectors">Connectors</span>
       <span class="dtab" data-dtab="Skills">Skills</span>
       <span class="dtab" data-dtab="Tools">Tools</span>
+      <span class="dtab" data-dtab="Knowledge">Knowledge</span>
     </div>
     <div class="dsec" data-dpane="Connectors">
       <div class="dtitle">Connected</div>
@@ -96,6 +98,21 @@
       <div class="dtitle" style="margin-top:16px">Multi-agent</div>
       <div class="subagent"><span class="si"><i class="ti ti-hierarchy-2"></i></span><div><div class="cn">Deploy a subagent</div><div class="cd">Spin up a specialist that reports back to Omega</div></div><span class="plus"><i class="ti ti-plus"></i></span></div>
     </div>
+    <div class="dsec" data-dpane="Knowledge" style="display:none">
+      <div class="dtitle">Knowledge graphs</div>
+      <div class="kg feat" id="kg-genomics" data-kg="genomics">
+        <div class="ktop"><span class="ki"><i class="ti ti-dna-2"></i></span><div><div class="knm">Genomics KG</div><div class="kby">by ASI Bio · ★ 4.9</div></div></div>
+        <div class="kdesc">Genes, variants, diseases, drugs &amp; pathways as one queryable graph. Ask in plain language; get ranked, cited answers with an explorable subgraph.</div>
+        <div class="kstat"><span>180M edges</span><span>weekly</span><span>GRCh38</span></div>
+        <div class="krow"><span class="kprice">$199<small> /mo</small></span><button class="subbtn" data-subscribe="genomics"><i class="ti ti-plus"></i> Subscribe</button></div>
+      </div>
+      <div class="kg" data-kg="opentargets">
+        <div class="ktop"><span class="ki"><i class="ti ti-target-arrow"></i></span><div><div class="knm">Open Targets KG</div><div class="kby">by community · ★ 4.7</div></div></div>
+        <div class="kdesc">Target–disease evidence for drug discovery.</div>
+        <div class="krow"><span class="kprice">$49<small> /mo</small></span><button class="subbtn" data-subscribe="opentargets"><i class="ti ti-plus"></i> Subscribe</button></div>
+      </div>
+      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the knowledge market</span><i class="ti ti-arrow-right"></i></div>
+    </div>
   </aside>
 </div>
 
@@ -115,6 +132,66 @@
     <div class="perm"><span class="ad" style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:12px">K</span><div><div style="font-size:14px">khellar (you)</div><div style="font-size:12px;color:var(--faint)">Owner</div></div></div>
   </div>
 </div>
+
+<!-- inline flow editor -->
+<div class="scrim" id="scrim"></div>
+<aside class="flowpanel" id="flowPanel">
+  <div class="fp-head">
+    <span class="fp-title"><i class="ti ti-subtask"></i> research-scout.flow</span>
+    <span class="fp-seg"><button class="on" data-fpview="visual">Visual</button><button data-fpview="code">Code</button></span>
+    <span class="fp-actions">
+      <button class="fp-btn" id="flowRun"><i class="ti ti-player-play"></i> Run</button>
+      <button class="fp-btn primary" id="flowSave"><i class="ti ti-device-floppy"></i> Save</button>
+      <span class="navic" id="flowClose"><i class="ti ti-x"></i></span>
+    </span>
+  </div>
+  <div class="fp-body">
+    <div class="fp-visual" data-fppane="visual">
+      <div class="flow-canvas">
+        <div class="fnode" data-node="schedule"><h6><i class="ti ti-clock"></i> Schedule</h6><div class="nb">daily · 7:00am</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode" data-node="search"><h6><i class="ti ti-world-search"></i> Web search</h6><div class="nb">"new web3 projects"<br>via Perplexity</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode sel" data-node="filter"><h6><i class="ti ti-filter"></i> On-chain filter</h6><div class="nb">volume_24h ≥ $1M</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode" data-node="summarize"><h6><i class="ti ti-sparkles"></i> Summarize</h6><div class="nb">3-bullet memo<br>per project</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode" data-node="deliver"><h6><i class="ti ti-send"></i> Deliver</h6><div class="nb">email · 7:05am</div></div>
+      </div>
+      <div class="inspector" id="inspector"></div>
+    </div>
+    <pre class="code" data-fppane="code" contenteditable="true" spellcheck="false" style="display:none"><span class="c"># research-scout.flow — generated by Research scout</span>
+<span class="k">from</span> asi <span class="k">import</span> schedule, tools, llm
+
+<span class="k">@schedule</span>(<span class="s">"0 7 * * *"</span>)            <span class="c"># daily 7:00am</span>
+<span class="k">def</span> research_scout():
+    hits = tools.web_search(<span class="s">"new web3 projects this week"</span>, provider=<span class="s">"perplexity"</span>)
+    hits = [h <span class="k">for</span> h <span class="k">in</span> hits <span class="k">if</span> h.volume_24h_usd >= <span class="s">1_000_000</span>]   <span class="c"># ← your filter</span>
+    memo = llm.summarize(hits, prompt=<span class="s">"3-bullet memo per project, focus on traction"</span>)
+    tools.deliver(memo, to=<span class="s">"email"</span>, subject=<span class="s">"Daily research"</span>)</pre>
+  </div>
+</aside>
+
+<!-- KG subscribe modal -->
+<div class="modal-ov" id="kgModal">
+  <div class="modal" style="position:relative;width:520px">
+    <span class="navic x" data-close><i class="ti ti-x"></i></span>
+    <div style="display:flex;align-items:center;gap:12px"><span class="ki" style="width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:23px"><i class="ti ti-dna-2"></i></span><div><h3>Genomics Knowledge Graph</h3><div style="font-size:12.5px;color:var(--faint)">by ASI Bio · updated weekly</div></div></div>
+    <p class="muted" style="font-size:14px;margin:16px 0;line-height:1.6">Connect a curated graph of genes, variants, diseases, drugs and pathways. Your agent queries it in natural language and returns ranked, cited answers with an explorable subgraph.</p>
+    <div style="display:grid;gap:10px;margin-bottom:18px;font-size:13.5px">
+      <div style="display:flex;gap:9px;align-items:center"><i class="ti ti-check" style="color:var(--ok)"></i> 180M curated edges · GRCh38 build</div>
+      <div style="display:flex;gap:9px;align-items:center"><i class="ti ti-check" style="color:var(--ok)"></i> Weekly updates from 40+ sources</div>
+      <div style="display:flex;gap:9px;align-items:center"><i class="ti ti-check" style="color:var(--ok)"></i> Natural-language queries + cited subgraphs</div>
+      <div style="display:flex;gap:9px;align-items:center"><i class="ti ti-check" style="color:var(--ok)"></i> Cancel anytime</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px">
+      <div><span style="font-family:var(--display);font-weight:700;font-size:26px">$199</span><span style="color:var(--faint);font-size:13px"> / month</span></div>
+      <button class="btn btn-primary btn-lg" id="kgConfirm">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-check"></i> <span id="toastMsg">Saved</span></div>
 
 <script src="proto.js"></script>
 </body></html>

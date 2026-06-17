@@ -152,4 +152,99 @@
     var _qs = new URLSearchParams(location.search).get('step');
     show(_qs ? Math.min(3, Math.max(1, +_qs)) : 1);
   }
+
+  // ===== toast =====
+  var _tt;
+  function toast(msg){ var el=document.getElementById('toast'); if(!el) return; document.getElementById('toastMsg').textContent=msg; el.classList.add('show'); clearTimeout(_tt); _tt=setTimeout(function(){el.classList.remove('show')},2800); }
+
+  // ===== per-agent threads =====
+  var THREADS = {
+    "Omega":
+      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Hey khellar — I’m set up and ready. I can read files, browse, and run any tools you switch on in the drawer. What should we work on first?</div></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">Find promising new web3 projects and draft a short memo on the top 3.</div></div>'+
+      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Searching now and cross-checking on-chain activity. I’ll use Perplexity + your Drive notes.<div class="callout" style="margin-top:10px"><i class="ti ti-puzzle"></i> Suggested skill — <b>Token-spend tracker</b> by John Grove. Want me to install it so you can watch cost live? <span style="text-decoration:underline;cursor:pointer">Install</span></div></div></div>',
+    "Research scout":
+      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Research scout</div>Morning — I ran today’s scan and turned it into a reusable flow so it repeats on its own every day at 7am. Here’s the automation I wrote for you:'+
+      '<div class="artifact" data-flow="research-scout"><span class="ai"><i class="ti ti-subtask"></i></span><div><div class="at">research-scout.flow</div><div class="as">5 steps · built by Research scout · runs daily 7:00am</div></div><span class="open">Open <i class="ti ti-arrow-up-right"></i></span></div></div></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">nice. can you also have it skip anything under $1M daily volume?</div></div>'+
+      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Research scout</div>Done — I added an on-chain filter step. Open the flow to fine-tune the threshold yourself, or just tell me a number.</div></div>',
+    "Genome explorer":
+      '<div class="row"><div class="av claw">G</div><div class="bub"><div class="who">Genome explorer</div>I can answer genomics questions, but I’m far more accurate with a knowledge graph connected. The <b>Genomics KG</b> is in your drawer.'+
+      '<div class="artifact" data-subscribe="genomics"><span class="ai"><i class="ti ti-dna-2"></i></span><div><div class="at">Genomics Knowledge Graph</div><div class="as">180M curated edges · $199/mo · not subscribed</div></div><span class="open">Subscribe <i class="ti ti-arrow-up-right"></i></span></div></div></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">which genes are linked to early-onset Parkinson’s?</div></div>'+
+      '<div class="row"><div class="av claw">G</div><div class="bub"><div class="who">Genome explorer</div>Subscribe to the Genomics KG and I’ll return ranked gene–disease associations with citations and a subgraph you can explore.</div></div>',
+    "Rent tracker":
+      '<div class="row"><div class="av claw">$</div><div class="bub"><div class="who">Rent tracker</div>3 of 4 units have paid this month. I drafted a friendly reminder for unit 2B — want me to send it?</div></div>'
+  };
+  var DRAWER_TAB = { "Genome explorer":"Knowledge" };
+  function renderAgent(name){
+    var t=document.getElementById('thread'); if(!t) return;
+    document.querySelectorAll('#agentList .agent').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-agent')===name); });
+    var title=document.getElementById('agentTitle'); if(title && title.firstChild) title.firstChild.textContent=name+' ';
+    var ci=document.getElementById('composerInput'); if(ci) ci.placeholder='Message '+name+'…';
+    t.innerHTML = THREADS[name] || THREADS["Omega"]; t.scrollTop=0;
+    var tb=document.querySelector('[data-dtab="'+(DRAWER_TAB[name]||'Connectors')+'"]'); if(tb) tb.click();
+  }
+  document.addEventListener('click', function(e){ var a=e.target.closest('#agentList .agent'); if(a) renderAgent(a.getAttribute('data-agent')); });
+
+  // ===== inline flow editor =====
+  var NODE_CFG = {
+    schedule:{t:'Schedule',ic:'ti-clock',ttl:'When it runs',html:'<label class="lbl">Cron</label><input class="field" value="0 7 * * *"><p class="hint">Runs every day at 7:00am.</p>'},
+    search:{t:'Web search',ic:'ti-world-search',ttl:'Search query',html:'<label class="lbl">Query</label><input class="field" value="new web3 projects this week"><label class="lbl" style="margin-top:12px">Provider</label><input class="field" value="Perplexity">'},
+    filter:{t:'On-chain filter',ic:'ti-filter',ttl:'Minimum 24h volume',html:'<label class="lbl">Threshold (USD)</label><input class="field" id="filterThreshold" value="1,000,000"><p class="hint">Projects below this are skipped before summarizing. Edit and Save — applies to tomorrow’s 7:00am run.</p>'},
+    summarize:{t:'Summarize',ic:'ti-sparkles',ttl:'Prompt',html:'<label class="lbl">Instruction</label><textarea class="field">3-bullet memo per project, focus on traction and team.</textarea><label class="lbl" style="margin-top:12px">Model</label><input class="field" value="Claude Sonnet 4.6">'},
+    deliver:{t:'Deliver',ic:'ti-send',ttl:'Delivery',html:'<label class="lbl">Channel</label><input class="field" value="Email — khellar@singularitynet.io"><p class="hint">Sent right after the run completes.</p>'}
+  };
+  function selectNode(n){
+    document.querySelectorAll('.fnode').forEach(function(x){ x.classList.toggle('sel', x.getAttribute('data-node')===n); });
+    var c=NODE_CFG[n], ins=document.getElementById('inspector');
+    if(c&&ins) ins.innerHTML='<div class="ih"><i class="ti '+c.ic+'"></i> '+c.t+' · node config</div><div class="ttl">'+c.ttl+'</div>'+c.html;
+  }
+  function openFlow(){ document.getElementById('flowPanel').classList.add('open'); document.getElementById('scrim').classList.add('open'); selectNode('filter'); }
+  function closeFlow(){ document.getElementById('flowPanel').classList.remove('open'); document.getElementById('scrim').classList.remove('open'); }
+
+  // ===== knowledge graph subscribe =====
+  function geneRow(n,d,s){ return '<div class="gene"><span class="gn">'+n+'</span><span style="color:var(--faint);font-size:11.5px">'+d+'</span><span class="gs">'+s+'</span><span class="bar"><i style="width:'+s+'%"></i></span></div>'; }
+  function appendGenomeResult(){
+    var t=document.getElementById('thread'); if(!t) return;
+    t.insertAdjacentHTML('beforeend',
+      '<div class="row"><div class="av claw">G</div><div class="bub"><div class="who">Genome explorer</div>Querying the Genomics KG for early-onset Parkinson’s associations…'+
+      '<div class="kgresult"><div class="gh"><i class="ti ti-dna-2"></i> gene → disease · ranked by evidence</div>'+
+      geneRow('PRKN','recessive · PARK2',95)+geneRow('PINK1','mitophagy',88)+geneRow('SNCA','α-synuclein',72)+geneRow('LRRK2','kinase',61)+
+      '<div style="font-size:11px;color:var(--faint);margin-top:10px;font-family:var(--mono)">4 of 27 results · sources: ClinVar, OMIM, DisGeNET</div></div>'+
+      'Connected. Want the variant-level view or known drug interactions next?</div></div>');
+    t.scrollTop=t.scrollHeight;
+  }
+  function subscribeGenomics(){
+    var card=document.getElementById('kg-genomics');
+    if(card){ card.classList.add('active'); var row=card.querySelector('.krow');
+      if(row) row.innerHTML='<span class="kactive"><i class="ti ti-check"></i> Active · $199/mo</span><span style="font-size:12px;color:var(--faint);cursor:pointer">Manage</span>'; }
+    toast('Subscribed to Genomics KG — your agent can now query it');
+    var ttl=document.getElementById('agentTitle');
+    if(ttl && /Genome/.test(ttl.textContent)) appendGenomeResult();
+  }
+
+  // ===== global click wiring for new components =====
+  document.addEventListener('click', function(e){
+    if(e.target.closest('[data-flow]')) openFlow();
+    var fn=e.target.closest('.fnode'); if(fn) selectNode(fn.getAttribute('data-node'));
+    if(e.target.closest('#flowClose')||e.target.closest('#scrim')) closeFlow();
+    if(e.target.closest('#flowSave')) toast('Flow saved · next run tomorrow 7:00am');
+    if(e.target.closest('#flowRun')) toast('Running flow… 5 projects found, memo sent');
+    var fv=e.target.closest('[data-fpview]');
+    if(fv){ var v=fv.getAttribute('data-fpview');
+      document.querySelectorAll('[data-fpview]').forEach(function(b){ b.classList.toggle('on', b===fv); });
+      document.querySelectorAll('[data-fppane]').forEach(function(p){ p.style.display = p.getAttribute('data-fppane')===v ? '' : 'none'; });
+    }
+    if(e.target.closest('[data-subscribe]')){ var m=document.getElementById('kgModal'); if(m) m.classList.add('open'); }
+    var km=document.getElementById('kgModal');
+    if(km && e.target.closest('#kgModal') && (e.target===km || e.target.closest('[data-close]'))) km.classList.remove('open');
+    if(e.target.closest('#kgConfirm')){ if(km) km.classList.remove('open'); subscribeGenomics(); }
+  });
+
+  // ===== deep links: ?agent= , ?flow= =====
+  if(document.getElementById('thread')){
+    var _qag=new URLSearchParams(location.search).get('agent'); if(_qag) renderAgent(_qag);
+    if(new URLSearchParams(location.search).get('flow')) openFlow();
+  }
 })();
