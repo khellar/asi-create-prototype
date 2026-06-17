@@ -192,6 +192,7 @@ textarea.field{height:auto;min-height:104px;padding:14px 16px;line-height:1.5;re
 .skill .si,.skillcard-sm .si{background:var(--accent-soft)!important;color:var(--accent-ink)!important}
 .gc-top .dot{background:var(--line2)!important}
 .toolchip{color:var(--accent-ink);background:var(--accent-soft)}
+.logomark{width:18px;height:18px;object-fit:contain;display:block}
 .av{width:26px!important;height:26px!important;border-radius:50%!important;font-size:11.5px;font-weight:500;background:var(--warm)!important;color:var(--muted)!important;border:1px solid var(--line)}
 .av.claw{background:var(--accent-soft)!important;color:var(--accent-ink)!important;border-color:var(--accent-soft-bd)!important}
 .av.me{background:var(--warm)!important;color:var(--muted)!important}
