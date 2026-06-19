@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASI:Create — Observability Cockpit Spec</title>
+<style>
+/* ===== Tokens lifted verbatim from north-star.css / proto.css (dark default, accent #8B7CFF) ===== */
+:root{
+  --bg:#0A0A0C; --surface:#131318; --warm:#1A1A21; --panel:#16161C;
+  --ink:#ECECEF; --muted:#9A9AA7; --faint:#6E6E7C;
+  --line:#23232C; --line2:#2E2E38;
+  --accent:#8B7CFF; --accent-press:#7A68FF;
+  --accent-ink:color-mix(in srgb, var(--accent) 62%, var(--ink));
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-soft-bd:color-mix(in srgb, var(--accent) 26%, var(--surface));
+  --ok:#4ADE9E; --ok-soft:color-mix(in srgb, var(--ok) 14%, var(--surface));
+  --warn:#F4C152; --warn-soft:color-mix(in srgb, var(--warn) 14%, var(--surface));
+  --bad:#FF6B6B;  --bad-soft:color-mix(in srgb, var(--bad) 14%, var(--surface));
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --font:"Inter",system-ui,sans-serif;
+  --display:"Inter Tight","Inter",sans-serif;
+  --r-lg:18px;
+  --shadow-lg:0 24px 60px -24px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.01em;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+small{font-weight:400}
+code{font-family:var(--mono);font-size:.92em;background:var(--warm);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--accent-ink)}
+
+/* ===== spec scaffolding (NOT part of the product — frames each section) ===== */
+.specnav{position:sticky;top:0;z-index:40;background:rgba(10,10,12,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.specnav-in{display:flex;align-items:center;gap:18px;height:60px;overflow-x:auto}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:16px;flex:none}
+.mark{width:24px;height:24px;border-radius:7px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:700}
+.specnav a{color:var(--muted);font-size:13px;white-space:nowrap;cursor:pointer}
+.specnav a:hover{color:var(--ink)}
+.hero{padding:46px 0 14px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.hero h1{font-size:34px;line-height:1.08;margin:12px 0 0;max-width:24ch}
+.hero p{font-size:16px;color:var(--muted);max-width:74ch;margin:14px 0 0}
+.specsec{padding:40px 0 8px;border-top:1px solid var(--line);margin-top:34px}
+.specsec>.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.specsec>h2{font-size:23px;margin:8px 0 4px}
+.specsec>.lede{color:var(--muted);font-size:14.5px;max-width:78ch;margin:0 0 22px}
+.note{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-soft-bd);border-radius:6px;padding:2px 8px;vertical-align:middle}
+.redteam{border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:0 10px 10px 0;padding:11px 15px;margin:16px 0;font-size:13px;color:var(--muted)}
+.redteam b{color:var(--warn);font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.copyrow{font-size:12.5px;color:var(--faint);margin-top:10px}
+.copyrow b{color:var(--muted)}
+
+/* ===== the actual product surface (this is the design) ===== */
+.cockpit-frame{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+.cockpit-head{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.cockpit-head .agent{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px}
+.cockpit-head .av{width:26px;height:26px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:700}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-family:var(--mono);color:var(--ok)}
+.live .pulse{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:pulse 2.2s infinite}
+.live.stale{color:var(--warn)} .live.stale .pulse{background:var(--warn);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 55%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.spacer{flex:1}
+.cmdk-hint{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);border:1px solid var(--line2);border-radius:9px;padding:5px 10px;cursor:pointer;background:var(--bg)}
+.cmdk-hint:hover{border-color:var(--accent-soft-bd);color:var(--ink)}
+.kbd{font-family:var(--mono);font-size:10.5px;background:var(--warm);border:1px solid var(--line2);border-radius:5px;padding:1px 5px;color:var(--faint)}
+.lifebtns{display:flex;gap:5px}
+.lifebtn{width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:13px}
+.lifebtn:hover{color:var(--ink);border-color:var(--accent-soft-bd)}
+
+.ctabs{display:flex;gap:2px;padding:6px 12px 0;border-bottom:1px solid var(--line);background:var(--surface);overflow-x:auto}
+.ctab{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--faint);font-family:var(--font);font-size:13px;font-weight:500;padding:9px 13px;border-radius:9px 9px 0 0;cursor:pointer;white-space:nowrap}
+.ctab.on{color:var(--ink);background:var(--bg);box-shadow:inset 0 -2px 0 var(--accent)}
+.ctab .badge{font-family:var(--mono);font-size:9.5px;background:var(--accent-soft);color:var(--accent-ink);border-radius:5px;padding:1px 5px}
+
+.activity{padding:18px 18px 24px;background:var(--bg)}
+.timebar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+.seg button{border:0;background:transparent;color:var(--muted);font-size:11.5px;font-family:var(--mono);padding:5px 11px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff}
+.timebar .meta{font-size:12px;color:var(--faint);font-family:var(--mono)}
+
+/* metric grid */
+.mgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.card{grid-column:span 4;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 15px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.card.w6{grid-column:span 6}.card.w8{grid-column:span 8}.card.w12{grid-column:span 12}.card.w3{grid-column:span 3}
+.card.clickable{cursor:pointer;transition:border-color .15s,transform .1s}
+.card.clickable:hover{border-color:var(--accent-soft-bd)}
+.card.clickable:active{transform:translateY(1px)}
+.ch{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.ch .ti{color:var(--accent-ink);font-style:normal}
+.ch .more{margin-left:auto;color:var(--faint);font-size:14px;cursor:pointer;letter-spacing:0}
+.ch .more:hover{color:var(--ink)}
+.big{font-family:var(--display);font-weight:700;font-size:27px;line-height:1;display:flex;align-items:baseline;gap:8px}
+.big small{font-size:12.5px;color:var(--faint);font-weight:400}
+.big .unit{font-size:13px;color:var(--muted);font-weight:500}
+.sub{font-size:11.5px;color:var(--muted);font-family:var(--mono);line-height:1.7}
+.sub b{color:var(--ink);font-weight:500}
+.meter{height:7px;border-radius:5px;background:var(--warm);overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.meter i.ok{background:var(--ok)} .meter i.warn{background:var(--warn)} .meter i.bad{background:var(--bad)}
+.captag{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.delta{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:6px}
+.delta.up{color:var(--ok);background:var(--ok-soft)} .delta.dn{color:var(--bad);background:var(--bad-soft)} .delta.flat{color:var(--faint);background:var(--warm)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.g{background:var(--ok)} .dot.y{background:var(--warn)} .dot.r{background:var(--bad)}
+.spark{display:flex;align-items:flex-end;gap:3px;height:34px}
+.spark span{flex:1;background:var(--accent-soft);border-radius:2px;min-height:2px}
+.spark span.hl{background:var(--accent)}
+
+/* belief / atom rows */
+.row{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid var(--line);font-size:12px;font-family:var(--mono);min-width:0}
+.row:first-of-type{border-top:0}
+.row .txt{flex:1;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.row .txt b{color:var(--ink);font-weight:500}
+.stv{color:var(--accent-ink);font-size:10.5px;white-space:nowrap}
+.stv .rev{color:var(--warn)}
+.tag{font-family:var(--mono);font-size:9.5px;border-radius:5px;padding:1px 6px;white-space:nowrap}
+.tag.kind{background:var(--accent-soft);color:var(--accent-ink)}
+.tag.clerk{background:var(--ok-soft);color:var(--ok)}
+.tag.llm{background:var(--warn-soft);color:var(--warn)}
+.tag.floor{background:var(--bad-soft);color:var(--bad)}
+
+.logwrap{margin-top:18px}
+.loglines{font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.95;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 15px;max-height:210px;overflow:auto}
+.loglines .t{color:var(--faint)}
+.loglines .ok2{color:var(--ok)} .loglines .warn2{color:var(--warn)} .loglines .acc{color:var(--accent-ink)}
+.loglines .cyc{display:flex;align-items:center;gap:8px;padding:3px 0;cursor:pointer;border-radius:6px;margin:0 -6px;padding-left:6px;padding-right:6px}
+.loglines .cyc:hover{background:var(--warm)}
+.loglines .cyc .more{margin-left:auto;color:var(--faint)}
+.loglines .cyc:hover .more{color:var(--accent-ink)}
+
+/* ===== drawer drill-down (slide-in inspector) ===== */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .22s;z-index:80}
+.scrim.on{opacity:1;pointer-events:auto}
+.inspector{position:fixed;top:0;right:0;height:100vh;width:min(720px,94vw);background:var(--surface);border-left:1px solid var(--line);z-index:90;transform:translateX(101%);transition:transform .28s ease;display:flex;flex-direction:column}
+.inspector.on{transform:translateX(0)}
+.insp-head{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--line)}
+.insp-head .ic{width:32px;height:32px;border-radius:9px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:16px;flex:none}
+.insp-head h3{font-size:15.5px}.insp-head .hs{font-size:11.5px;color:var(--faint);font-family:var(--mono)}
+.insp-x{margin-left:auto;width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);color:var(--muted);cursor:pointer;font-size:15px}
+.insp-x:hover{color:var(--ink)}
+.insp-body{padding:18px;overflow:auto;flex:1}
+.insp-body h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:20px 0 9px}
+.insp-body h4:first-child{margin-top:0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:12.5px}
+.kv:first-of-type{border-top:0}
+.kv .k{color:var(--faint);font-family:var(--mono)}
+.kv .v{color:var(--ink);font-family:var(--mono);text-align:right}
+.codeblock{font-family:var(--mono);font-size:11.5px;line-height:1.7;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:13px 14px;overflow:auto;color:var(--muted);white-space:pre;max-height:280px}
+.codeblock .hl{color:var(--accent-ink)} .codeblock .g{color:var(--ok)} .codeblock .dim{color:var(--faint)} .codeblock .w{color:var(--warn)}
+.timeline{position:relative;padding-left:18px}
+.timeline::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--line2)}
+.tnode{position:relative;padding:0 0 16px 8px}
+.tnode::before{content:"";position:absolute;left:-15px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+.tnode.rev::before{background:var(--warn)}
+.tnode .tt{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.tnode .tb{font-size:12.5px;color:var(--ink);margin-top:2px}
+.tnode .tb .stv{font-size:11px}
+.chiprow{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-family:var(--mono);font-size:10.5px;border:1px solid var(--line2);border-radius:7px;padding:3px 8px;color:var(--muted);cursor:pointer;background:var(--bg)}
+.chip:hover{border-color:var(--accent-soft-bd);color:var(--accent-ink)}
+.chip .ti{color:var(--accent-ink);font-style:normal}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:10px;font-weight:500;font-size:13.5px;border:1px solid transparent;cursor:pointer;font-family:var(--font)}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-press)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line2)}.btn-ghost:hover{background:var(--warm)}
+.btn-sm{height:32px;font-size:12.5px;padding:0 12px}
+.scaffold-flag{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--warn-soft);background:var(--warn-soft);border-radius:11px;padding:12px 14px;font-size:12.5px;color:var(--muted);margin-top:14px}
+.scaffold-flag .ti{color:var(--warn);font-size:17px;font-style:normal;flex:none}
+
+/* ===== Cmd-K palette ===== */
+.palette-scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;z-index:120;padding-top:12vh}
+.palette-scrim.on{display:flex}
+.palette{width:min(620px,92vw);background:var(--surface);border:1px solid var(--line2);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden}
+.pal-input{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--line)}
+.pal-input .ti{color:var(--faint);font-size:18px;font-style:normal}
+.pal-input input{flex:1;border:0;background:transparent;color:var(--ink);font-size:16px;font-family:var(--font);outline:none}
+.pal-grp{padding:8px 0}
+.pal-grp .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:6px 18px}
+.pal-item{display:flex;align-items:center;gap:12px;padding:10px 18px;cursor:pointer}
+.pal-item:hover,.pal-item.sel{background:var(--warm)}
+.pal-item .pi{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:15px;flex:none;font-style:normal}
+.pal-item .pt{font-size:13.5px;font-weight:500}
+.pal-item .pd{font-size:11.5px;color:var(--faint)}
+.pal-item .slash{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.pal-foot{display:flex;gap:16px;padding:9px 18px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);font-family:var(--mono)}
+
+/* report bundle modal */
+.bundle{width:min(640px,94vw)}
+.bundle-stat{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);padding:10px 0;border-top:1px solid var(--line)}
+.bundle-stat:first-of-type{border-top:0}
+.bundle-stat .ti{color:var(--accent-ink);font-style:normal}
+.bundle-stat b{color:var(--ink)}
+.bundle-stat .pick{margin-left:auto}
+.toggle{width:38px;height:22px;border-radius:999px;background:var(--line2);position:relative;cursor:pointer;flex:none}
+.toggle.on{background:var(--accent)}
+.toggle b{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
+.toggle.on b{left:18px}
+textarea.repfield{width:100%;border:1px solid var(--line2);border-radius:10px;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:13.5px;line-height:1.6;padding:11px 13px;resize:vertical;min-height:74px;outline:none;margin-top:6px}
+textarea.repield:focus,textarea.repfield:focus{border-color:var(--accent)}
+
+/* top-up funds */
+.funds{display:flex;align-items:center;gap:10px;border:1px solid var(--line2);border-radius:11px;padding:9px 13px;background:var(--bg);cursor:pointer}
+.funds:hover{border-color:var(--accent-soft-bd)}
+.funds .ti{color:var(--accent-ink);font-style:normal;font-size:16px}
+.funds .ft{font-size:12.5px}.funds .fd{font-size:11px;color:var(--faint);font-family:var(--mono)}
+.funds.low{border-color:var(--warn-soft);background:var(--warn-soft)} .funds.low .ti{color:var(--warn)}
+.topup-amts{display:flex;gap:8px;margin:14px 0}
+.amt{flex:1;border:1px solid var(--line2);border-radius:11px;padding:14px 10px;text-align:center;cursor:pointer;background:var(--bg)}
+.amt.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.amt .a{font-family:var(--display);font-weight:700;font-size:20px}.amt .r{font-size:10.5px;color:var(--faint);font-family:var(--mono)}
+
+.modal-scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:120;padding:20px}
+.modal-scrim.on{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line2);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden}
+.modal-head{display:flex;align-items:center;gap:11px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.modal-head .mi{width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:19px;flex:none;font-style:normal}
+.modal-head h3{font-size:16px}.modal-head .ms{font-size:12px;color:var(--faint)}
+.modal-body{padding:18px 20px}
+.modal-foot{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-top:1px solid var(--line)}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;padding:11px 18px;border-radius:11px;display:flex;align-items:center;gap:8px;opacity:0;pointer-events:none;transition:.25s;z-index:200}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ti{font-style:normal}
+
+@media(max-width:760px){
+  .card,.card.w6,.card.w8,.card.w3{grid-column:span 12}
+  .hero h1{font-size:26px}
+}
+/* tiny inline-icon glyph fallback (no external font) — uses unicode so artifact is self-contained */
+.ti{font-style:normal;font-family:var(--font)}
+</style>
+</head>
+<body>
+
+<!-- ============ SPEC NAV (framing only) ============ -->
+<div class="specnav"><div class="wrap specnav-in">
+  <div class="brand"><span class="mark">◈</span> ASI:Create · Observability</div>
+  <a onclick="jump('s-dash')">Dashboard</a>
+  <a onclick="jump('s-mem')">Memory drill-downs</a>
+  <a onclick="jump('s-reason')">Reasoning meters</a>
+  <a onclick="jump('s-cycle')">Cycle inspector</a>
+  <a onclick="jump('s-cmdk')">Cmd-K</a>
+  <a onclick="jump('s-funds')">Funds</a>
+</div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Instrumentation design · grounded in real Myrrh mind.json</div>
+    <h1>Showing that the agent is genuinely thinking</h1>
+    <p>This is the <b>Activity</b> tab of the cockpit, redesigned as a credible observability product — Langfuse/Grafana patterns applied to a neuro-symbolic mind. Every number is a real field from Myrrh's <code>mind.json</code> snapshot (2026-06-18, cycle 2501). Click anything that glows on hover — the drill-downs are live. Press <span class="kbd">⌘K</span> anywhere.</p>
+    <p class="copyrow"><b>Principle (note 3):</b> the user <i>observes</i> the mind forming and revising memories — they do not do the agent's bookkeeping. Every panel answers "is it really thinking?" with evidence the user can open.</p>
+  </div>
+</div>
+
+<!-- ============ §1 THE ACTIVITY DASHBOARD ============ -->
+<div class="wrap specsec" id="s-dash">
+  <div class="kicker">§1 · Note 4 — the live Activity dashboard</div>
+  <h2>The cockpit, Activity tab</h2>
+  <p class="lede">A single fold answers four questions at a glance: <b>is it alive & affordable</b> (top row), <b>is its memory growing within its caps</b> (memory row), <b>is the careful mind actually reasoning</b> (reasoning row), and <b>what is it doing right now</b> (live cycle feed). Each tile is a sparkline + a real value + its cap, and each opens a drill-down. Color = health dot from <code>mind.json.health</code> (green/yellow/red), never decoration.</p>
+
+  <div class="cockpit-frame">
+    <div class="cockpit-head">
+      <div class="agent"><span class="av">M</span> Myrrh <span class="ti" style="color:var(--faint);font-size:12px">▾</span></div>
+      <span class="live stale" id="liveBadge"><span class="pulse"></span> running · last cycle 14m ago</span>
+      <div class="spacer"></div>
+      <div class="funds low" onclick="openTopup()" title="Top up LLM funds (note 6)"><span class="ti">◷</span><div><div class="ft">$78.36 left</div><div class="fd">runway ~4,631 cycles</div></div></div>
+      <div class="cmdk-hint" onclick="openPalette()"><span class="ti">⌘</span> Report / inspect <span class="kbd">⌘K</span></div>
+      <div class="lifebtns"><button class="lifebtn" title="Reboot">⟳</button><button class="lifebtn" title="Stop">■</button></div>
+    </div>
+    <div class="ctabs">
+      <div class="ctab">Chat</div>
+      <div class="ctab on">Activity</div>
+      <div class="ctab">Mind</div>
+      <div class="ctab">Vision</div>
+      <div class="ctab">Tests &amp; Benchmarks</div>
+      <div class="ctab">Versions <span class="badge">v7</span></div>
+      <div class="ctab">Files &amp; IDE</div>
+    </div>
+
+    <div class="activity">
+      <div class="timebar">
+        <div class="seg"><button>1h</button><button class="on">24h</button><button>7d</button><button>all</button></div>
+        <span class="meta">window: last 30 cycles · 2,501 total · updated 09:14:45</span>
+      </div>
+
+      <!-- ===== ROW 1: liveness, spend, throughput ===== -->
+      <div class="mgrid">
+        <div class="card clickable" onclick="openInsp('spend')">
+          <div class="ch"><span class="ti">◷</span> LLM budget <span class="more" onclick="event.stopPropagation();openInsp('spend')">⋯</span></div>
+          <div class="big">$21.64 <small>/ $100.00 cap</small></div>
+          <div class="meter"><i style="width:21.6%"></i></div>
+          <div class="sub"><b>$0.0169</b> / cycle · runway <b>~4,631</b> cycles · today <span class="delta flat">+$0.41</span></div>
+        </div>
+
+        <div class="card clickable" onclick="openInsp('health')">
+          <div class="ch"><span class="ti">♥</span> Runtime health <span class="more">⋯</span></div>
+          <div class="big" style="font-size:18px;gap:7px"><span class="dot y"></span> 5 green · 3 yellow · 2 red</div>
+          <div class="sub">liveness <span class="dot y"></span> · format <span class="dot r"></span> · native substrate <span class="dot r"></span> · memory <span class="dot y"></span> · episodes <span class="dot y"></span></div>
+          <div class="captag">last cycle age 871s &middot; click for the 10-dot board</div>
+        </div>
+
+        <div class="card clickable" onclick="openInsp('throughput')">
+          <div class="ch"><span class="ti">≋</span> Throughput &amp; tokens <span class="more">⋯</span></div>
+          <div class="big">2,501 <span class="unit">cycles</span></div>
+          <div class="spark" title="think-token ratio over last 14 cycles">
+            <span style="height:88%"></span><span style="height:52%"></span><span style="height:14%"></span><span style="height:6%"></span><span class="hl" style="height:90%"></span><span style="height:51%"></span><span style="height:84%"></span><span style="height:13%"></span><span style="height:7%"></span><span style="height:97%"></span><span style="height:60%"></span><span style="height:25%"></span><span style="height:10%"></span><span style="height:11%"></span>
+          </div>
+          <div class="sub">avg ctx <b>55.3k</b> chars · in <b>22.4k</b> / out <b>8.5k</b> · think-ratio <b>0.71</b></div>
+        </div>
+      </div>
+
+      <!-- ===== ROW 2: MEMORY — the "is it forming memories" answer (note 4) ===== -->
+      <div class="ch" style="margin:20px 0 9px"><span class="ti">▤</span> MEMORY — what it has learned & retained, against its caps</div>
+      <div class="mgrid">
+        <div class="card clickable" onclick="openInsp('chroma')">
+          <div class="ch"><span class="ti">⛁</span> Long-term memory · chromadb <span class="more">⋯</span></div>
+          <div class="big">27,394 <span class="unit">vectors</span></div>
+          <div class="meter"><i class="ok" style="width:38%"></i></div>
+          <div class="sub">cap <b>unbounded</b> (glacier-backed) · <b>+29</b> recalled last query · 75% local (ollama)</div>
+          <div class="captag">note: chroma has no hard cap — old episodes MOVE to glacier, never deleted</div>
+        </div>
+
+        <div class="card clickable" onclick="openInsp('persist')">
+          <div class="ch"><span class="ti">◈</span> Working atomspace · &amp;persistent <span class="more">⋯</span></div>
+          <div class="big">97 <span class="unit">atoms</span> <small>/ ~cap</small></div>
+          <div class="meter"><i style="width:19.1%"></i></div>
+          <div class="sub">9,565 / <b>50,000</b> chars (<b>19.1%</b>) · whole-file snapshot per cycle</div>
+          <div class="captag">RAM is source-of-truth; persistent.metta is the derived per-cycle mirror</div>
+        </div>
+
+        <div class="card clickable" onclick="openInsp('episodes')">
+          <div class="ch"><span class="ti">⟳</span> Episodes · history.metta <span class="more">⋯</span></div>
+          <div class="big" style="gap:7px"><span class="dot y"></span> 0 <small>episodes this game</small></div>
+          <div class="sub">states <b>0</b> · max-repeat <b>0</b> · repeated-actions <b>0</b> · refused <b>1</b></div>
+          <div class="captag">yellow: episode store empty for re86 — perception broken 10+ cycles (see feed)</div>
+        </div>
+      </div>
+
+      <!-- ===== ROW 3: REASONING — "is the careful mind alive" (note 4) ===== -->
+      <div class="ch" style="margin:20px 0 9px"><span class="ti">✦</span> REASONING — the careful mind: beliefs, truth-valued atoms, and how often it actually reasons</div>
+      <div class="mgrid">
+        <div class="card clickable w3" onclick="openInsp('rratoms')">
+          <div class="ch"><span class="ti">✦</span> Reasoning-ready atoms <span class="more">⋯</span></div>
+          <div class="big" style="gap:7px"><span class="dot r"></span> 0 <small>of 97</small></div>
+          <div class="sub">atoms carrying <code>(stv F C)</code> · forming-rate <b>0/30 cyc</b></div>
+        </div>
+        <div class="card clickable w3" onclick="openInsp('beliefs')">
+          <div class="ch"><span class="ti">↻</span> Belief revisions <span class="more">⋯</span></div>
+          <div class="big">0 <span class="unit">last 30 cyc</span></div>
+          <div class="sub">freq/conf changes on existing beliefs</div>
+        </div>
+        <div class="card clickable w3" onclick="openInsp('metta')">
+          <div class="ch"><span class="ti">λ</span> MeTTa calls <span class="more">⋯</span></div>
+          <div class="big" style="gap:7px"><span class="dot r"></span> 0%</div>
+          <div class="sub">metta_usage_rate · substrate_rate 0.0</div>
+        </div>
+        <div class="card clickable w3" onclick="openInsp('pln')">
+          <div class="ch"><span class="ti">⊢</span> PLN / NAL / NARS <span class="more">⋯</span></div>
+          <div class="big" style="gap:7px"><span class="dot r"></span> 0</div>
+          <div class="sub">reasoner_invocations · by-kind: —</div>
+        </div>
+      </div>
+
+      <div class="scaffold-flag">
+        <span class="ti">⚠</span>
+        <div><b style="color:var(--warn);font-family:var(--mono);font-size:11px;letter-spacing:.05em">CAREFUL MIND DORMANT.</b> Every reasoning meter is at zero this window: no <code>(stv)</code> atoms forming, no belief revisions, <code>metta_usage_rate 0.0</code>, <code>reasoner_invocations 0</code>. The agent is running on the fast mind (LLM + shell) only. This is the honest state — the dashboard does <i>not</i> fake activity. <span style="color:var(--accent-ink);cursor:pointer" onclick="openPalette()">Report this as suspected scaffolding-gap →</span></div>
+      </div>
+
+      <!-- ===== LIVE FEED ===== -->
+      <div class="logwrap">
+        <div class="ch" style="margin-bottom:9px"><span class="ti">▸</span> LIVE — last cycles (click a row to inspect prompt · reasoning · tool-calls · episodes)</div>
+        <div class="loglines" id="feed">
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">09:00:14</span> <span class="acc">act</span> shell — fix parser, refresh frame + parse <span class="warn2">(perception broken 10+ cyc)</span><span class="more">⋯</span></div>
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">08:59:37</span> <span class="acc">act</span> shell — refresh + parse one-shot · think 274 tok <span class="more">⋯</span></div>
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">08:54:05</span> <span class="acc">act</span> shell + write-file /tmp/percept.py · 496 tok <span class="more">⋯</span></div>
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">08:53:51</span> think — diagnosed empty-file parse error · 1,031 tok <span class="more">⋯</span></div>
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">08:50:30</span> <span class="acc">act</span> shell — robust text parser, read arcseq.py · 3,917 tok <span class="more">⋯</span></div>
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">08:29:51</span> think — flag 11→111, ACT5 no-op confirmed · 13,933 tok <span class="more">⋯</span></div>
+<div class="cyc" onclick="openInsp('cycle')"><span class="t">08:17:56</span> <span class="acc">ACTION5</span> fired → flag++ · 7,490 tok <span class="more">⋯</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="redteam"><b>Red-team · note 2</b> &nbsp; The original mock used a fake <code>$20 cap</code> and invented beliefs (<code>(did web_search)→useful stv .95</code>) that don't exist in the runtime. That reads as a demo, not an instrument. This version shows the agent's <i>actual</i> embarrassing truth — caps from <code>budget.cap</code> & <code>persist_cap</code>, and a careful mind sitting at zero. A real observability product must be able to show "nothing is happening," or nobody trusts it when something is.</div>
+</div>
+
+<!-- ============ §2 MEMORY DRILL-DOWNS ============ -->
+<div class="wrap specsec" id="s-mem">
+  <div class="kicker">§2 · Note 4 — memory observability · drill-downs</div>
+  <h2>Opening a memory tile</h2>
+  <p class="lede">Each memory card opens a right-side <b>inspector</b> (the Langfuse/Datadog pattern). The user watches counts move and beliefs form — they never hand-edit. Click the cards in §1 to open these for real; the static specs below document each one.</p>
+
+  <div class="mgrid">
+    <div class="card w6">
+      <div class="ch"><span class="ti">⛁</span> chromadb LTM inspector</div>
+      <div class="sub" style="line-height:1.9">
+        <b>Header:</b> 27,394 vectors · cap unbounded (glacier-backed) · embed backend <code>ollama</code> · 75% local<br>
+        <b>Growth chart:</b> vectors/day with a marker each time a batch was promoted from working memory → LTM<br>
+        <b>Last auto-recall (real):</b> 8 queries, 29 hits, 4.2s, fires 4/30 cyc — lists the actual query strings ("khellar relationship", "epistemic resolve definition"…) so the user sees <i>what it chose to remember to look up</i><br>
+        <b>Glacier:</b> live_bytes / glacier_bytes / segments — "nothing destroyed, cold cycles moved out"
+      </div>
+    </div>
+    <div class="card w6">
+      <div class="ch"><span class="ti">◈</span> &amp;persistent atomspace inspector</div>
+      <div class="sub" style="line-height:1.9">
+        <b>Header:</b> 97 atoms · 9,565 / 50,000 chars (19.1%) — the cap is loud<br>
+        <b>By kind:</b> dyn-rule · macro-rule · episode · prefer · goal-hyp (the clerk's canonical schemas)<br>
+        <b>By author + provenance:</b> clerk vs llm, with the confidence-floor quarantine shown (LLM atoms pinned to <code>c=0.0</code>)<br>
+        <b>Atom table:</b> every atom, its <code>(stv F C)</code>, author, evidence-N, ts — sortable, searchable
+      </div>
+    </div>
+  </div>
+
+  <div class="redteam"><b>Boundary · note 3</b> &nbsp; The inspector is <b>read-mostly</b>. The only write actions are <i>👍 keep / 👎 forget</i> on a memory (human-curated purge, which the glacier preserves) and "pin to view." The agent does its own diffing and forming; the user watches it happen and occasionally curates. No "edit memory" form — that would make the user the agent's bookkeeper.</p></div>
+</div>
+
+<!-- ============ §3 REASONING METERS ============ -->
+<div class="wrap specsec" id="s-reason">
+  <div class="kicker">§3 · Note 4 — the careful mind, made visible</div>
+  <h2>Reasoning meters &amp; belief-revision feed</h2>
+  <p class="lede">This is the heart of "is it <i>really</i> a neuro-symbolic mind." Four counters + one event feed. When Myrrh's careful mind wakes up (I1/T17-T18 wires it to the live loop), these fill in; until then they honestly read zero and the dashboard flags it. Click the §1 reasoning cards to open these.</p>
+
+  <div class="mgrid">
+    <div class="card w8">
+      <div class="ch"><span class="ti">↻</span> Belief-revision feed (the money shot)</div>
+      <div class="timeline" style="margin-top:8px">
+        <div class="tnode rev"><div class="tt">— · would appear like this when live —</div>
+          <div class="tb"><code>(dyn-rule (action ACT5) (effect flag++))</code> revised <span class="stv">stv <span class="rev">.62→.81</span> · c .50→.67</span></div>
+          <div class="chiprow"><span class="chip"><span class="ti">+</span> evidence: 3 episodes</span><span class="chip"><span class="ti">⟳</span> cited ep c014-0817 · c014-0829</span></div>
+        </div>
+        <div class="tnode"><div class="tt">— new belief formed —</div>
+          <div class="tb"><code>(prefer ACT5 over ACT1 (context 0-at-red-center))</code> <span class="stv">new · clerk · N=2</span></div>
+        </div>
+      </div>
+      <div class="captag" style="margin-top:10px">Each event names the belief, the <b>freq/conf delta</b> (note 4), and the <b>episodes it referenced</b> (note 7). Click any to open the atom's full revision history + the cited episodes from history.metta.</div>
+    </div>
+    <div class="card w4">
+      <div class="ch"><span class="ti">⊢</span> Reasoner usage · by kind</div>
+      <div class="row"><span class="txt">PLN (probabilistic)</span><span class="stv">0</span></div>
+      <div class="row"><span class="txt">NAL / NARS (non-axiomatic)</span><span class="stv">0</span></div>
+      <div class="row"><span class="txt">MeTTa eval (match/superpose)</span><span class="stv">0</span></div>
+      <div class="captag" style="margin-top:8px">Source: <code>symbolic.reasoner_invocations</code> + <code>by_kind{}</code> · <code>signals.metta_usage_rate</code>. A stacked area over the window shows the <b>rate</b> they fire, not just totals.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ §4 CYCLE INSPECTOR (note 7) ============ -->
+<div class="wrap specsec" id="s-cycle">
+  <div class="kicker">§4 · Note 7 — click the ⋯ to see the actual prompt, reasoning, tool-calls, episodes</div>
+  <h2>The cycle inspector</h2>
+  <p class="lede">This is note 7 in full. Clicking the <code>⋯</code> on any cycle (in the feed or the metric cards) opens the cycle's complete trace: the <b>exact prompt that was sent</b> (the scaffolding-check angle), the model's <b>private reasoning</b>, the <b>tool-calls</b>, and the <b>episodes referenced</b> from history.metta. <span class="note">click any feed row in §1 — it really opens →</span></p>
+
+  <div class="redteam"><b>Scaffolding-check · note 7</b> &nbsp; The whole point of surfacing the raw prompt is to <i>audit how much the harness is steering the model</i>. The inspector tags each prompt block by source — <code>system / self-model / world-state / recalled-memory / board / instructions</code> — and shows a <b>scaffold ratio</b>: how many prompt chars are framework-injected vs. genuinely the agent's own context. Khellar's morning thesis ("the ~74k-char prompt is heavy-handed") becomes a measurable number per cycle.</div>
+</div>
+
+<!-- ============ §5 CMD-K ============ -->
+<div class="wrap specsec" id="s-cmdk">
+  <div class="kicker">§5 · Note 5 — Cmd-K + slash commands</div>
+  <h2>Report a bug · report suspected emergent behavior</h2>
+  <p class="lede">A command palette (Linear/Vercel pattern) bound to <span class="kbd">⌘K</span>. The two flagship commands — <code>/report-bug</code> and <code>/report-emergent</code> — bundle the <b>full context windows of the last 20 cycles</b> (real <code>promptcap-*.txt</code> files + reasoning + tool-calls), so the team can read the actual prompt, check for scaffolding, and evaluate. <span class="note">press ⌘K now, or click →</span> <span class="btn btn-ghost btn-sm" onclick="openPalette()">Open palette</span></p>
+  <div class="redteam"><b>Why bundle 20 cycles · note 5</b> &nbsp; A single screenshot can't show whether "emergent behavior" was genuine or prompted. 20 full context windows let a reviewer trace the lineage: what was injected, what the model added, when a belief or strategy first appeared. The bundle is a <code>.zip</code> of the raw <code>promptcap</code> files + the matching <code>mind_feed</code> entries + the diffs — submitted to the rig's "Notes &amp; advice" thread or a private report queue.</div>
+</div>
+
+<!-- ============ §6 FUNDS ============ -->
+<div class="wrap specsec" id="s-funds">
+  <div class="kicker">§6 · Note 6 — top up LLM funds</div>
+  <h2>The funds affordance</h2>
+  <p class="lede">Always-visible chip in the cockpit header showing <code>budget.remaining</code> + <b>runway in cycles</b> (derived from <code>burn_per_cycle</code>) — the operator's most actionable number. It turns amber when runway drops below a threshold and opens a one-click top-up. <span class="btn btn-ghost btn-sm" onclick="openTopup()">Open top-up</span></p>
+</div>
+
+<div style="height:60px"></div>
+
+<!-- ============ INSPECTOR (drill-down panel) ============ -->
+<div class="scrim" id="scrim" onclick="closeInsp()"></div>
+<div class="inspector" id="inspector">
+  <div class="insp-head">
+    <div class="ic" id="inspIcon">⋯</div>
+    <div><h3 id="inspTitle">Inspector</h3><div class="hs" id="inspSub">—</div></div>
+    <button class="insp-x" onclick="closeInsp()">✕</button>
+  </div>
+  <div class="insp-body" id="inspBody"></div>
+</div>
+
+<!-- ============ CMD-K PALETTE ============ -->
+<div class="palette-scrim" id="paletteScrim" onclick="if(event.target.id==='paletteScrim')closePalette()">
+  <div class="palette">
+    <div class="pal-input"><span class="ti">⌘</span><input id="palInput" placeholder="Search, report, or inspect…  try “report”, “episode”, “prompt”" oninput="filterPal()"></div>
+    <div id="palList"></div>
+    <div class="pal-foot"><span>↑↓ navigate</span><span>↵ select</span><span>esc close</span><span style="margin-left:auto;color:var(--accent-ink)">/ for commands</span></div>
+  </div>
+</div>
+
+<!-- ============ REPORT BUNDLE MODAL ============ -->
+<div class="modal-scrim" id="reportScrim" onclick="if(event.target.id==='reportScrim')closeReport()">
+  <div class="modal bundle">
+    <div class="modal-head"><div class="mi" id="repIcon">⚑</div><div><h3 id="repTitle">Report suspected emergent behavior</h3><div class="ms">Bundles the full context windows of the last 20 cycles for review</div></div></div>
+    <div class="modal-body">
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">What did you notice?</div>
+      <textarea class="repfield" id="repText" placeholder="e.g. Myrrh started forming cross-translation hypotheses and citing its own earlier episodes without being prompted to…"></textarea>
+      <div style="margin-top:16px;font-size:11px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)">Bundle contents — auto-attached</div>
+      <div class="bundle-stat"><span class="ti">▤</span> <b>20</b> full context windows <span style="color:var(--faint)">(promptcap-*.txt · 70.5k chars avg)</span> <span class="pick"><span class="toggle on" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+      <div class="bundle-stat"><span class="ti">✦</span> matching <b>mind_feed</b> reasoning + think-tokens <span class="pick"><span class="toggle on" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+      <div class="bundle-stat"><span class="ti">⚒</span> <b>tool-call</b> log + results for those cycles <span class="pick"><span class="toggle on" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+      <div class="bundle-stat"><span class="ti">⟳</span> referenced <b>episodes</b> from history.metta <span class="pick"><span class="toggle on" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+      <div class="bundle-stat"><span class="ti">◈</span> &amp;persistent + chroma <b>memory snapshot</b> at report time <span class="pick"><span class="toggle on" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+      <div class="bundle-stat"><span class="ti">⚠</span> include personal memory? <span style="color:var(--faint)">(off = share clean)</span> <span class="pick"><span class="toggle" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+    </div>
+    <div class="modal-foot">
+      <span style="font-size:11.5px;color:var(--faint);font-family:var(--mono)">~1.4 MB · stays private until you share</span>
+      <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="closeReport()">Cancel</button><button class="btn btn-primary" onclick="closeReport();toast('Bundle submitted — 20 cycles attached')">Submit bundle</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOP-UP MODAL ============ -->
+<div class="modal-scrim" id="topupScrim" onclick="if(event.target.id==='topupScrim')closeTopup()">
+  <div class="modal" style="width:min(440px,94vw)">
+    <div class="modal-head"><div class="mi">◷</div><div><h3>Top up LLM funds</h3><div class="ms">$78.36 left · burning $0.0169/cycle · ~4,631 cycles of runway</div></div></div>
+    <div class="modal-body">
+      <div class="topup-amts">
+        <div class="amt" onclick="selAmt(this)"><div class="a">$25</div><div class="r">~1.5k cyc</div></div>
+        <div class="amt sel" onclick="selAmt(this)"><div class="a">$100</div><div class="r">~5.9k cyc</div></div>
+        <div class="amt" onclick="selAmt(this)"><div class="a">$500</div><div class="r">~29k cyc</div></div>
+      </div>
+      <div class="bundle-stat" style="border:0;padding-top:4px"><span class="ti">↻</span> Auto-top-up when runway &lt; 500 cycles <span class="pick"><span class="toggle on" onclick="this.classList.toggle('on')"><b></b></span></span></div>
+      <div style="font-size:11.5px;color:var(--faint);margin-top:6px">Raises the <code>budget.cap</code> for this agent. Charged to your workspace card · Visa ···· 4242.</div>
+    </div>
+    <div class="modal-foot"><span style="font-size:11.5px;color:var(--faint)">New cap: <b style="color:var(--ink)">$200.00</b></span><div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="closeTopup()">Cancel</button><button class="btn btn-primary" onclick="closeTopup();toast('Topped up — cap now $200.00')">Add funds</button></div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="ti">✓</span> <span id="toastMsg">Saved</span></div>
+
+<script>
+function jump(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
+function toast(m){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('on');clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('on'),2400);}
+
+/* ---------- INSPECTOR content (all real mind.json fields) ---------- */
+var INSP = {
+  spend:{icon:'◷',title:'LLM budget',sub:'budget.* · 2,501 cycles',body:`
+    <h4>Current</h4>
+    <div class="kv"><span class="k">cap</span><span class="v">$100.0000</span></div>
+    <div class="kv"><span class="k">spent</span><span class="v">$21.6358</span></div>
+    <div class="kv"><span class="k">remaining</span><span class="v">$78.36</span></div>
+    <div class="kv"><span class="k">pct</span><span class="v">21.6%</span></div>
+    <div class="kv"><span class="k">burn_per_cycle</span><span class="v">$0.01692</span></div>
+    <div class="kv"><span class="k">runway_cycles</span><span class="v">4,631</span></div>
+    <h4>Per-cycle averages</h4>
+    <div class="kv"><span class="k">in_tok</span><span class="v">22,379</span></div>
+    <div class="kv"><span class="k">out_tok</span><span class="v">8,504</span></div>
+    <div class="kv"><span class="k">think_tok</span><span class="v">6,012</span></div>
+    <div class="kv"><span class="k">ctx_chars</span><span class="v">55,259</span></div>
+    <button class="btn btn-primary btn-sm" style="margin-top:16px" onclick="closeInsp();openTopup()">Top up funds</button>`},
+
+  health:{icon:'♥',title:'Runtime health · 10-dot board',sub:'health.* + integrity.dots',body:`
+    <h4>Cognition & loop</h4>
+    <div class="kv"><span class="k">liveness</span><span class="v"><span class="dot y"></span> yellow · last cycle 871s ago</span></div>
+    <div class="kv"><span class="k">budget</span><span class="v"><span class="dot g"></span> green</span></div>
+    <div class="kv"><span class="k">grind</span><span class="v"><span class="dot g"></span> green</span></div>
+    <div class="kv"><span class="k">truncation</span><span class="v"><span class="dot y"></span> yellow · rate 0.03</span></div>
+    <div class="kv"><span class="k">format</span><span class="v"><span class="dot r"></span> red · 8 recent fails</span></div>
+    <div class="kv"><span class="k">native_substrate</span><span class="v"><span class="dot r"></span> red · metta 0.0</span></div>
+    <div class="kv"><span class="k">thrash</span><span class="v"><span class="dot g"></span> green · 0.0</span></div>
+    <div class="kv"><span class="k">memory</span><span class="v"><span class="dot y"></span> yellow</span></div>
+    <div class="kv"><span class="k">episodes</span><span class="v"><span class="dot y"></span> yellow · 0 recorded</span></div>
+    <h4>Integrity</h4>
+    <div class="kv"><span class="k">instances</span><span class="v"><span class="dot g"></span> 1</span></div>
+    <div class="kv"><span class="k">stale_code</span><span class="v"><span class="dot g"></span> false</span></div>
+    <div class="kv"><span class="k">identity</span><span class="v"><span class="dot y"></span> identity_ok false</span></div>
+    <div class="scaffold-flag"><span class="ti">⚠</span><div><b style="color:var(--warn);font-family:var(--mono);font-size:11px">format RED + native_substrate RED.</b> The model is emitting malformed tool-calls (<code>]&lt;]minimax[&gt;[</code> contamination in the feed) and never touching MeTTa. Two concrete things to fix, surfaced as dots.</div></div>`},
+
+  throughput:{icon:'≋',title:'Throughput & tokens',sub:'averages.* + signals.*',body:`
+    <h4>Window (last 30 cycles)</h4>
+    <div class="kv"><span class="k">cycles_total</span><span class="v">2,501</span></div>
+    <div class="kv"><span class="k">cycles_window</span><span class="v">30</span></div>
+    <div class="kv"><span class="k">think_ratio</span><span class="v">0.71</span></div>
+    <div class="kv"><span class="k">truncation_rate</span><span class="v">0.03</span></div>
+    <div class="kv"><span class="k">format_fail_recent</span><span class="v">8</span></div>
+    <div class="kv"><span class="k">grind_dom_count</span><span class="v">1</span></div>
+    <h4>Attention buffer (cognition.attention)</h4>
+    <div class="kv"><span class="k">raw_entries</span><span class="v">129</span></div>
+    <div class="kv"><span class="k">kept_entries</span><span class="v">124</span></div>
+    <div class="kv"><span class="k">dropped_lament</span><span class="v">5</span></div>
+    <div class="kv"><span class="k">summarized_b64</span><span class="v">29</span></div>`},
+
+  chroma:{icon:'⛁',title:'Long-term memory · chromadb',sub:'memory_meters.chroma + auto_recall.*',body:`
+    <h4>Store</h4>
+    <div class="kv"><span class="k">vectors</span><span class="v">27,394</span></div>
+    <div class="kv"><span class="k">cap</span><span class="v">unbounded · glacier-backed</span></div>
+    <div class="kv"><span class="k">embed backend</span><span class="v">ollama</span></div>
+    <div class="kv"><span class="k">local_rate</span><span class="v">0.75</span></div>
+    <h4>Last auto-recall · 03:22:47</h4>
+    <div class="kv"><span class="k">n_queries</span><span class="v">8</span></div>
+    <div class="kv"><span class="k">n_hits</span><span class="v">29</span></div>
+    <div class="kv"><span class="k">latency_ms</span><span class="v">4,223</span></div>
+    <div class="kv"><span class="k">fires_30 / avg_hits</span><span class="v">4 / 19.5</span></div>
+    <h4>What it chose to look up</h4>
+    <div class="codeblock"><span class="hl">"ARC build progress"</span>
+<span class="hl">"khellar relationship"</span>
+<span class="hl">"khellar identity"</span>
+<span class="hl">"cookie baking partner"</span>
+<span class="hl">"epistemic resolve definition"</span>
+<span class="hl">"epistemic resolve decision"</span>
+<span class="dim"># the queries reveal the mind's own self-cued recall</span></div>
+    <h4>Glacier — nothing destroyed</h4>
+    <div class="kv"><span class="k">live_bytes / glacier_bytes</span><span class="v">0 / 0</span></div>
+    <div class="kv"><span class="k">segments</span><span class="v">0</span></div>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px">Cold cycles MOVE to an append-only glacier outside the dir — citable, never deleted. Curated 👍/👎 drive purges.</p>`},
+
+  persist:{icon:'◈',title:'&persistent atomspace',sub:'memory_meters.persist_* · cap 50,000 chars',body:`
+    <h4>Capacity</h4>
+    <div class="kv"><span class="k">persist_atoms</span><span class="v">97</span></div>
+    <div class="kv"><span class="k">persist_chars</span><span class="v">9,565</span></div>
+    <div class="kv"><span class="k">persist_cap</span><span class="v">50,000</span></div>
+    <div class="kv"><span class="k">persist_pct</span><span class="v">19.1%</span></div>
+    <div class="meter" style="margin:8px 0"><i style="width:19.1%"></i></div>
+    <h4>By canonical kind (clerk schema)</h4>
+    <div class="row"><span class="tag kind">dyn-rule</span><span class="txt">precond / control / context / action / effect / delta · needs stv</span></div>
+    <div class="row"><span class="tag kind">macro-rule</span><span class="txt">trigger / seq / horizon · needs stv</span></div>
+    <div class="row"><span class="tag kind">episode</span><span class="txt">state / action / result · needs stv</span></div>
+    <div class="row"><span class="tag kind">prefer</span><span class="txt">prefer A over B (context) · no stv</span></div>
+    <div class="row"><span class="tag kind">goal-hyp</span><span class="txt">target · needs stv</span></div>
+    <h4>Provenance & quarantine</h4>
+    <div class="kv"><span class="k">clerk-authored</span><span class="v"><span class="tag clerk">C from evidence N</span></span></div>
+    <div class="kv"><span class="k">llm-authored</span><span class="v"><span class="tag floor">C floored to 0.0</span></span></div>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px">The clerk gate is the single chokepoint into &persistent. The LLM cannot author confidence into the argmax — it's pinned to the floor and the stv text is rewritten on commit.</p>`},
+
+  episodes:{icon:'⟳',title:'Episodes · history.metta',sub:'episodes.* (episodes.db)',body:`
+    <h4>This game (re86)</h4>
+    <div class="kv"><span class="k">episodes</span><span class="v">0</span></div>
+    <div class="kv"><span class="k">states</span><span class="v">0</span></div>
+    <div class="kv"><span class="k">max_repeat</span><span class="v">0</span></div>
+    <div class="kv"><span class="k">repeated_actions</span><span class="v">0</span></div>
+    <div class="kv"><span class="k">refused</span><span class="v">1</span></div>
+    <div class="scaffold-flag"><span class="ti">⚠</span><div><b style="color:var(--warn);font-family:var(--mono);font-size:11px">No episodes recorded.</b> An episode is <code>(state … action … result … (stv F C))</code> logged on every act. Zero means the act→record coupling isn't firing for re86 — consistent with perception being broken 10+ cycles. <span style="color:var(--accent-ink);cursor:pointer" onclick="closeInsp();openPalette()">Report a bug →</span></div></div>
+    <h4>An episode looks like (canonical)</h4>
+    <div class="codeblock">(episode
+  (state  <span class="hl">"0@r45c36 mag-complete flag=2 lvl=0/8"</span>)
+  (action <span class="hl">ACTION5</span>)
+  (result <span class="g">"flag++ ; 0→r27c21 ; red-complete"</span>)
+  (stv    <span class="w">0.9 0.67</span>))   <span class="dim"># C computed from N, not the LLM</span></div>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px">A belief or answer can <b>cite episodes</b> — the inspector links each cited episode back to its row here (note 7).</p>`},
+
+  rratoms:{icon:'✦',title:'Reasoning-ready atoms',sub:'atoms carrying (stv F C)',body:`
+    <h4>Now</h4>
+    <div class="kv"><span class="k">stv-bearing atoms</span><span class="v">0 of 97</span></div>
+    <div class="kv"><span class="k">forming-rate</span><span class="v">0 / 30 cycles</span></div>
+    <div class="kv"><span class="k">cognition.atoms_forming</span><span class="v">0</span></div>
+    <p style="font-size:12.5px;color:var(--muted);margin-top:10px">A <b>reasoning-ready atom</b> is one a reasoner can actually use: it carries a truth value <code>(stv frequency confidence)</code>. The forming-rate is the slope — how fast the careful mind is converting raw observation into truth-valued belief. The 97 current atoms are structural (board cards, prefs) and carry no stv yet.</p>
+    <h4>When live, the rate chart shows</h4>
+    <div class="spark" style="height:48px"><span style="height:8%"></span><span style="height:12%"></span><span style="height:20%"></span><span class="hl" style="height:34%"></span><span style="height:30%"></span><span style="height:46%"></span><span class="hl" style="height:58%"></span></div>
+    <p style="font-size:11.5px;color:var(--faint);margin-top:6px">stv-atoms forming per cycle — the literal pulse of the careful mind.</p>`},
+
+  beliefs:{icon:'↻',title:'Belief revisions',sub:'freq/conf changes on existing atoms',body:`
+    <h4>Last 30 cycles</h4>
+    <div class="kv"><span class="k">revisions</span><span class="v">0</span></div>
+    <div class="kv"><span class="k">new beliefs</span><span class="v">0</span></div>
+    <p style="font-size:12.5px;color:var(--muted);margin:10px 0">A revision is when the reasoner updates an atom's <code>(stv F C)</code> from new evidence — the single clearest sign of <i>learning</i>. When live, each event renders as:</p>
+    <div class="timeline"><div class="tnode rev"><div class="tt">08:29:51 · evidence: 2 episodes</div>
+      <div class="tb"><code>(dyn-rule (action ACT5) (effect flag++))</code><br><span class="stv">stv .50→<span class="rev">.81</span> · c .33→.50</span></div>
+      <div class="chiprow"><span class="chip"><span class="ti">⟳</span> cited ep c014-0817</span><span class="chip"><span class="ti">⟳</span> cited ep c014-0829</span></div></div></div>
+    <p style="font-size:11.5px;color:var(--faint);margin-top:8px">Clicking a revision opens the atom's full freq/conf history (a small line chart) + every episode it referenced.</p>`},
+
+  metta:{icon:'λ',title:'MeTTa usage',sub:'signals.metta_usage_rate · cognition.substrate_rate',body:`
+    <h4>Window</h4>
+    <div class="kv"><span class="k">metta_usage_rate</span><span class="v">0.0</span></div>
+    <div class="kv"><span class="k">substrate_rate</span><span class="v">0.0</span></div>
+    <div class="kv"><span class="k">moves with metta=true</span><span class="v">0 of 20</span></div>
+    <p style="font-size:12.5px;color:var(--muted);margin-top:10px">Every move in the feed carries a <code>metta:true/false</code> flag (real field). This counter is the fraction of cycles that invoked the native substrate at all. <b>0.0</b> = the agent is reasoning entirely in the fast mind. This is the metric Khellar's morning exam is built to falsify.</p>`},
+
+  pln:{icon:'⊢',title:'PLN / NAL / NARS invocations',sub:'symbolic.reasoner_invocations + by_kind',body:`
+    <h4>Window</h4>
+    <div class="kv"><span class="k">reasoner_invocations</span><span class="v">0</span></div>
+    <div class="kv"><span class="k">by_kind</span><span class="v">{ } (empty)</span></div>
+    <div class="row" style="margin-top:10px"><span class="txt">PLN — probabilistic logic</span><span class="stv">0</span></div>
+    <div class="row"><span class="txt">NAL / NARS — non-axiomatic</span><span class="stv">0</span></div>
+    <div class="row"><span class="txt">MeTTa eval — match / superpose</span><span class="stv">0</span></div>
+    <p style="font-size:12.5px;color:var(--muted);margin-top:10px">Distinct from the MeTTa-call counter: this counts actual <i>inference</i> steps by reasoner family. When live, a stacked-area chart over the window shows which reasoner the careful mind leans on, and a sparkline of invocations/cycle.</p>`},
+
+  cycle:{icon:'⋯',title:'Cycle inspector · 09:00:14',sub:'note 7 — the full trace of one cycle',body:`
+    <h4>Outcome</h4>
+    <div class="kv"><span class="k">type · finish</span><span class="v">act · stop</span></div>
+    <div class="kv"><span class="k">think / in / out tok</span><span class="v">751 / 20,523 / 2,747</span></div>
+    <div class="kv"><span class="k">prompt_chars</span><span class="v">70,529</span></div>
+    <div class="kv"><span class="k">metta</span><span class="v">false</span></div>
+
+    <h4>① Exact prompt sent — scaffolding check</h4>
+    <div class="codeblock"><span class="dim"># promptcap-2026-06-18-090014-90fa1a1a9d86.txt · 70,529 chars</span>
+<span class="w">[system]</span>        constitution + gates      <span class="dim">~31,000 ch (44%)</span>
+<span class="w">[self-model]</span>    SELF_MODEL.md             <span class="dim">~12,400 ch (18%)</span>
+<span class="w">[world-state]</span>   re86 grid + objects       <span class="dim">~14,100 ch (20%)</span>
+<span class="hl">[recalled-mem]</span>  chroma auto-recall (29)   <span class="dim">~6,800 ch (10%)</span>
+<span class="hl">[board+focus]</span>   active cards              <span class="dim">~4,200 ch (6%)</span>
+<span class="g">[agent-own]</span>     prior turn carry-over     <span class="dim">~2,000 ch (2%)</span>
+<span class="dim">─────────────────────────────────────────</span>
+scaffold ratio  <span class="w">82%</span> framework-injected   <span class="g">18%</span> agent-own</div>
+    <p style="font-size:11.5px;color:var(--faint);margin-top:6px">Open the raw file · diff against another cycle's prompt · the bars are clickable to read each block verbatim.</p>
+
+    <h4>② Private reasoning (3,006 chars)</h4>
+    <div class="codeblock">Let me analyze the situation carefully:
+1. Current state: 0 at r45c36 (red HOLE), magenta
+   COMPLETE, flag=2, levels=0/8
+...
+<span class="hl">5. Hypothesis: the puzzle is "fill all crosses
+   with their target colors"</span> — 8 yellow boxes
+   may be loadable color sources
+6. Need fresh perception (frame 1457s+ stale)</div>
+
+    <h4>③ Tool-calls</h4>
+    <div class="row"><span class="tag kind">shell</span><span class="txt">arc.py frame &gt; /tmp/now.txt 2&gt;/tmp/now.err</span><span class="stv g">ok</span></div>
+    <div class="row"><span class="tag kind">write-file</span><span class="txt">/tmp/parse_grid.py</span><span class="stv g">ok</span></div>
+    <div class="row"><span class="tag kind">write-file</span><span class="txt">./artifacts/arcparse.py</span><span class="stv g">ok</span></div>
+    <div class="row"><span class="tag floor">format</span><span class="txt">]&lt;]minimax[&gt;[ contamination in payload</span><span class="stv" style="color:var(--bad)">flagged</span></div>
+
+    <h4>④ Episodes referenced (note 7)</h4>
+    <div class="chiprow"><span class="chip"><span class="ti">⟳</span> ep re86 · ACT5 toggle</span><span class="chip"><span class="ti">⟳</span> ep c014-0817 flag++</span><span class="chip"><span class="ti">⟳</span> arcseq cross-translation 08:18</span></div>
+    <div style="display:flex;gap:8px;margin-top:18px"><button class="btn btn-ghost btn-sm" onclick="closeInsp();openPalette()">Report this cycle</button><button class="btn btn-ghost btn-sm">Open raw promptcap</button><button class="btn btn-ghost btn-sm">Diff vs prev cycle</button></div>`}
+};
+function openInsp(k){var d=INSP[k];if(!d)return;document.getElementById('inspIcon').textContent=d.icon;document.getElementById('inspTitle').textContent=d.title;document.getElementById('inspSub').textContent=d.sub;document.getElementById('inspBody').innerHTML=d.body;document.getElementById('inspector').classList.add('on');document.getElementById('scrim').classList.add('on');}
+function closeInsp(){document.getElementById('inspector').classList.remove('on');document.getElementById('scrim').classList.remove('on');}
+
+/* ---------- CMD-K PALETTE ---------- */
+var PAL=[
+  {g:'Report',t:'Report suspected emergent behavior',d:'Bundles last 20 context windows',s:'/report-emergent',act:()=>{closePalette();openReport('emergent');}},
+  {g:'Report',t:'Report a bug',d:'Bundles last 20 cycles + tool-calls + memory snapshot',s:'/report-bug',act:()=>{closePalette();openReport('bug');}},
+  {g:'Inspect',t:'Inspect last cycle',d:'Prompt · reasoning · tool-calls · episodes',s:'/cycle',act:()=>{closePalette();openInsp('cycle');}},
+  {g:'Inspect',t:'Open &persistent atomspace',d:'97 atoms · 19.1% of cap',s:'/atoms',act:()=>{closePalette();openInsp('persist');}},
+  {g:'Inspect',t:'Open chromadb LTM',d:'27,394 vectors · auto-recall queries',s:'/ltm',act:()=>{closePalette();openInsp('chroma');}},
+  {g:'Inspect',t:'Open episodes (history.metta)',d:'0 recorded · re86',s:'/episodes',act:()=>{closePalette();openInsp('episodes');}},
+  {g:'Inspect',t:'Belief revisions',d:'freq/conf change feed',s:'/beliefs',act:()=>{closePalette();openInsp('beliefs');}},
+  {g:'Inspect',t:'Reasoner usage (PLN/NAL/MeTTa)',d:'reasoner_invocations by kind',s:'/reason',act:()=>{closePalette();openInsp('pln');}},
+  {g:'Operate',t:'Top up LLM funds',d:'$78.36 left · ~4,631 cycles',s:'/funds',act:()=>{closePalette();openTopup();}},
+  {g:'Operate',t:'Reboot agent (keep vision & flags)',d:'stateful restart',s:'/reboot',act:()=>{closePalette();toast('Rebooting Myrrh…');}}
+];
+function renderPal(filter){
+  filter=(filter||'').toLowerCase().replace(/^\//,'');var list=document.getElementById('palList');list.innerHTML='';
+  var groups={};PAL.forEach((p,i)=>{if(filter && !(p.t.toLowerCase().includes(filter)||p.s.includes(filter)||p.d.toLowerCase().includes(filter)||p.g.toLowerCase().includes(filter)))return;(groups[p.g]=groups[p.g]||[]).push({p,i});});
+  var first=true;
+  Object.keys(groups).forEach(g=>{
+    var gd=document.createElement('div');gd.className='pal-grp';
+    gd.innerHTML='<div class="lbl">'+g+'</div>';
+    groups[g].forEach(({p,i})=>{
+      var it=document.createElement('div');it.className='pal-item'+(first?' sel':'');first=false;
+      it.innerHTML='<span class="pi">'+(p.g==='Report'?'⚑':p.g==='Operate'?'◷':'⋯')+'</span><div><div class="pt">'+p.t+'</div><div class="pd">'+p.d+'</div></div><span class="slash">'+p.s+'</span>';
+      it.onclick=p.act;list.appendChild(it);
+    });
+    list.appendChild(gd);
+  });
+  if(!list.children.length)list.innerHTML='<div class="pal-grp"><div class="pd" style="padding:14px 18px;color:var(--faint)">No matches</div></div>';
+}
+function openPalette(){document.getElementById('paletteScrim').classList.add('on');var inp=document.getElementById('palInput');inp.value='';renderPal('');setTimeout(()=>inp.focus(),50);}
+function closePalette(){document.getElementById('paletteScrim').classList.remove('on');}
+function filterPal(){renderPal(document.getElementById('palInput').value);}
+
+/* ---------- REPORT BUNDLE ---------- */
+function openReport(kind){var emergent=kind==='emergent';document.getElementById('repIcon').textContent=emergent?'⚑':'⚒';document.getElementById('repTitle').textContent=emergent?'Report suspected emergent behavior':'Report a bug';document.getElementById('repText').value='';document.getElementById('reportScrim').classList.add('on');setTimeout(()=>document.getElementById('repText').focus(),60);}
+function closeReport(){document.getElementById('reportScrim').classList.remove('on');}
+
+/* ---------- TOP-UP ---------- */
+function openTopup(){document.getElementById('topupScrim').classList.add('on');}
+function closeTopup(){document.getElementById('topupScrim').classList.remove('on');}
+function selAmt(el){document.querySelectorAll('.amt').forEach(a=>a.classList.remove('sel'));el.classList.add('sel');}
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();document.getElementById('paletteScrim').classList.contains('on')?closePalette():openPalette();}
+  if(e.key==='Escape'){closePalette();closeInsp();closeReport();closeTopup();}
+});
+</script>
+</body>
+</html>
