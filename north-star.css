@@ -1,0 +1,116 @@
+/* ===== ASI:Create — North Star additions (Lab Bench depth) =====
+   Extends base.css + proto.css. New surfaces: MVP↔North Star mode toggle,
+   the Lab Bench slide-over (Mind / Skills / Memory / Diagnostics / Files),
+   the genome editor, the diagnostics dashboard, IDE connect, publish/sell.
+   Everything North-Star-only is hidden unless <body class="ns">. */
+
+/* ---- mode toggle (top of chat header) ---- */
+.modeseg{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--surface)}
+.modeseg button{border:0;background:transparent;color:var(--muted);font-size:12.5px;font-weight:500;padding:7px 13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font)}
+.modeseg button.on{background:var(--accent);color:#fff}
+.modeseg button .ti{font-size:14px}
+.ns-only{display:none!important}
+body.ns .ns-only{display:flex!important}
+body.ns .ns-grid{display:grid!important}
+.mvp-note{display:none}
+body:not(.ns) .mvp-note{display:flex}
+
+/* lab-bench entry button in header */
+.labbtn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:9px;border:1px solid var(--accent-soft-bd);background:var(--accent-soft);color:var(--accent-ink);font-size:13px;cursor:pointer;font-weight:500}
+.labbtn:hover{filter:brightness(1.04)}
+
+/* ---- Lab Bench slide-over (reuses flowpanel geometry) ---- */
+.labpanel{position:fixed;top:0;right:0;height:100vh;width:min(880px,82vw);background:var(--surface);border-left:1px solid var(--line);z-index:70;display:flex;flex-direction:column;transform:translateX(101%);transition:transform .3s ease}
+.labpanel.open{transform:translateX(0)}
+.lp-head{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line)}
+.lp-id{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:15px}
+.lp-id .ad{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;border:1px solid var(--accent-soft-bd);font-size:13px}
+.lp-ver{font-family:var(--mono);font-size:11px;color:var(--faint);background:var(--warm);border:1px solid var(--line);border-radius:6px;padding:3px 7px}
+.lp-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.lp-tabs{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.lp-tab{border:0;background:transparent;color:var(--muted);font-size:13px;padding:9px 13px;border-radius:9px 9px 0 0;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;font-family:var(--font)}
+.lp-tab .ti{font-size:15px}
+.lp-tab.on{color:var(--ink);background:var(--warm);box-shadow:inset 0 -2px 0 var(--accent)}
+.lp-body{flex:1;overflow:auto;padding:22px 24px;min-height:0}
+.lp-pane{display:none}.lp-pane.on{display:block}
+
+/* genome summary strip */
+.genome-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.gchip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-family:var(--mono);color:var(--muted);background:var(--warm);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.gchip b{color:var(--ink);font-weight:500}
+.gchip .ti{color:var(--accent-ink);font-size:14px}
+
+/* genome blocks (the editable mind, at various depths) */
+.gblock{border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;background:var(--surface)}
+.gblock>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:11px;padding:14px 16px}
+.gblock>summary::-webkit-details-marker{display:none}
+.gblock>summary .gi{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:17px;flex:none}
+.gblock>summary .gt{font-family:var(--display);font-weight:600;font-size:14.5px}
+.gblock>summary .gd{font-size:12px;color:var(--faint)}
+.gblock>summary .chev{margin-left:auto;color:var(--faint);transition:transform .2s}
+.gblock[open]>summary .chev{transform:rotate(180deg)}
+.gblock .gbody{padding:0 16px 16px}
+.gedit{width:100%;border:1px solid var(--line2);border-radius:10px;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:13px 14px;resize:vertical;min-height:120px;outline:none}
+.gedit:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.depth{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.depth button{border:0;background:transparent;color:var(--muted);font-size:11.5px;padding:6px 11px;cursor:pointer;font-family:var(--mono)}
+.depth button.on{background:var(--ink);color:var(--surface)}
+
+/* a policy toggle row (simple depth) */
+.polrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.polrow:first-child{border-top:0}
+.polrow .pt{font-size:13.5px;font-weight:500}
+.polrow .pd{font-size:12px;color:var(--faint)}
+.polrow .toggle{margin-left:auto}
+
+/* ---- diagnostics dashboard ---- */
+.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dcard{border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:var(--surface)}
+.dcard .dh{font-size:11px;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.dcard .big{font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:-.02em}
+.dcard .big small{font-size:13px;color:var(--faint);font-weight:400}
+.meter{height:7px;border-radius:4px;background:var(--warm);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;background:var(--accent)}
+.spark{display:flex;align-items:flex-end;gap:3px;height:42px;margin-top:8px}
+.spark span{flex:1;background:var(--accent-soft);border-radius:2px}
+.belief{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid var(--line);font-size:12.5px;font-family:var(--mono)}
+.belief:first-of-type{border-top:0}
+.belief .stv{margin-left:auto;color:var(--accent-ink);font-size:11px}
+.belief .ok{color:var(--ok)}
+.health{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:4px 11px}
+.loglines{font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.7;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;max-height:150px;overflow:auto}
+.loglines .t{color:var(--faint)}
+
+/* ---- files / IDE connect ---- */
+.filetree{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ftrow{display:flex;align-items:center;gap:9px;padding:8px 14px;border-top:1px solid var(--line);color:var(--muted)}
+.ftrow:first-child{border-top:0}
+.ftrow:hover{background:var(--warm);color:var(--ink);cursor:pointer}
+.ftrow .ti{font-size:14px;color:var(--faint)}
+.ftrow.ind{padding-left:32px}
+.ftrow .badge{margin-left:auto;font-size:10px;background:var(--accent-soft);color:var(--accent-ink);border-radius:5px;padding:2px 6px}
+.ide-card{display:flex;gap:14px;align-items:center;border:1px dashed var(--accent-soft-bd);background:var(--accent-soft);border-radius:14px;padding:16px;margin-bottom:16px}
+.ide-card .ii{width:42px;height:42px;border-radius:11px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:21px;color:var(--ink);flex:none}
+.ide-card .it{font-family:var(--display);font-weight:600;font-size:14.5px}
+.ide-card .is{font-size:12.5px;color:var(--accent-ink);opacity:.85;line-height:1.45}
+.ide-card .btn{margin-left:auto;flex:none}
+
+/* marketplace publish modal extras */
+.pubopt{display:flex;align-items:center;gap:12px;border:1px solid var(--line2);border-radius:12px;padding:13px 15px;cursor:pointer;margin-bottom:10px}
+.pubopt.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.pubopt .pi{width:34px;height:34px;border-radius:9px;background:var(--warm);border:1px solid var(--line);display:grid;place-items:center;font-size:17px;flex:none}
+.pubopt .pt{font-size:14px;font-weight:500}
+.pubopt .pd{font-size:12px;color:var(--faint)}
+.pubopt .rad{margin-left:auto;width:18px;height:18px;border-radius:50%;border:2px solid var(--line2)}
+.pubopt.sel .rad{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--surface)}
+
+/* MVP "unlock" teaser shown where depth would be */
+.nslock{border:1px dashed var(--line2);border-radius:14px;padding:18px;text-align:center;color:var(--muted);font-size:13px;background:var(--warm)}
+.nslock b{color:var(--ink);font-family:var(--display)}
+.nslock .btn{margin-top:12px}
+
+/* small callout used in chat */
+.callout{font-size:13px;color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-soft-bd);border-radius:11px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start;line-height:1.5}
+.callout .ti{margin-top:2px}
+
+@media(max-width:1100px){ .diag-grid{grid-template-columns:1fr} }

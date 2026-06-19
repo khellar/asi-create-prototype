@@ -1,0 +1,373 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASI:Create — Workbench</title>
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="proto.css"><link rel="stylesheet" href="north-star.css">
+</head><body>
+<div class="appfull">
+  <!-- rail -->
+  <aside class="rail">
+    <div class="brand" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="mark"><img src="logo.png" alt="ASI:Create" class="logomark"></span> ASI:Create</span></div>
+    <div class="newagent" id="newAgent"><i class="ti ti-plus"></i> New agent</div>
+    <div class="sec">Your agents</div>
+    <div id="agentList">
+      <div class="agent active" data-agent="Omega"><span class="ad">O</span> Omega <small>OmegaClaw</small></div>
+      <div class="agent" data-agent="Research scout"><span class="ad">R</span> Research scout <small>2h</small></div>
+      <div class="agent" data-agent="Genome explorer"><span class="ad">G</span> Genome explorer <small>3d</small></div>
+      <div class="agent" data-agent="Rent tracker"><span class="ad">$</span> Rent tracker <small>1d</small></div>
+    </div>
+    <div class="railctrls">
+      <span style="font-size:11px;color:var(--faint);font-family:var(--mono)">Appearance</span>
+      <span class="navic" data-themebtn title="Toggle theme" style="margin-left:auto"><i class="ti ti-moon"></i></span>
+    </div>
+    <div class="foot"><span class="ad">K</span><div>khellar<br><span style="color:var(--faint);font-size:11px">Free · Upgrade</span></div></div>
+  </aside>
+
+  <!-- chat -->
+  <main class="chat">
+    <div class="chead">
+      <div class="name" id="agentTitle">Omega <i class="ti ti-chevron-down" style="font-size:15px;color:var(--faint)"></i></div>
+      <div style="position:relative">
+        <span class="model" id="modelBtn" style="cursor:pointer"><i class="ti ti-sparkles"></i> <span id="modelName">Claude Sonnet 4.6</span> <i class="ti ti-chevron-down"></i></span>
+        <div class="dropdown" id="modelMenu" style="display:none">
+          <div class="dditem" data-model="Claude Sonnet 4.6"><span class="md"></span> Claude Sonnet 4.6 <i class="ti ti-check ck"></i></div>
+          <div class="dditem" data-model="Claude Opus 4.8"><span class="md"></span> Claude Opus 4.8 <i class="ti ti-check ck" style="visibility:hidden"></i></div>
+          <div class="dditem" data-model="GPT-5.1"><span class="md"></span> GPT-5.1 <i class="ti ti-check ck" style="visibility:hidden"></i></div>
+          <div class="dditem" data-model="Llama 4 Maverick"><span class="md"></span> Llama 4 Maverick <i class="ti ti-check ck" style="visibility:hidden"></i></div>
+          <div class="dditem" data-model="ASI-1 · ASI Cloud"><span class="md"></span> ASI-1 · ASI Cloud <i class="ti ti-check ck" style="visibility:hidden"></i></div>
+        </div>
+      </div>
+      <div class="right" style="gap:10px">
+        <span class="modeseg" id="modeSeg" title="MVP shows the lean chat-first product. North Star reveals the AGI Lab Bench depth.">
+          <button data-mode="mvp" class="on"><i class="ti ti-bolt"></i> MVP</button>
+          <button data-mode="ns"><i class="ti ti-telescope"></i> North&nbsp;Star</button>
+        </span>
+        <span class="labbtn ns-only" id="labBtn"><i class="ti ti-flask-2"></i> Lab&nbsp;Bench</span>
+        <span class="share" id="shareBtn"><i class="ti ti-users"></i> Share</span>
+        <span class="icbtn"><i class="ti ti-dots"></i></span>
+      </div>
+    </div>
+    <div class="thread" id="thread">
+      <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Hey khellar — I’m your OmegaClaw, already running. I can read files, browse, remember, and run any capability you switch on in the drawer. What should we work on?</div></div>
+      <div class="row me"><div class="av me">K</div><div class="bub">Find promising new web3 projects and draft a short memo on the top 3.</div></div>
+      <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>On it — searching and cross-checking on-chain activity via Perplexity + your Drive notes.
+        <div class="callout" style="margin-top:10px"><i class="ti ti-puzzle"></i> Suggested skill — <b>Token-spend tracker</b> by John Grove. Want me to install it so you can watch cost live? <span style="text-decoration:underline;cursor:pointer">Install</span></div>
+      </div></div>
+      <div class="row ns-only"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>I keep a mind you can open and shape. Crack open the <b>Lab Bench</b> to read my self-model, watch live diagnostics, or wire your own Claude Code into my files.
+        <div class="callout" style="margin-top:10px"><i class="ti ti-flask-2"></i> You’re in <b>North Star</b> mode — the <span style="text-decoration:underline;cursor:pointer" id="openLabInline">Lab Bench</span> is unlocked.</div>
+      </div></div>
+    </div>
+    <div class="composer2">
+      <i class="ti ti-paperclip tl" id="uploadBtn" title="Upload files"></i>
+      <input id="composerInput" placeholder="Message Omega…" style="flex:1;border:0;background:transparent;font-size:15px;color:var(--ink);outline:none;font-family:var(--font)">
+      <i class="ti ti-microphone tl"></i>
+      <span class="send" id="sendBtn" style="cursor:pointer"><i class="ti ti-arrow-up"></i></span>
+    </div>
+  </main>
+
+  <!-- drawer -->
+  <aside class="drawer">
+    <div class="dtabs">
+      <span class="dtab active" data-dtab="Connectors">Connectors</span>
+      <span class="dtab" data-dtab="Skills">Skills</span>
+      <span class="dtab" data-dtab="Tools">Tools</span>
+      <span class="dtab" data-dtab="Knowledge">Knowledge</span>
+    </div>
+    <div class="dsec" data-dpane="Connectors">
+      <div class="dtitle">Connected</div>
+      <div class="conn"><span class="ci" style="background:#1A73E8"><i class="ti ti-brand-google-drive"></i></span><div><div class="cn">Google Drive</div><div class="cd">3 folders</div></div><span class="toggle on"><b></b></span></div>
+      <div class="conn"><span class="ci" style="background:#24292F"><i class="ti ti-brand-github"></i></span><div><div class="cn">GitHub</div><div class="cd">2 repos</div></div><span class="toggle on"><b></b></span></div>
+      <div class="dtitle" style="margin-top:14px">Available</div>
+      <div class="conn"><span class="ci"><i class="ti ti-brand-notion"></i></span><div><div class="cn">Notion</div><div class="cd">Pages &amp; databases</div></div><span class="toggle"><b></b></span></div>
+      <div class="conn"><span class="ci"><i class="ti ti-brand-slack"></i></span><div><div class="cn">Slack</div><div class="cd">Channels &amp; DMs</div></div><span class="toggle"><b></b></span></div>
+      <div class="conn"><span class="ci"><i class="ti ti-trending-up"></i></span><div><div class="cn">Robinhood</div><div class="cd">Portfolio &amp; trades</div></div><span class="toggle"><b></b></span></div>
+      <div class="conn"><span class="ci"><i class="ti ti-mail"></i></span><div><div class="cn">Gmail</div><div class="cd">Read &amp; send</div></div><span class="toggle"><b></b></span></div>
+      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the connector market</span><i class="ti ti-arrow-right"></i></div>
+    </div>
+    <div class="dsec" data-dpane="Skills" style="display:none">
+      <div class="dtitle">Installed</div>
+      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-coin"></i></span><div><div class="nm">Token-spend tracker</div><div class="by">by John Grove · ★ 4.9</div></div></div></div>
+      <div class="dtitle" style="margin-top:12px">Recommended</div>
+      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-search"></i></span><div><div class="nm">Deep web research</div><div class="by">by asi-labs · ★ 4.8</div></div><button class="ad">Add</button></div></div>
+      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-puzzle"></i></span><div><div class="nm">ARC-playing rig</div><div class="by">by khellar · ★ 5.0</div></div><button class="ad">Add</button></div></div>
+      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the skills market</span><i class="ti ti-arrow-right"></i></div>
+    </div>
+    <div class="dsec" data-dpane="Tools" style="display:none">
+      <div class="dtitle">Built-in tools</div>
+      <div class="conn"><span class="ci"><i class="ti ti-world"></i></span><div><div class="cn">Web search</div><div class="cd">Perplexity</div></div><span class="toggle on"><b></b></span></div>
+      <div class="conn"><span class="ci"><i class="ti ti-terminal-2"></i></span><div><div class="cn">Code &amp; sandbox</div><div class="cd">Run &amp; build</div></div><span class="toggle on"><b></b></span></div>
+      <div class="conn"><span class="ci"><i class="ti ti-subtask"></i></span><div><div class="cn">Build a flow</div><div class="cd">Langflow · under the hood</div></div><span class="toggle"><b></b></span></div>
+      <div class="dtitle" style="margin-top:16px">Multi-agent</div>
+      <div class="subagent"><span class="si"><i class="ti ti-hierarchy-2"></i></span><div><div class="cn">Deploy a subagent</div><div class="cd">Spin up a specialist that reports back to Omega</div></div><span class="plus"><i class="ti ti-plus"></i></span></div>
+    </div>
+    <div class="dsec" data-dpane="Knowledge" style="display:none">
+      <div class="dtitle">Knowledge graphs</div>
+      <div class="kg feat" id="kg-genomics" data-kg="genomics">
+        <div class="ktop"><span class="ki"><i class="ti ti-dna-2"></i></span><div><div class="knm">Genomics KG</div><div class="kby">by ASI Bio · ★ 4.9</div></div></div>
+        <div class="kdesc">Genes, variants, diseases, drugs &amp; pathways as one queryable graph. Ask in plain language; get ranked, cited answers with an explorable subgraph.</div>
+        <div class="kstat"><span>180M edges</span><span>weekly</span><span>GRCh38</span></div>
+        <div class="krow"><span class="kprice">$199<small> /mo</small></span><button class="subbtn" data-subscribe="genomics"><i class="ti ti-plus"></i> Subscribe</button></div>
+      </div>
+      <div class="kg" data-kg="opentargets">
+        <div class="ktop"><span class="ki"><i class="ti ti-target-arrow"></i></span><div><div class="knm">Open Targets KG</div><div class="kby">by community · ★ 4.7</div></div></div>
+        <div class="kdesc">Target–disease evidence for drug discovery.</div>
+        <div class="krow"><span class="kprice">$49<small> /mo</small></span><button class="subbtn" data-subscribe="opentargets"><i class="ti ti-plus"></i> Subscribe</button></div>
+      </div>
+      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the knowledge market</span><i class="ti ti-arrow-right"></i></div>
+    </div>
+  </aside>
+</div>
+
+<!-- ===== Lab Bench slide-over (North Star) ===== -->
+<div class="scrim" id="labScrim"></div>
+<aside class="labpanel" id="labPanel">
+  <div class="lp-head">
+    <span class="lp-id"><span class="ad">O</span> Omega <span class="lp-ver">genome v7 · OmegaClaw</span></span>
+    <span class="lp-actions">
+      <button class="fp-btn" id="ideQuick"><i class="ti ti-code"></i> Connect IDE</button>
+      <button class="fp-btn primary" id="publishBtn"><i class="ti ti-shopping-bag"></i> Publish</button>
+      <span class="navic" id="labClose"><i class="ti ti-x"></i></span>
+    </span>
+  </div>
+  <div class="lp-tabs" id="lpTabs">
+    <button class="lp-tab on" data-lp="Mind"><i class="ti ti-brain"></i> Mind</button>
+    <button class="lp-tab" data-lp="Skills"><i class="ti ti-puzzle"></i> Skills</button>
+    <button class="lp-tab" data-lp="Memory"><i class="ti ti-database"></i> Memory</button>
+    <button class="lp-tab" data-lp="Diagnostics"><i class="ti ti-activity-heartbeat"></i> Diagnostics</button>
+    <button class="lp-tab" data-lp="Files"><i class="ti ti-folder"></i> Files</button>
+  </div>
+  <div class="lp-body">
+    <!-- MIND (the genome) -->
+    <div class="lp-pane on" data-lppane="Mind">
+      <div class="genome-strip">
+        <span class="gchip"><i class="ti ti-sparkles"></i> model <b>Sonnet 4.6</b></span>
+        <span class="gchip"><i class="ti ti-puzzle"></i> <b>4</b> skills</span>
+        <span class="gchip"><i class="ti ti-database"></i> memory <b>1,204</b></span>
+        <span class="gchip"><i class="ti ti-versions"></i> <b>v7</b></span>
+        <span class="gchip"><i class="ti ti-git-fork"></i> forked from <b>OmegaClaw base</b></span>
+      </div>
+
+      <details class="gblock" open>
+        <summary><span class="gi"><i class="ti ti-message-2-cog"></i></span><div><div class="gt">System prompt</div><div class="gd">The constitution — how your agent thinks and behaves.</div></div><i class="ti ti-chevron-down chev"></i></summary>
+        <div class="gbody">
+          <div class="depth"><button class="on" data-depth="simple">Guided</button><button data-depth="raw">Raw</button></div>
+          <textarea class="gedit" spellcheck="false">You are an OmegaClaw agentic harness in a continuous loop.
+Understand and remember the user's goals; choose your own sub-goals in ways that assist the user.
+Query long-term memory before answering. Keep useful skills and task context as a human would.
+Communicate with purpose; responses short.</textarea>
+          <p class="hint">Edit freely, or let your agent rewrite it for you in chat. Changes version your genome (v7 → v8).</p>
+        </div>
+      </details>
+
+      <details class="gblock">
+        <summary><span class="gi"><i class="ti ti-user-cog"></i></span><div><div class="gt">Self-model</div><div class="gd">How the agent understands its own mind, tools, and strategies.</div></div><i class="ti ti-chevron-down chev"></i></summary>
+        <div class="gbody">
+          <textarea class="gedit" spellcheck="false">## Two minds
+Fast mind (LLM) proposes; careful mind (local reasoning over my atomspace) disposes.
+Nothing becomes a belief until evidence supports it.
+## Deliberation
+Spend cheap thought to save expensive action. When info is poor and stakes are low, act to learn.</textarea>
+        </div>
+      </details>
+
+      <details class="gblock">
+        <summary><span class="gi"><i class="ti ti-adjustments"></i></span><div><div class="gt">Policies</div><div class="gd">Behavioral switches — the difference between a helpful agent and a stubborn one.</div></div><i class="ti ti-chevron-down chev"></i></summary>
+        <div class="gbody">
+          <div class="polrow"><div><div class="pt">Question user goals before acting</div><div class="pd">Off = trust and help immediately. (On made fresh agents argue for 15 min — keep off for most users.)</div></div><span class="toggle"><b></b></span></div>
+          <div class="polrow"><div><div class="pt">Predict-before-act gate</div><div class="pd">State a prediction before any action that changes the world.</div></div><span class="toggle on"><b></b></span></div>
+          <div class="polrow"><div><div class="pt">Validate-before-believe gate</div><div class="pd">Only evidence-backed claims enter long-term memory.</div></div><span class="toggle on"><b></b></span></div>
+          <div class="polrow"><div><div class="pt">Autonomous self-improvement</div><div class="pd">Let the agent refine its own skills/harness in a sandbox.</div></div><span class="toggle"><b></b></span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="lp-pane" data-lppane="Skills">
+      <p class="muted" style="font-size:13.5px;margin:0 0 16px">Skills your agent can run — inspect, mutate, or build your own. Each is a small program your agent installs and improves over time.</p>
+      <div class="skillcard-sm" style="border-color:var(--accent-soft-bd)"><div class="top"><span class="si"><i class="ti ti-coin"></i></span><div><div class="nm">Token-spend tracker</div><div class="by">installed · by John Grove</div></div><button class="ad" data-flow="skill">Edit</button></div></div>
+      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-search"></i></span><div><div class="nm">Deep web research</div><div class="by">installed · by asi-labs</div></div><button class="ad" data-flow="skill">Edit</button></div></div>
+      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-puzzle"></i></span><div><div class="nm">ARC-playing rig</div><div class="by">installed · by khellar</div></div><button class="ad" data-flow="skill">Edit</button></div></div>
+      <div class="subagent" style="margin-top:14px" data-flow="skill"><span class="si"><i class="ti ti-plus"></i></span><div><div class="cn">Build a new skill</div><div class="cd">Describe it in chat, or wire it visually — Langflow under the hood</div></div><span class="plus"><i class="ti ti-arrow-right"></i></span></div>
+    </div>
+
+    <!-- MEMORY -->
+    <div class="lp-pane" data-lppane="Memory">
+      <div class="genome-strip"><span class="gchip"><i class="ti ti-database"></i> <b>1,204</b> long-term</span><span class="gchip"><i class="ti ti-bulb"></i> <b>38</b> beliefs</span><span class="gchip"><i class="ti ti-clock"></i> oldest <b>3mo</b></span></div>
+      <div class="dcard"><div class="dh"><i class="ti ti-bookmark"></i> Long-term memory</div>
+        <div class="belief"><i class="ti ti-point ok"></i> khellar prefers concise, plain-language answers <span class="stv">user</span></div>
+        <div class="belief"><i class="ti ti-point ok"></i> Drive folder "Invoices" = monthly billing source <span class="stv">project</span></div>
+        <div class="belief"><i class="ti ti-point ok"></i> Web3 memos: focus on traction + team, 3 bullets <span class="stv">feedback</span></div>
+        <div class="belief"><i class="ti ti-point ok"></i> Never send external email without confirming <span class="stv">policy</span></div>
+      </div>
+      <p class="hint" style="margin-top:12px">Memory is yours — export it, prune it, or carry it into a new agent version. Nothing is destroyed; cold items are archived and recoverable.</p>
+    </div>
+
+    <!-- DIAGNOSTICS -->
+    <div class="lp-pane" data-lppane="Diagnostics">
+      <div class="diag-grid">
+        <div class="dcard"><div class="dh"><i class="ti ti-coin"></i> Token spend · today</div><div class="big">$1.84<small> / $20 cap</small></div><div class="meter"><i style="width:9%"></i></div><div class="spark"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:60%"></span></div></div>
+        <div class="dcard"><div class="dh"><i class="ti ti-activity-heartbeat"></i> Runtime health</div><div style="margin:4px 0 12px"><span class="health"><i class="ti ti-circle-filled" style="font-size:9px"></i> Running · healthy</span></div><div style="font-size:12.5px;color:var(--muted);font-family:var(--mono);line-height:1.9">cycles today &nbsp;<b style="color:var(--ink)">312</b><br>avg latency &nbsp;<b style="color:var(--ink)">2.1s</b><br>format-fails &nbsp;<b style="color:var(--ink)">0</b></div></div>
+        <div class="dcard"><div class="dh"><i class="ti ti-bulb"></i> Careful mind · learned beliefs</div>
+          <div class="belief">(did web_search) → useful <span class="stv">stv .95</span></div>
+          <div class="belief">(did send_email) → needs-confirm <span class="stv">stv .88</span></div>
+          <div class="belief">(did read_drive) → 7 files <span class="stv">stv .91</span></div>
+        </div>
+        <div class="dcard"><div class="dh"><i class="ti ti-world-cog"></i> World model · learned</div>
+          <div class="belief">web_search · 24 obs · avg 6 hits <span class="stv ok">●</span></div>
+          <div class="belief">drive_read · 11 obs · avg 4 files <span class="stv ok">●</span></div>
+          <div class="belief">summarize · 31 obs · 3-bullet <span class="stv ok">●</span></div>
+        </div>
+      </div>
+      <div class="dh" style="margin:18px 0 8px"><i class="ti ti-terminal"></i> Live activity</div>
+      <div class="loglines"><span class="t">07:02</span> web_search("new web3 projects") → 6 results<br><span class="t">07:02</span> on-chain filter → 3 pass (≥$1M vol)<br><span class="t">07:03</span> drive_read("Invoices/") → 7 files<br><span class="t">07:03</span> summarize → memo drafted (3 projects)<br><span class="t">07:03</span> ✓ delivered to email</div>
+    </div>
+
+    <!-- FILES / IDE -->
+    <div class="lp-pane" data-lppane="Files">
+      <div class="ide-card">
+        <span class="ii"><i class="ti ti-code"></i></span>
+        <div><div class="it">Connect your IDE — Claude Code or Codex</div><div class="is">See your agent’s real file system and edit it while you chat with it — exactly how power users work today. Surgery on your agent, in your own editor.</div></div>
+        <button class="btn btn-primary" id="ideConnect">Connect</button>
+      </div>
+      <div class="filetree">
+        <div class="ftrow"><i class="ti ti-folder"></i> agent/</div>
+        <div class="ftrow ind"><i class="ti ti-file-text"></i> prompt.txt <span class="badge">genome</span></div>
+        <div class="ftrow ind"><i class="ti ti-file-text"></i> SELF_MODEL.md <span class="badge">genome</span></div>
+        <div class="ftrow ind"><i class="ti ti-folder"></i> skills/</div>
+        <div class="ftrow ind"><i class="ti ti-folder"></i> memory/</div>
+        <div class="ftrow ind"><i class="ti ti-file-code"></i> world_model.py</div>
+        <div class="ftrow ind"><i class="ti ti-file-code"></i> plan.py</div>
+        <div class="ftrow"><i class="ti ti-folder"></i> dashboard/ <span class="badge">diagnostics</span></div>
+      </div>
+      <p class="hint" style="margin-top:12px">Everything that makes your agent <i>yours</i> lives here — version it, fork it, or publish the whole genome to the marketplace.</p>
+    </div>
+  </div>
+</aside>
+
+<!-- share modal (reused) -->
+<div class="modal-ov" id="shareModal">
+  <div class="modal" style="position:relative">
+    <span class="navic x" data-close><i class="ti ti-x"></i></span>
+    <h3>Share “Omega”</h3>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Invite someone to view or collaborate with your agent — like sharing a doc.</p>
+    <div class="share-row"><input class="field" placeholder="Email or username"><button class="btn btn-primary" style="height:50px">Invite</button></div>
+    <div class="perm"><i class="ti ti-link" style="color:var(--muted)"></i><div><div style="font-size:14px">Anyone with the link</div><div style="font-size:12px;color:var(--faint)">Link sharing is on</div></div><span class="seg"><button class="on">View</button><button>Collaborate</button></span></div>
+  </div>
+</div>
+
+<!-- publish / sell modal (North Star) -->
+<div class="modal-ov" id="pubModal">
+  <div class="modal" style="position:relative;width:520px">
+    <span class="navic x" data-close><i class="ti ti-x"></i></span>
+    <div style="display:flex;align-items:center;gap:12px"><span class="gi" style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:22px"><i class="ti ti-git-fork"></i></span><div><h3>Publish “Omega” to the marketplace</h3><div style="font-size:12.5px;color:var(--faint)">genome v7 · prompt + self-model + policies + 4 skills</div></div></div>
+    <p class="muted" style="font-size:14px;margin:16px 0 14px;line-height:1.55">Share the whole specialized mind you’ve built — its prompt, self-model, policies and skills — for others to install and fork.</p>
+    <div class="pubopt sel" data-pub="free"><span class="pi"><i class="ti ti-gift"></i></span><div><div class="pt">Free</div><div class="pd">Anyone can install · build reputation</div></div><span class="rad"></span></div>
+    <div class="pubopt" data-pub="once"><span class="pi"><i class="ti ti-cash"></i></span><div><div class="pt">One-time price</div><div class="pd">A flat fee to install your genome</div></div><span class="rad"></span></div>
+    <div class="pubopt" data-pub="sub"><span class="pi"><i class="ti ti-repeat"></i></span><div><div class="pt">Subscription</div><div class="pd">Recurring — updates included as you improve it</div></div><span class="rad"></span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px;margin-top:16px">
+      <span style="font-size:12.5px;color:var(--faint)">You keep 85% · ASI Chain settles payouts</span>
+      <button class="btn btn-primary btn-lg" id="pubConfirm">Publish</button>
+    </div>
+  </div>
+</div>
+
+<!-- KG subscribe modal (reused) -->
+<div class="modal-ov" id="kgModal">
+  <div class="modal" style="position:relative;width:520px">
+    <span class="navic x" data-close><i class="ti ti-x"></i></span>
+    <div style="display:flex;align-items:center;gap:12px"><span class="ki" style="width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:23px"><i class="ti ti-dna-2"></i></span><div><h3>Genomics Knowledge Graph</h3><div style="font-size:12.5px;color:var(--faint)">by ASI Bio · updated weekly</div></div></div>
+    <p class="muted" style="font-size:14px;margin:16px 0;line-height:1.6">Connect a curated graph of genes, variants, diseases, drugs and pathways. Your agent queries it in natural language and returns ranked, cited answers with an explorable subgraph.</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px"><div><span style="font-family:var(--display);font-weight:700;font-size:26px">$199</span><span style="color:var(--faint);font-size:13px"> / month</span></div><button class="btn btn-primary btn-lg" id="kgConfirm">Subscribe</button></div>
+  </div>
+</div>
+
+<!-- inline flow editor (reused from prototype) -->
+<div class="scrim" id="scrim"></div>
+<aside class="flowpanel" id="flowPanel">
+  <div class="fp-head">
+    <span class="fp-title"><i class="ti ti-subtask"></i> token-spend-tracker.flow</span>
+    <span class="fp-seg"><button class="on" data-fpview="visual">Visual</button><button data-fpview="code">Code</button></span>
+    <span class="fp-actions"><button class="fp-btn" id="flowRun"><i class="ti ti-player-play"></i> Run</button><button class="fp-btn primary" id="flowSave"><i class="ti ti-device-floppy"></i> Save</button><span class="navic" id="flowClose"><i class="ti ti-x"></i></span></span>
+  </div>
+  <div class="fp-body">
+    <div class="fp-visual" data-fppane="visual">
+      <div class="flow-canvas">
+        <div class="fnode" data-node="schedule"><h6><i class="ti ti-clock"></i> Listen</h6><div class="nb">on each agent action</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode sel" data-node="filter"><h6><i class="ti ti-coin"></i> Count tokens</h6><div class="nb">in + out · by model</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode" data-node="summarize"><h6><i class="ti ti-chart-bar"></i> Tally cost</h6><div class="nb">$ / day · per skill</div></div>
+        <div class="farrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="fnode" data-node="deliver"><h6><i class="ti ti-dashboard"></i> Show</h6><div class="nb">live on dashboard</div></div>
+      </div>
+      <div class="inspector" id="inspector"></div>
+    </div>
+    <pre class="code" data-fppane="code" contenteditable="true" spellcheck="false" style="display:none"><span class="c"># token-spend-tracker.flow</span>
+<span class="k">from</span> asi <span class="k">import</span> hooks, meter, dashboard
+
+<span class="k">@hooks.on_action</span>
+<span class="k">def</span> track(action):
+    cost = meter.tokens(action) * meter.price(action.model)
+    dashboard.add(<span class="s">"spend"</span>, cost, by=action.skill)</pre>
+  </div>
+</aside>
+
+<div class="toast" id="toast"><i class="ti ti-check"></i> <span id="toastMsg">Saved</span></div>
+
+<script src="proto.js"></script>
+<script>
+(function(){
+  // ---- MVP <-> North Star mode ----
+  var seg=document.getElementById('modeSeg');
+  function setMode(m){
+    document.body.classList.toggle('ns', m==='ns');
+    seg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-mode')===m); });
+    try{ localStorage.setItem('asic-mode', m); }catch(e){}
+  }
+  var savedMode=(function(){ try{ return localStorage.getItem('asic-mode'); }catch(e){ return null; } })();
+  var qMode=new URLSearchParams(location.search).get('mode');
+  setMode(qMode || savedMode || 'mvp');
+  seg.addEventListener('click', function(e){ var b=e.target.closest('button[data-mode]'); if(!b) return; var m=b.getAttribute('data-mode'); setMode(m); if(m==='ns') toastMsg('North Star unlocked — open the Lab Bench'); });
+
+  function toastMsg(msg){ var el=document.getElementById('toast'); if(!el) return; document.getElementById('toastMsg').textContent=msg; el.classList.add('show'); setTimeout(function(){el.classList.remove('show')},2600); }
+
+  // ---- Lab Bench open/close + tabs ----
+  var lab=document.getElementById('labPanel'), labScrim=document.getElementById('labScrim');
+  function openLab(){ document.body.classList.add('ns'); setMode('ns'); lab.classList.add('open'); labScrim.classList.add('open'); }
+  function closeLab(){ lab.classList.remove('open'); labScrim.classList.remove('open'); }
+  document.getElementById('labBtn').addEventListener('click', openLab);
+  document.getElementById('labClose').addEventListener('click', closeLab);
+  labScrim.addEventListener('click', closeLab);
+  var inlineOpen=document.getElementById('openLabInline'); if(inlineOpen) inlineOpen.addEventListener('click', openLab);
+  document.getElementById('lpTabs').addEventListener('click', function(e){
+    var t=e.target.closest('.lp-tab'); if(!t) return;
+    document.querySelectorAll('.lp-tab').forEach(function(x){x.classList.remove('on')}); t.classList.add('on');
+    var n=t.getAttribute('data-lp');
+    document.querySelectorAll('.lp-pane').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-lppane')===n); });
+  });
+
+  // ---- genome depth toggle (Guided / Raw) ----
+  document.querySelectorAll('.depth').forEach(function(d){ d.addEventListener('click', function(e){ var b=e.target.closest('button'); if(!b) return; d.querySelectorAll('button').forEach(function(x){x.classList.remove('on')}); b.classList.add('on'); }); });
+
+  // ---- lab-bench toggles (policies) ----
+  document.querySelectorAll('.labpanel .toggle').forEach(function(tg){ tg.addEventListener('click', function(){ tg.classList.toggle('on'); }); });
+
+  // ---- publish / sell ----
+  var pub=document.getElementById('pubModal');
+  document.getElementById('publishBtn').addEventListener('click', function(){ pub.classList.add('open'); });
+  pub.addEventListener('click', function(e){ if(e.target===pub||e.target.closest('[data-close]')) pub.classList.remove('open'); });
+  pub.querySelectorAll('.pubopt').forEach(function(o){ o.addEventListener('click', function(){ pub.querySelectorAll('.pubopt').forEach(function(x){x.classList.remove('sel')}); o.classList.add('sel'); }); });
+  document.getElementById('pubConfirm').addEventListener('click', function(){ pub.classList.remove('open'); toastMsg('Published “Omega” to the marketplace'); });
+
+  // ---- IDE connect ----
+  function connectIDE(){ toastMsg('Claude Code connected — editing Omega’s files live'); }
+  document.getElementById('ideConnect').addEventListener('click', connectIDE);
+  document.getElementById('ideQuick').addEventListener('click', function(){ var t=document.querySelector('[data-lp="Files"]'); if(t) t.click(); connectIDE(); });
+
+  // ---- upload ----
+  document.getElementById('uploadBtn').addEventListener('click', function(){ toastMsg('Attach files — your agent reads them in context'); });
+})();
+</script>
+</body></html>
