@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASI:Create — Activity (alt)</title>
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="proto.css"><link rel="stylesheet" href="north-star.css">
+<style>
+  body{background:var(--bg);margin:0}
+  .av2{max-width:1060px;margin:0 auto;padding:26px 26px 70px}
+  .av2-altflag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-soft-bd);padding:3px 9px;border-radius:999px;margin-bottom:18px}
+  /* top bar */
+  .av2-top{display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+  .av2-agent{font-family:var(--font);font-weight:600;font-size:19px;color:var(--ink);display:flex;align-items:center;gap:10px}
+  .av2-av{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+  .av2-run{font-size:12px;color:#3ECF8E;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+  .av2-run .d{width:7px;height:7px;border-radius:50%;background:#3ECF8E;box-shadow:0 0 0 3px rgba(62,207,142,.16)}
+  .av2-seg{margin-left:auto;display:inline-flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+  .av2-seg button{border:0;background:transparent;color:var(--muted);font-size:12px;padding:6px 12px;cursor:pointer;font-family:var(--mono)}
+  .av2-seg button.on{background:var(--accent-soft);color:var(--accent-ink)}
+  .av2-metaline{font-size:12px;color:var(--faint);font-family:var(--mono);margin-bottom:24px}
+  .av2-sec{font-size:11px;font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin:28px 0 13px;display:flex;align-items:center;gap:8px}
+  .av2-sec .ti{font-size:14px}
+  /* reasoning hero */
+  .av2-hero{border:1px solid var(--accent-soft-bd);border-radius:18px;background:radial-gradient(120% 140% at 0% 0%,var(--accent-soft),transparent 60%);padding:22px 24px}
+  .av2-hero-top{display:flex;align-items:center;gap:12px}
+  .av2-hero-ic{width:36px;height:36px;border-radius:11px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:19px;flex:none}
+  .av2-hero-t{font-weight:600;font-size:15.5px;color:var(--ink)}
+  .av2-hero-eng{margin-left:auto;font-size:11px;font-family:var(--mono);color:#3ECF8E;background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);padding:3px 10px;border-radius:999px}
+  .av2-hero-s{font-size:12.5px;color:var(--muted);margin:9px 0 20px;line-height:1.55;max-width:680px}
+  .av2-hero-s code{font-family:var(--mono);font-size:11.5px;color:var(--accent-ink)}
+  .av2-rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .av2-stat .v{font-size:27px;font-weight:600;font-family:var(--font);color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+  .av2-stat .v small{font-size:13px;color:var(--faint);font-weight:400}
+  .av2-stat .l{font-size:12px;color:var(--ink);margin-top:7px;font-weight:500}
+  .av2-stat .k{font-size:10.5px;color:var(--faint);font-family:var(--mono);margin-top:3px}
+  .av2-bar{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-top:10px;background:var(--line2)}
+  .av2-bar i{display:block;height:100%}
+  /* tiles */
+  .av2-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .av2-tile{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:16px 17px}
+  .av2-tile .h{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px;font-family:var(--font)}
+  .av2-tile .h .ti{color:var(--accent-ink);font-size:15px}
+  .av2-tile .big{font-size:23px;font-weight:600;color:var(--ink);margin-top:9px;font-variant-numeric:tabular-nums}
+  .av2-tile .big small{font-size:12px;color:var(--faint);font-weight:400}
+  .av2-tile .sub{font-size:11.5px;color:var(--faint);margin-top:6px;font-family:var(--mono)}
+  .av2-dot{width:7px;height:7px;border-radius:50%;display:inline-block;vertical-align:middle}
+  .av2-dot.g{background:#3ECF8E}.av2-dot.y{background:#E0B341}.av2-dot.r{background:#FF6B6B}
+  .av2-meter{height:5px;border-radius:3px;background:var(--line2);margin-top:10px;overflow:hidden}
+  .av2-meter i{display:block;height:100%;background:var(--accent)}
+  .av2-meter i.ok{background:#3ECF8E}
+  .av2-spark{display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:10px}
+  .av2-spark span{flex:1;background:var(--line2);border-radius:2px;min-height:2px}
+  .av2-spark span.hl{background:var(--accent)}
+  /* live feed */
+  .av2-feed{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+  .av2-frow{display:flex;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid var(--line);font-size:13px;cursor:pointer;transition:background .12s}
+  .av2-frow:first-child{border-top:0}
+  .av2-frow:hover{background:var(--accent-soft)}
+  .av2-frow .t{font-family:var(--mono);font-size:11px;color:var(--faint);width:58px;flex:none}
+  .av2-frow .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;padding:2px 7px;border-radius:5px;flex:none;width:42px;text-align:center}
+  .av2-frow .tag.act{background:var(--accent-soft);color:var(--accent-ink)}
+  .av2-frow .tag.think{background:var(--line2);color:var(--muted)}
+  .av2-frow .tag.pln{background:rgba(62,207,142,.13);color:#3ECF8E}
+  .av2-frow .txt{flex:1;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .av2-frow .txt b{color:var(--accent-ink);font-weight:500}
+  .av2-frow .tok{font-family:var(--mono);font-size:11px;color:var(--faint);flex:none}
+  .av2-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--accent-ink);text-decoration:none;margin-bottom:18px}
+  @media(max-width:780px){.av2-rgrid{grid-template-columns:repeat(2,1fr);gap:18px}.av2-grid{grid-template-columns:1fr}.av2-seg{margin-left:0}}
+</style>
+</head><body>
+<div class="av2">
+  <a class="av2-back" href="workbench.html"><i class="ti ti-arrow-left"></i> Back to cockpit</a>
+  <div><span class="av2-altflag"><i class="ti ti-flask"></i> Alternative design — for review</span></div>
+
+  <div class="av2-top">
+    <div class="av2-agent"><span class="av2-av">O</span> Omega · Activity</div>
+    <span class="av2-run"><span class="d"></span> running · cycle 2,501</span>
+    <div class="av2-seg"><button>1h</button><button class="on">24h</button><button>7d</button><button>all</button></div>
+  </div>
+  <div class="av2-metaline">window: last 30 cycles · updated 09:14:45 · last cycle 38s ago</div>
+
+  <!-- REASONING HERO -->
+  <div class="av2-sec"><i class="ti ti-sparkles"></i> Reasoning — the careful mind</div>
+  <div class="av2-hero">
+    <div class="av2-hero-top">
+      <span class="av2-hero-ic"><i class="ti ti-logic-and"></i></span>
+      <span class="av2-hero-t">Careful mind engaged</span>
+      <span class="av2-hero-eng">● active this window</span>
+    </div>
+    <div class="av2-hero-s">Fast mind (the LLM) proposes; the careful mind (PLN / NAL over your <code>&amp;persistent</code> atomspace) disposes — spending cheap thought to save expensive action. Over the last 30 cycles:</div>
+    <div class="av2-rgrid">
+      <div class="av2-stat">
+        <div class="v">128</div>
+        <div class="l">PLN / NAL / NARS runs</div>
+        <div class="av2-bar"><i style="width:55%;background:#3ECF8E"></i><i style="width:34%;background:var(--accent)"></i><i style="width:11%;background:#E0B341"></i></div>
+        <div class="k">PLN 71 · NAL 44 · NARS 13</div>
+      </div>
+      <div class="av2-stat">
+        <div class="v">41 <small>/ 97</small></div>
+        <div class="l">Reasoning-ready atoms</div>
+        <div class="k">carry <code style="font-family:var(--mono);color:var(--accent-ink)">(stv F C)</code> · forming 6/30</div>
+      </div>
+      <div class="av2-stat">
+        <div class="v">4 <small>/ 30 cyc</small></div>
+        <div class="l">Belief revisions</div>
+        <div class="k">freq/conf updated on existing beliefs</div>
+      </div>
+      <div class="av2-stat">
+        <div class="v">34<small>%</small></div>
+        <div class="l">MeTTa substrate use</div>
+        <div class="k">of cycles touch the symbolic substrate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATIONS -->
+  <div class="av2-sec"><i class="ti ti-activity-heartbeat"></i> Operations</div>
+  <div class="av2-grid">
+    <div class="av2-tile">
+      <div class="h"><i class="ti ti-heartbeat"></i> Runtime health</div>
+      <div class="big"><span class="av2-dot g"></span> 8 green · 2 yellow</div>
+      <div class="sub">liveness ● · format ● · substrate ● · memory ● · episodes ●</div>
+    </div>
+    <div class="av2-tile">
+      <div class="h"><i class="ti ti-wave-square"></i> Throughput</div>
+      <div class="big">2,501 <small>cycles</small></div>
+      <div class="av2-spark"><span style="height:60%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:70%"></span><span class="hl" style="height:95%"></span><span style="height:55%"></span><span style="height:88%"></span><span style="height:40%"></span><span style="height:72%"></span><span style="height:97%"></span><span style="height:62%"></span><span style="height:50%"></span><span style="height:84%"></span><span style="height:66%"></span></div>
+      <div class="sub">avg ctx 55.3k ch · think-ratio 0.71</div>
+    </div>
+    <div class="av2-tile">
+      <div class="h"><i class="ti ti-clock-dollar"></i> LLM budget</div>
+      <div class="big">$21.64 <small>/ $100</small></div>
+      <div class="av2-meter"><i style="width:21.6%"></i></div>
+      <div class="sub">$0.0169 / cycle · runway ~4,631 cyc</div>
+    </div>
+  </div>
+
+  <!-- MEMORY -->
+  <div class="av2-sec"><i class="ti ti-database"></i> Memory</div>
+  <div class="av2-grid">
+    <div class="av2-tile">
+      <div class="h"><i class="ti ti-stack-2"></i> Long-term memory · chromadb</div>
+      <div class="big">27,394 <small>vectors</small></div>
+      <div class="sub">+29 recalled last query · cap unbounded (glacier)</div>
+    </div>
+    <div class="av2-tile">
+      <div class="h"><i class="ti ti-cube"></i> Working atomspace · &amp;persistent</div>
+      <div class="big">97 <small>atoms</small></div>
+      <div class="av2-meter"><i style="width:19.1%"></i></div>
+      <div class="sub">9,565 / 50,000 chars (19.1%)</div>
+    </div>
+    <div class="av2-tile">
+      <div class="h"><i class="ti ti-history"></i> Episodes · history.metta</div>
+      <div class="big"><span class="av2-dot g"></span> 1,284 <small>lifetime</small></div>
+      <div class="sub">47 this run · 0 refused · state·action·result·stv</div>
+    </div>
+  </div>
+
+  <!-- LIVE -->
+  <div class="av2-sec"><i class="ti ti-player-track-next"></i> Live — last cycles</div>
+  <div class="av2-feed">
+    <div class="av2-frow"><span class="t">09:14:45</span><span class="tag pln">pln</span><div class="txt">inferred <b>(prefer ACT5 over ACT1)</b> from 2 episodes · stv .81 c .67</div><span class="tok">cheap</span></div>
+    <div class="av2-frow"><span class="t">09:14:07</span><span class="tag act">act</span><div class="txt">web_search "tokenized real-estate launches" → 9 hits</div><span class="tok">1,204 tok</span></div>
+    <div class="av2-frow"><span class="t">09:13:22</span><span class="tag think">think</span><div class="txt">revised belief <b>send_email → needs-confirm</b> after bounce</div><span class="tok">880 tok</span></div>
+    <div class="av2-frow"><span class="t">09:12:48</span><span class="tag act">act</span><div class="txt">drive_read · 4 files → summarized for the memo</div><span class="tok">2,310 tok</span></div>
+    <div class="av2-frow"><span class="t">09:11:30</span><span class="tag pln">nars</span><div class="txt">answered "is ACT5 safe at red-center?" from atomspace</div><span class="tok">cheap</span></div>
+    <div class="av2-frow"><span class="t">09:09:05</span><span class="tag act">act</span><div class="txt">drafted memo · top 3 projects</div><span class="tok">3,917 tok</span></div>
+    <div class="av2-frow"><span class="t">09:06:18</span><span class="tag pln">pln</span><div class="txt">forward-chained <b>(dyn-rule ACT5 → flag++)</b> confirmed · stv .74</div><span class="tok">cheap</span></div>
+  </div>
+</div>
+<script>
+  (function(){
+    document.querySelectorAll('.av2-seg button').forEach(function(b){ b.addEventListener('click',function(){ b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.remove('on')}); b.classList.add('on'); }); });
+  })();
+</script>
+</body></html>
