@@ -140,7 +140,7 @@
         var logs=['Provisioning runtime on ASI Cloud','Wiring default connectors','Loading model: '+(window._ocModel||'Claude Sonnet 4.6'),'Agent online'];
         var box=document.getElementById('deploylog'); box.innerHTML='';
         logs.forEach(function(l,idx){ setTimeout(function(){ box.innerHTML+='<div><i class="ti ti-check"></i> '+l+'</div>'; },500*(idx+1)); });
-        setTimeout(function(){ window.location.href='app.html'; }, 500*(logs.length+1)+400);
+        setTimeout(function(){ window.location.href='workbench.html'; }, 500*(logs.length+1)+400);
       }
     }
     ob.addEventListener('click',function(e){
