@@ -744,3 +744,8 @@ body.adv .ctab.adv{display:inline-flex}
    =================================================================== */
 .appfull{grid-template-rows:100vh}
 .appfull>aside,.appfull>main{min-height:0}
+
+/* drawer capability rows use toggles (right-aligned); composer mic dictation state */
+.capcard .toggle{margin-left:auto;flex:none}
+.composer2 .tl{cursor:pointer}
+.composer2 .tl.rec{color:var(--accent)}

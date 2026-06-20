@@ -124,6 +124,7 @@
           </span>
           <i class="ti ti-paperclip tl" id="uploadBtn" title="Upload files"></i>
           <input id="composerInput" placeholder="Message Omega…  (type / for commands)" style="flex:1;border:0;background:transparent;font-size:15px;color:var(--ink);outline:none;font-family:var(--font)">
+          <i class="ti ti-microphone tl" id="micBtn" title="Dictate to your agent"></i>
           <span class="send" id="sendBtn" style="cursor:pointer"><i class="ti ti-arrow-up"></i></span>
         </div>
       </div>
@@ -444,34 +445,34 @@ right mind and never let the fast mind launder a guess into a belief.
     </div>
     <div class="dsec" style="overflow:auto" id="capList">
       <!-- Built-in -->
-      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-world"></i></span><div><div class="cn">Web search</div><div class="cd">Perplexity · built-in</div></div><span class="capbtn added">Added · Manage</span></div>
-      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-eye"></i></span><div><div class="cn">Vision</div><div class="cd">see · snap · diff frames</div></div><span class="capbtn added">Added · Manage</span></div>
-      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-terminal-2"></i></span><div><div class="cn">Code &amp; sandbox</div><div class="cd">run &amp; build</div></div><span class="capbtn added">Added · Manage</span></div>
+      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-world"></i></span><div><div class="cn">Web search</div><div class="cd">Perplexity · built-in</div></div><span class="toggle on"><b></b></span></div>
+      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-eye"></i></span><div><div class="cn">Vision</div><div class="cd">see · snap · diff frames</div></div><span class="toggle on"><b></b></span></div>
+      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-terminal-2"></i></span><div><div class="cn">Code &amp; sandbox</div><div class="cd">run &amp; build</div></div><span class="toggle on"><b></b></span></div>
       <!-- Skills -->
-      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-coin"></i></span><div><div class="cn">Token-spend tracker <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by Jon Grove · ★ 4.9</div></div><span class="capbtn added">Added · Manage</span></div>
-      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-puzzle"></i></span><div><div class="cn">ARC-playing rig <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by khellar · ★ 5.0</div></div><span class="capbtn added">Added · Manage</span></div>
-      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-search"></i></span><div><div class="cn">Deep web research <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by asi-labs · ★ 4.8 · needs: web search</div></div><span class="capbtn">Add</span></div>
+      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-coin"></i></span><div><div class="cn">Token-spend tracker <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by Jon Grove · ★ 4.9</div></div><span class="toggle on"><b></b></span></div>
+      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-puzzle"></i></span><div><div class="cn">ARC-playing rig <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by khellar · ★ 5.0</div></div><span class="toggle on"><b></b></span></div>
+      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-search"></i></span><div><div class="cn">Deep web research <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by asi-labs · ★ 4.8 · needs: web search</div></div><span class="toggle"><b></b></span></div>
       <!-- Connectors -->
-      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-google-drive"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Google Drive</div><div class="cd">3 folders connected</div></div><span class="capbtn added">Connected · Manage</span></div>
-      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-github"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">GitHub</div><div class="cd">2 repos · sync versions</div></div><span class="capbtn added">Connected · Manage</span></div>
-      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-notion"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Notion</div><div class="cd">pages &amp; databases</div></div><span class="capbtn connect">Connect</span></div>
-      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-mail"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Gmail</div><div class="cd">read &amp; send</div></div><span class="capbtn connect">Connect</span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-google-drive"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Google Drive</div><div class="cd">3 folders connected</div></div><span class="toggle on"><b></b></span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-github"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">GitHub</div><div class="cd">2 repos · sync versions</div></div><span class="toggle on"><b></b></span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-notion"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Notion</div><div class="cd">pages &amp; databases</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-mail"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Gmail</div><div class="cd">read &amp; send</div></div><span class="toggle"><b></b></span></div>
       <!-- Knowledge: curated KGs (Subscribe) + live data sources (Connect) -->
       <div class="dtitle" data-captype="Knowledge" style="margin:14px 0 4px">Curated knowledge graphs</div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-dna-2"></i></span><div><div class="cn">Genomics KG <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by ASI Bio · 180M edges · ★ 4.9</div></div><span class="capbtn connect" data-subscribe="genomics">Subscribe</span></div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-target-arrow"></i></span><div><div class="cn">Open Targets KG</div><div class="cd">targets · diseases · evidence</div></div><span class="capbtn connect" data-subscribe="opentargets">Subscribe</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-dna-2"></i></span><div><div class="cn">Genomics KG <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by ASI Bio · 180M edges · $199/mo</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-target-arrow"></i></span><div><div class="cn">Open Targets KG</div><div class="cd">targets · diseases · $49/mo</div></div><span class="toggle"><b></b></span></div>
       <div class="dtitle" data-captype="Knowledge" style="margin:14px 0 4px">Live data sources</div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-api"></i></span><div><div class="cn">Open Targets GraphQL <span class="livedot" title="live"></span></div><div class="cd">live API · target-disease</div></div><span class="capbtn">Connect</span></div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-microscope"></i></span><div><div class="cn">PubMed <span class="livedot"></span></div><div class="cd">biomedical literature</div></div><span class="capbtn">Connect</span></div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-file-text"></i></span><div><div class="cn">arXiv <span class="livedot"></span></div><div class="cd">preprints</div></div><span class="capbtn">Connect</span></div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-building-bank"></i></span><div><div class="cn">SEC EDGAR <span class="livedot"></span></div><div class="cd">filings</div></div><span class="capbtn">Connect</span></div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-coin-bitcoin"></i></span><div><div class="cn">CoinGecko <span class="livedot"></span></div><div class="cd">prices &amp; markets</div></div><span class="capbtn">Connect</span></div>
-      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-share"></i></span><div><div class="cn">TheGraph <span class="livedot"></span></div><div class="cd">on-chain subgraphs</div></div><span class="capbtn">Connect</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-api"></i></span><div><div class="cn">Open Targets GraphQL <span class="livedot" title="live"></span></div><div class="cd">live API · target-disease</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-microscope"></i></span><div><div class="cn">PubMed <span class="livedot"></span></div><div class="cd">biomedical literature</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-file-text"></i></span><div><div class="cn">arXiv <span class="livedot"></span></div><div class="cd">preprints</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-building-bank"></i></span><div><div class="cn">SEC EDGAR <span class="livedot"></span></div><div class="cd">filings</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-coin-bitcoin"></i></span><div><div class="cn">CoinGecko <span class="livedot"></span></div><div class="cd">prices &amp; markets</div></div><span class="toggle"><b></b></span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-share"></i></span><div><div class="cn">TheGraph <span class="livedot"></span></div><div class="cd">on-chain subgraphs</div></div><span class="toggle"><b></b></span></div>
       <!-- advanced group -->
       <details class="capadv">
         <summary>Advanced <i class="ti ti-chevron-down chev"></i></summary>
-        <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-subtask"></i></span><div><div class="cn">Build a flow · Langflow</div><div class="cd">visual multi-step pipelines</div></div><span class="capbtn">Add</span></div>
-        <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-hierarchy-2"></i></span><div><div class="cn">Deploy a subagent</div><div class="cd">a specialist that reports back to Omega</div></div><span class="capbtn">Add</span></div>
+        <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-subtask"></i></span><div><div class="cn">Build a flow · Langflow</div><div class="cd">visual multi-step pipelines</div></div><span class="toggle"><b></b></span></div>
+        <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-hierarchy-2"></i></span><div><div class="cn">Deploy a subagent</div><div class="cd">a specialist that reports back to Omega</div></div><span class="toggle"><b></b></span></div>
       </details>
       <div class="browse" id="browseMarket"><span><i class="ti ti-shopping-bag"></i> Browse the capability market</span><i class="ti ti-arrow-right"></i></div>
     </div>
@@ -945,12 +946,10 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   $('#capBar').addEventListener('click',function(e){var c=e.target.closest('.capchip');if(c)applyCapFilter(c.getAttribute('data-capfilter'));});
   $('#capStrip').addEventListener('click',function(e){var s=e.target.closest('.si');if(!s)return;toggleR();applyCapFilter(s.getAttribute('data-capfilter'));});
   $('#capList').addEventListener('click',function(e){
-    var b=e.target.closest('.capbtn');if(!b)return;
-    if(b.classList.contains('added'))return;
-    if(b.getAttribute('data-subscribe')){toast('Subscribed · knowledge graph connected');b.textContent='Subscribed';b.classList.add('added');b.classList.remove('connect');return;}
-    if(b.classList.contains('connect')){toast('Connecting… authorize in the popup');b.textContent='Connected · Manage';b.classList.add('added');b.classList.remove('connect');return;}
-    // plain Add (skills/built-in/data sources)
-    toast('Added to Omega');b.textContent='Added · Manage';b.classList.add('added');
+    var t=e.target.closest('.toggle');if(!t)return;
+    t.classList.toggle('on');
+    var card=t.closest('.capcard');var nm=card&&card.querySelector('.cn')?card.querySelector('.cn').textContent.trim():'capability';
+    toast((t.classList.contains('on')?'Switched on · ':'Switched off · ')+nm);
   });
   $('#browseMarket').addEventListener('click',function(){showCommunity(true);});
 
@@ -1016,6 +1015,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   slash.addEventListener('click',function(e){var it=e.target.closest('.sl-item');if(!it)return;var s=it.getAttribute('data-slash');slash.classList.remove('open');ci.value='';if(s==='bug')openReport('bug');if(s==='emergent')openReport('emergent');if(s==='inspect')openInsp('cycle');});
   $('#sendBtn').addEventListener('click',function(){if(ci.value.trim()){toast('Sent to Omega');ci.value='';slash.classList.remove('open');}});
   $('#uploadBtn').addEventListener('click',function(){toast('Attach files — your agent reads them in context');});
+  $('#micBtn').addEventListener('click',function(){this.classList.toggle('rec');var ci=$('#composerInput');if(this.classList.contains('rec')){toast('Listening… dictate to Omega');ci.placeholder='Listening… speak now';}else{ci.placeholder='Message Omega…  (type / for commands)';}});
 
   /* ============ account/advanced pref ============ */
   $('#acctFoot').addEventListener('click',function(e){if(e.target.closest('.acctmenu'))return;$('#acctMenu').classList.toggle('open');});
