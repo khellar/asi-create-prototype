@@ -754,3 +754,16 @@ body.adv .ctab.adv{display:inline-flex}
 .capcard .capcog{margin-left:auto;color:var(--faint);cursor:pointer;font-size:16px;flex:none}
 .capcard .capcog:hover{color:var(--ink)}
 .capcard .toggle{margin-left:10px}
+
+/* ── modal width fix ──────────────────────────────────────────────────────────
+   Modals are flex children of a centered scrim (.modal-scrim / .modal-ov, both
+   display:flex). A flex child defaults to min-width:auto, so it grows PAST its
+   declared width to fit non-wrapping content — which shoved the right-aligned
+   toggles (.pick) off the right edge, where .ob-modal{overflow:hidden} clipped
+   them. Pin min-width:0 so each modal honors its width; let inner rows shrink
+   and wrap instead of overflowing. */
+.ob-modal{min-width:0;max-width:94vw}
+.ob-modal-body{min-width:0}
+.bundle-stat{min-width:0}
+.bundle-stat .pick{flex:none}
+.modal{min-width:0}
