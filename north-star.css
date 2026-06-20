@@ -767,3 +767,53 @@ body.adv .ctab.adv{display:inline-flex}
 .bundle-stat{min-width:0}
 .bundle-stat .pick{flex:none}
 .modal{min-width:0}
+
+/* ── Flows — visual automations the agent builds ─────────────────────────── */
+.flowtop{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.flowcards{display:flex;flex-direction:column;gap:11px}
+.flowcard{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s}
+.flowcard:hover{border-color:var(--accent-soft-bd);background:var(--accent-soft)}
+.fc-ic{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:22px;flex:none}
+.fc-main{flex:1;min-width:0}
+.fc-name{font-size:15px;font-weight:600;color:var(--ink);font-family:var(--font);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.fc-ext{color:var(--faint);font-weight:500}
+.fc-meta{font-size:12.5px;color:var(--muted);margin-top:3px}
+.fc-run{font-size:11.5px;color:var(--faint);margin-top:4px;font-family:var(--mono)}
+.fc-run .ok,.fe-foot .ok{color:#3ECF8E}
+.fc-open{color:var(--accent-ink);font-size:13px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:4px;flex:none}
+.fc-badge{font-size:10.5px;font-weight:600;font-family:var(--font);padding:2px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+.fc-badge.live{background:rgba(62,207,142,.13);color:#3ECF8E}
+.fc-badge.live b{width:6px;height:6px;border-radius:50%;background:#3ECF8E;display:inline-block}
+.fc-badge.paused{background:var(--line2);color:var(--muted)}
+.flowtip{margin-top:16px;font-size:12.5px;color:var(--muted);display:flex;align-items:flex-start;gap:8px}
+.flowtip .ti{margin-top:2px;color:var(--accent-ink)}
+.flowtip .mono{font-family:var(--mono);font-size:11.5px;color:var(--accent-ink);background:var(--accent-soft);padding:2px 7px;border-radius:6px}
+/* editor */
+.fe-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fe-back{border:0;background:transparent;color:var(--muted);font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-family:var(--font);padding:0}
+.fe-back:hover{color:var(--ink)}
+.fe-title{font-size:16px;font-weight:600;color:var(--ink);font-family:var(--font);display:flex;align-items:center;gap:7px}
+.fe-title .ti{color:var(--accent-ink)}
+.fe-sub{font-size:12px;color:var(--faint)}
+.fe-actions{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+.btn.sm{font-size:12px;padding:6px 11px;height:auto}
+.flowcanvas-wrap{border:1px solid var(--line);border-radius:14px;background:var(--bg);background-image:radial-gradient(var(--line) .9px,transparent .9px);background-size:22px 22px;overflow-x:auto;padding:10px}
+.flowcanvas{position:relative;width:1290px;height:360px}
+.fedges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.fedges path{fill:none;stroke:var(--line2);stroke-width:2}
+.fnode{position:absolute;width:170px;box-sizing:border-box;display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--line2);border-radius:12px;padding:10px 12px;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.18);transition:border-color .15s,transform .1s,box-shadow .15s;z-index:2}
+.fnode:hover{border-color:var(--accent);transform:translateY(-1px)}
+.fnode.io{border-color:var(--accent-soft-bd)}
+.fn-ic{width:30px;height:30px;border-radius:8px;background:var(--line2);color:var(--muted);display:grid;place-items:center;font-size:16px;flex:none}
+.fnode.io .fn-ic{background:var(--accent-soft);color:var(--accent-ink)}
+.fn-tx{min-width:0}
+.fn-t{font-size:12.5px;font-weight:600;color:var(--ink);font-family:var(--font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:106px}
+.fn-s{font-size:10.5px;color:var(--faint);margin-top:1px;font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:106px}
+.fnode.ran{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.flowcanvas.editing .fnode{border-style:dashed}
+.fe-foot{display:flex;align-items:center;margin-top:11px;font-size:12px;color:var(--muted);font-family:var(--mono);flex-wrap:wrap;gap:6px}
+.fe-foot .ti{margin-right:3px}
+.fe-foot-r{margin-left:auto}
+.fb-ex{margin-top:11px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
+.ne-omega{margin-top:14px;font-size:12.5px;color:var(--accent-ink);display:flex;align-items:center;gap:7px}
+.ob-foot-note{font-size:11.5px;color:var(--faint)}

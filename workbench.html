@@ -100,6 +100,7 @@
       <button class="ctab" data-cpane="Activity"><i class="ti ti-activity-heartbeat"></i> Activity</button>
       <button class="ctab" data-cpane="Mind"><i class="ti ti-brain"></i> Mind</button>
       <button class="ctab" data-cpane="Vision"><i class="ti ti-photo"></i> Vision</button>
+      <button class="ctab" data-cpane="Flows"><i class="ti ti-sitemap"></i> Flows</button>
       <button class="ctab adv" data-cpane="Tests"><i class="ti ti-checkup-list"></i> Tests &amp; Benchmarks</button>
       <button class="ctab adv" data-cpane="Versions"><i class="ti ti-versions"></i> Versions <span class="cnt">v7</span></button>
       <button class="ctab adv" data-cpane="Files"><i class="ti ti-folder-code"></i> Files &amp; IDE</button>
@@ -361,6 +362,89 @@ right mind and never let the fast mind launder a guess into a belief.
           <div class="diffcell" style="color:var(--faint)">… +50 more</div>
         </div>
         <button class="manualbtn" id="manualInspect"><i class="ti ti-click"></i> Inspect manually — pick two frames to diff</button>
+      </div>
+
+      <!-- ============ FLOWS (visual automations the agent builds) ============ -->
+      <div class="cpane scroll" data-cpane="Flows">
+
+        <!-- LIST VIEW -->
+        <div id="flowList">
+          <p class="paneintro">Flows are automations your agent runs — on a schedule or on demand. Describe what you want in plain language and <b>Omega builds the steps as a visual graph</b> you can open, edit, and watch run.</p>
+          <div class="flowtop">
+            <button class="btn btn-primary" id="askFlowBtn"><i class="ti ti-sparkles"></i> Ask Omega to build a flow</button>
+            <button class="btn btn-ghost" id="newFlowBtn"><i class="ti ti-plus"></i> New flow</button>
+          </div>
+          <div class="flowcards">
+            <div class="flowcard" data-flow="research-scout">
+              <span class="fc-ic"><i class="ti ti-sitemap"></i></span>
+              <div class="fc-main">
+                <div class="fc-name">research-scout<span class="fc-ext">.flow</span> <span class="fc-badge live"><b></b> Active</span></div>
+                <div class="fc-meta">5 steps · built by <b>Research scout</b> · runs daily 7:00am</div>
+                <div class="fc-run">Last run today 7:00am · <span class="ok"><i class="ti ti-check"></i> 0 errors</span> · 1m 48s</div>
+              </div>
+              <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
+            </div>
+            <div class="flowcard" data-flow="inbox-triage">
+              <span class="fc-ic"><i class="ti ti-mail-cog"></i></span>
+              <div class="fc-main">
+                <div class="fc-name">inbox-triage<span class="fc-ext">.flow</span> <span class="fc-badge live"><b></b> Active</span></div>
+                <div class="fc-meta">4 steps · built by <b>Omega</b> · runs hourly</div>
+                <div class="fc-run">Last run 0:32 ago · <span class="ok"><i class="ti ti-check"></i> 0 errors</span> · 22s</div>
+              </div>
+              <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
+            </div>
+            <div class="flowcard" data-flow="weekly-digest">
+              <span class="fc-ic"><i class="ti ti-file-text"></i></span>
+              <div class="fc-main">
+                <div class="fc-name">weekly-digest<span class="fc-ext">.flow</span> <span class="fc-badge paused">Paused</span></div>
+                <div class="fc-meta">6 steps · built by <b>Omega</b> · Mondays 8:00am</div>
+                <div class="fc-run">Last run 3d ago · <span class="ok"><i class="ti ti-check"></i> 0 errors</span> · 3m 04s</div>
+              </div>
+              <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
+            </div>
+          </div>
+          <div class="flowtip"><i class="ti ti-bulb"></i> Tip — in chat just say <span class="mono">"every morning, find new web3 launches and draft a memo"</span> and Omega turns it into a flow here.</div>
+        </div>
+
+        <!-- EDITOR VIEW -->
+        <div id="flowEditor" style="display:none">
+          <div class="fe-bar">
+            <button class="fe-back" id="flowBack"><i class="ti ti-arrow-left"></i> Flows</button>
+            <div class="fe-title"><i class="ti ti-sitemap"></i> research-scout<span class="fc-ext">.flow</span></div>
+            <span class="fc-badge live"><b></b> Active</span>
+            <span class="fe-sub">built by Research scout · daily 7:00am</span>
+            <div class="fe-actions">
+              <button class="btn btn-ghost sm" id="askEditFlow"><i class="ti ti-sparkles"></i> Ask Omega to edit</button>
+              <button class="btn btn-ghost sm" id="flowRun"><i class="ti ti-player-play"></i> Run now</button>
+              <button class="btn btn-primary sm" id="flowEdit"><i class="ti ti-pencil"></i> Edit</button>
+            </div>
+          </div>
+          <div class="flowcanvas-wrap">
+            <div class="flowcanvas" id="flowcanvas">
+              <svg class="fedges" viewBox="0 0 1290 360" preserveAspectRatio="none">
+                <path d="M186 180 C 220 180, 198 81, 232 81"/>
+                <path d="M186 180 C 220 180, 198 279, 232 279"/>
+                <path d="M402 81 C 436 81, 414 180, 448 180"/>
+                <path d="M402 279 C 436 279, 414 180, 448 180"/>
+                <path d="M618 180 L 664 180"/>
+                <path d="M834 180 L 880 180"/>
+                <path d="M1050 180 L 1096 180"/>
+              </svg>
+              <div class="fnode io" data-node="Trigger" style="left:16px;top:149px"><span class="fn-ic"><i class="ti ti-clock-bolt"></i></span><div class="fn-tx"><div class="fn-t">Trigger</div><div class="fn-s">Daily · 7:00am</div></div></div>
+              <div class="fnode" data-node="Web search" style="left:232px;top:50px"><span class="fn-ic"><i class="ti ti-world-search"></i></span><div class="fn-tx"><div class="fn-t">Web search</div><div class="fn-s">Perplexity · launches</div></div></div>
+              <div class="fnode" data-node="Your notes" style="left:232px;top:248px"><span class="fn-ic"><i class="ti ti-brand-google-drive"></i></span><div class="fn-tx"><div class="fn-t">Your notes</div><div class="fn-s">Drive · research</div></div></div>
+              <div class="fnode" data-node="Cross-check" style="left:448px;top:149px"><span class="fn-ic"><i class="ti ti-chart-candle"></i></span><div class="fn-tx"><div class="fn-t">Cross-check</div><div class="fn-s">On-chain · CoinGecko</div></div></div>
+              <div class="fnode" data-node="Summarize" style="left:664px;top:149px"><span class="fn-ic"><i class="ti ti-sparkles"></i></span><div class="fn-tx"><div class="fn-t">Summarize</div><div class="fn-s">summarizer · v7</div></div></div>
+              <div class="fnode" data-node="Draft memo" style="left:880px;top:149px"><span class="fn-ic"><i class="ti ti-file-pencil"></i></span><div class="fn-tx"><div class="fn-t">Draft memo</div><div class="fn-s">Top 3 projects</div></div></div>
+              <div class="fnode io" data-node="Deliver" style="left:1096px;top:149px"><span class="fn-ic"><i class="ti ti-send"></i></span><div class="fn-tx"><div class="fn-t">Deliver</div><div class="fn-s">Drive + ping you</div></div></div>
+            </div>
+          </div>
+          <div class="fe-foot">
+            <span><i class="ti ti-clock"></i> Last run today 7:00am · <b class="ok">0 errors</b> · 1m 48s · 3 projects found</span>
+            <span class="fe-foot-r"><span class="vlink" id="flowOutput">View last output →</span></span>
+          </div>
+        </div>
+
       </div>
 
       <!-- ============ TESTS & BENCHMARKS (adv) ============ -->
@@ -788,6 +872,35 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   </div>
 </div>
 
+<!-- ===================== BUILD A FLOW WITH OMEGA ===================== -->
+<div class="modal-scrim" id="flowBuildScrim">
+  <div class="ob-modal" style="width:min(540px,94vw)">
+    <div class="ob-modal-head"><div class="mi"><i class="ti ti-sparkles"></i></div><div><h3>Build a flow with Omega</h3><div class="ms">Describe the automation in plain language — Omega drafts the steps as a visual graph you can edit</div></div></div>
+    <div class="ob-modal-body">
+      <textarea class="repfield" id="flowAsk" placeholder="e.g. Every morning, scan for new web3 launches, cross-check them on-chain, and draft a memo on the top 3 to my Drive."></textarea>
+      <div class="fb-ex">Try: <span class="chip2" data-ex="Triage my inbox every hour: label, draft replies, flag anything urgent.">Triage my inbox hourly</span><span class="chip2" data-ex="Every Monday 8am, summarize my portfolio's weekly performance and email me a digest.">Weekly portfolio digest</span><span class="chip2" data-ex="Watch the khellar/hypernoia repo and summarize each new release.">Watch a repo</span></div>
+    </div>
+    <div class="ob-modal-foot"><span class="ob-foot-note">You'll review every step before it runs.</span><div style="display:flex;gap:8px"><button class="btn btn-ghost" id="flowBuildCancel">Cancel</button><button class="btn btn-primary" id="flowBuildGo">Build flow <i class="ti ti-arrow-right"></i></button></div></div>
+  </div>
+</div>
+
+<!-- ===================== EDIT A FLOW STEP ===================== -->
+<div class="modal-scrim" id="nodeEditScrim">
+  <div class="ob-modal" style="width:min(460px,94vw)">
+    <div class="ob-modal-head"><div class="mi"><i class="ti ti-adjustments"></i></div><div><h3 id="nodeEditTitle">Step</h3><div class="ms">Edit this step — or ask Omega to change it for you</div></div></div>
+    <div class="ob-modal-body">
+      <label class="lbl">Step name</label>
+      <div class="invrow"><input class="field" id="nodeName" value="Web search"></div>
+      <label class="lbl" style="margin-top:14px;display:block">Tool / skill</label>
+      <div class="invrow"><select class="field" id="nodeTool"><option>Perplexity · web search</option><option>Google Drive</option><option>CoinGecko / TheGraph · on-chain</option><option>summarizer skill · v7</option><option>Send / deliver</option></select></div>
+      <label class="lbl" style="margin-top:14px;display:block">Instruction</label>
+      <div class="invrow"><textarea class="repfield" id="nodeInstr" style="min-height:54px">Find new web3 project launches from the last 24 hours.</textarea></div>
+      <div class="ne-omega"><i class="ti ti-sparkles"></i> <span class="vlink" id="nodeAskOmega">Ask Omega to rewrite this step</span></div>
+    </div>
+    <div class="ob-modal-foot"><button class="btn btn-ghost" id="nodeDel" style="color:#FF6B6B">Remove step</button><div style="display:flex;gap:8px"><button class="btn btn-ghost" id="nodeCancel">Cancel</button><button class="btn btn-primary" id="nodeSave">Save</button></div></div>
+  </div>
+</div>
+
 <!-- ===================== CAPABILITY SETTINGS MODAL (keys · scopes · options) ===================== -->
 <div class="modal-scrim" id="capCfgScrim">
   <div class="ob-modal" style="width:min(460px,94vw)">
@@ -876,6 +989,8 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
     {g:'Navigate',t:'Go to Activity',d:'the observability dashboard',s:'/activity',act:function(){closePalette();gotoTab('Activity');}},
     {g:'Navigate',t:'Go to Mind (genome)',d:'author the constitution',s:'/mind',act:function(){closePalette();gotoTab('Mind');}},
     {g:'Navigate',t:'Go to Tests & Benchmarks',d:'run suites, compare versions',s:'/tests',act:function(){closePalette();gotoTab('Tests');}},
+    {g:'Navigate',t:'Go to Flows',d:'visual automations your agent runs',s:'/flows',act:function(){closePalette();gotoTab('Flows');}},
+    {g:'Create',t:'Build a flow with Omega',d:'describe it — Omega drafts the graph',s:'/build-flow',act:function(){closePalette();gotoTab('Flows');openFlowBuild();}},
     {g:'Navigate',t:'Open Community',d:'rigs · arena · notes',s:'/community',act:function(){closePalette();showCommunity(true);}},
     {g:'Operate',t:'Top up LLM funds',d:'$78.36 left · ~4,631 cycles',s:'/funds',act:function(){closePalette();openTopup();}},
     {g:'Operate',t:'Reboot agent (keep vision & flags)',d:'stateful restart',s:'/reboot',act:function(){closePalette();toast('Rebooting Omega… vision & connectors stay on');}}
@@ -926,6 +1041,21 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   function gotoTab(n){$$('.ctab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-cpane')===n);});$$('.cpane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-cpane')===n);});}
   $('#ctabs').addEventListener('click',function(e){var t=e.target.closest('.ctab');if(!t)return;gotoTab(t.getAttribute('data-cpane'));});
   var gt=$('#goTests');if(gt)gt.addEventListener('click',function(){if(!document.body.classList.contains('adv')){document.body.classList.add('adv');$('#advToggle').classList.add('on');}gotoTab('Tests');});
+  // ---- Flows (visual automations the agent builds) ----
+  function openFlow(name){$('#flowList').style.display='none';$('#flowEditor').style.display='block';}
+  function backToFlows(){$('#flowEditor').style.display='none';$('#flowList').style.display='block';}
+  function openFlowBuild(){$('#flowBuildScrim').classList.add('on');setTimeout(function(){var a=$('#flowAsk');if(a)a.focus();},60);}
+  function openNodeEdit(name){$('#nodeEditTitle').textContent=name;$('#nodeName').value=name;$('#nodeEditScrim').classList.add('on');}
+  function runFlowAnim(){$$('#flowcanvas .fnode').forEach(function(n,i){setTimeout(function(){n.classList.add('ran');setTimeout(function(){n.classList.remove('ran');},650);},i*170);});}
+  var flowListEl=$('#flowList');if(flowListEl)flowListEl.addEventListener('click',function(e){var c=e.target.closest('.flowcard');if(c){openFlow(c.getAttribute('data-flow'));return;}if(e.target.closest('#askFlowBtn')||e.target.closest('#newFlowBtn'))openFlowBuild();});
+  var flowBackEl=$('#flowBack');if(flowBackEl)flowBackEl.addEventListener('click',backToFlows);
+  var flowCanvasEl=$('#flowcanvas');if(flowCanvasEl)flowCanvasEl.addEventListener('click',function(e){var n=e.target.closest('.fnode');if(n)openNodeEdit(n.getAttribute('data-node'));});
+  var flowRunEl=$('#flowRun');if(flowRunEl)flowRunEl.addEventListener('click',function(){toast('Running research-scout.flow…');runFlowAnim();});
+  var flowEditEl=$('#flowEdit');if(flowEditEl)flowEditEl.addEventListener('click',function(){$('#flowcanvas').classList.toggle('editing');toast('Edit mode — click any step to change it');});
+  var askEditEl=$('#askEditFlow');if(askEditEl)askEditEl.addEventListener('click',openFlowBuild);
+  var flowOutEl=$('#flowOutput');if(flowOutEl)flowOutEl.addEventListener('click',function(){toast('Opening last run output…');});
+  var fbScrim=$('#flowBuildScrim');if(fbScrim)fbScrim.addEventListener('click',function(e){if(e.target===this||e.target.closest('#flowBuildCancel')){this.classList.remove('on');return;}var ex=e.target.closest('[data-ex]');if(ex){$('#flowAsk').value=ex.getAttribute('data-ex');$('#flowAsk').focus();return;}if(e.target.closest('#flowBuildGo')){this.classList.remove('on');toast('Omega is drafting your flow — you\'ll review the steps next');return;}});
+  var neScrim=$('#nodeEditScrim');if(neScrim)neScrim.addEventListener('click',function(e){if(e.target===this||e.target.closest('#nodeCancel')){this.classList.remove('on');return;}if(e.target.closest('#nodeAskOmega')){this.classList.remove('on');toast('Tell Omega in chat how to change this step');return;}if(e.target.closest('#nodeSave')){this.classList.remove('on');toast('Step saved');return;}if(e.target.closest('#nodeDel')){this.classList.remove('on');toast('Step removed');return;}});
   $('#openFull').addEventListener('click',function(){window.open('observability.html','_blank');});
 
   /* ============ lifecycle ============ */
