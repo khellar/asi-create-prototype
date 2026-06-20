@@ -691,3 +691,48 @@ textarea.repfield:focus{border-color:var(--accent)}
    hide when it is not. This overrides the legacy `body:not(.ns) .ctab.adv`. */
 .ctab.adv{display:none}
 body.adv .ctab.adv{display:inline-flex}
+
+/* ===================================================================
+   PROJECTS — new-project, switcher menu, project panel (members/permissions)
+   =================================================================== */
+.newproj{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-top:6px;border-radius:9px;border:1px dashed var(--line2);color:var(--muted);font-size:12.5px;cursor:pointer}
+.newproj:hover{border-color:var(--accent-soft-bd);color:var(--ink);background:var(--warm)}
+.newproj .ti{font-size:15px}
+.projswitch{position:relative;cursor:pointer}
+.projmenu{position:absolute;top:38px;left:0;right:0;background:var(--surface);border:1px solid var(--line2);border-radius:11px;box-shadow:var(--shadow-lg);padding:6px;z-index:40;display:none}
+.projswitch.open .projmenu{display:block}
+.projmenu .pm-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--ink);cursor:pointer}
+.projmenu .pm-item:hover{background:var(--warm)}
+.projmenu .pm-item .ti{color:var(--accent-ink);font-size:15px}
+.projmenu .pm-sep{height:1px;background:var(--line);margin:5px 2px}
+.projmenu .pm-lbl{font-size:10px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:6px 10px 3px}
+/* project panel internals (reuses .rigdetail / .rd-head / .rd-body / .rd-cta / .scrim / .seg / .toggle / .field / .callout) */
+.pjsec{font-family:var(--display);font-weight:600;font-size:13px;margin:20px 0 9px;color:var(--ink)}
+.pjsec:first-child{margin-top:2px}
+.pmember{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.pmember:first-of-type{border-top:0}
+.pmember .pm-av{width:30px;height:30px;border-radius:50%;background:var(--warm);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;color:var(--muted);flex:none}
+.pmember .pm-av.claw{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent-soft-bd)}
+.pmember .pm-id{font-size:13.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pmember .pm-meta{font-size:11px;color:var(--faint)}
+.pmember .pm-role{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.pmember .pm-x{color:var(--faint);cursor:pointer;font-size:15px;flex:none}
+.pmember .pm-x:hover{color:#FF6B6B}
+.pm-voice{flex:none}
+.pm-voice button{font-size:11px;padding:4px 9px}
+.invrow{display:flex;gap:8px;margin-top:11px}
+.invrow .field{flex:1;height:40px}
+.invrow .pj-role{flex:none;width:132px;height:40px;padding:0 10px}
+.invrow .btn{height:40px}
+.pjhint{font-size:11.5px;color:var(--faint);margin-top:9px;line-height:1.55}
+.pjhint b{color:var(--muted)}
+.chip2{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;border:1px solid var(--line2);border-radius:7px;padding:3px 8px;color:var(--accent-ink);cursor:pointer}
+.chip2:hover{border-color:var(--accent-soft-bd);background:var(--accent-soft)}
+.accessrow{display:flex;align-items:center;gap:10px}
+.proom{border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:12px 13px;max-height:170px;overflow:auto}
+.proom .prow{display:flex;gap:8px;margin-bottom:10px;font-size:12.5px}
+.proom .prow:last-child{margin-bottom:0}
+.proom .prow .pa{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:10px;flex:none;background:var(--warm);border:1px solid var(--line);color:var(--muted)}
+.proom .prow .pa.claw{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent-soft-bd)}
+.proom .prow .pb{color:var(--muted);line-height:1.5}
+.proom .prow .pb b{color:var(--ink);font-weight:500}

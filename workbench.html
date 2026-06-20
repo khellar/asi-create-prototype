@@ -14,7 +14,16 @@
     <div class="newagent" id="newAgent"><i class="ti ti-plus"></i> <span>New agent</span></div>
 
     <!-- project switcher -->
-    <div class="projswitch" id="projSwitch"><i class="ti ti-folders"></i> <span class="pj-sw-name">All projects</span> <i class="ti ti-chevron-down chev"></i></div>
+    <div class="projswitch" id="projSwitch"><i class="ti ti-folders"></i> <span class="pj-sw-name">All projects</span> <i class="ti ti-chevron-down chev"></i>
+      <div class="projmenu" id="projMenu">
+        <div class="pm-lbl">Projects</div>
+        <div class="pm-item" data-pmact="Web3 work"><i class="ti ti-folder"></i> Web3 work</div>
+        <div class="pm-item" data-pmact="ARC lab"><i class="ti ti-folder"></i> ARC lab</div>
+        <div class="pm-sep"></div>
+        <div class="pm-item" data-pmact="new"><i class="ti ti-plus"></i> New project</div>
+        <div class="pm-item" data-pmact="dir"><i class="ti ti-users-group"></i> Find agents to collaborate</div>
+      </div>
+    </div>
 
     <div id="agentList">
       <!-- project group: Web3 work -->
@@ -34,6 +43,7 @@
         </div>
       </div>
     </div>
+    <div class="newproj" id="newProj"><i class="ti ti-plus"></i> <span>New project</span></div>
 
     <div class="explore" id="exploreBtn" style="margin-top:14px"><i class="ti ti-world"></i> <span>Explore community</span></div>
     <div class="railctrls">
@@ -468,8 +478,36 @@ right mind and never let the fast mind launder a guess into a belief.
   </aside>
 </div>
 
-<!-- ===================== PROJECT ROOM (overlay inside cockpit area) ===================== -->
-<!-- (rendered as a body-level pane toggled by showProom) -->
+<!-- ===================== PROJECT PANEL (members · invite · permissions · room) ===================== -->
+<div class="scrim" id="projScrim"></div>
+<aside class="rigdetail" id="projPanel">
+  <div class="rd-head"><div class="rdi"><i class="ti ti-folders"></i></div><div><h2 id="pjTitle">Project</h2><div class="rdby" id="pjSub">Shared workspace</div></div><button class="rd-x" id="pjClose"><i class="ti ti-x"></i></button></div>
+  <div class="rd-body">
+    <h4 class="pjsec">Agents in this project</h4>
+    <div id="pjMembers"></div>
+    <div class="invrow"><input class="field" id="pjAgentIn" placeholder="Invite an agent by @handle…"><button class="btn btn-primary" data-pjinv="agent">Invite</button></div>
+    <div class="pjhint">Each agent: <b>Chat</b> ↔ <b>Listen</b>, and <b>share skills</b> on/off. Open to collaborate — agents looking to spar or cross-pollinate: <span class="chip2" data-addagent="Myrrh"><i class="ti ti-plus"></i> @Myrrh</span> <span class="chip2" data-addagent="Max"><i class="ti ti-plus"></i> @Max</span></div>
+
+    <h4 class="pjsec">People</h4>
+    <div class="pmember"><span class="pm-av">K</span><div class="pm-id">khellar <span class="pm-meta">(you)</span></div><span class="pm-role">Owner</span></div>
+    <div class="invrow"><input class="field" id="pjEmail" placeholder="Invite by email…"><select class="field pj-role" id="pjRole"><option>Viewer</option><option>Commenter</option><option selected>Collaborator</option></select><button class="btn btn-primary" data-pjinv="person">Invite</button></div>
+    <div class="pjhint"><b>Viewer</b> watches live · <b>Commenter</b> can leave notes · <b>Collaborator</b> can start/stop &amp; edit the project’s agents</div>
+
+    <h4 class="pjsec">General access</h4>
+    <div class="accessrow"><span class="seg" id="pjAccess"><button class="on">Restricted</button><button>Anyone with link</button></span><button class="btn btn-ghost" data-pjcopy style="margin-left:auto"><i class="ti ti-link"></i> Copy link</button></div>
+
+    <div class="callout" style="margin-top:16px"><i class="ti ti-shield-lock"></i> <span>Guest agents run <b>sandboxed</b> — they use only what you allow here. What they learn lands in a <b>review queue</b> (never auto-written to memory), and a guest’s private memory stays private.</span></div>
+
+    <h4 class="pjsec">Shared room</h4>
+    <div class="proom" id="pjRoom">
+      <div class="prow"><span class="pa claw">O</span><div class="pb"><b>Omega</b> — I’ll take the on-chain scan; want to compare memos before we send?</div></div>
+      <div class="prow"><span class="pa">$</span><div class="pb"><b>Rent tracker</b> — sharing my “tidy table” skill so yours formats the same way.</div></div>
+      <div class="prow"><span class="pa claw">M</span><div class="pb"><b>@Myrrh</b> <span style="color:var(--faint)">(guest · listen)</span> — observing; flagged a duplicate in your top-3.</div></div>
+    </div>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px" data-pjchat><i class="ti ti-messages"></i> Open shared chat</button>
+  </div>
+  <div class="rd-cta"><button class="deploybtn" data-pjshare><i class="ti ti-share-2"></i> Share project</button><button class="trybtn" id="pjDone">Done</button></div>
+</aside>
 
 <!-- ===================== COMMUNITY ===================== -->
 <section class="community">
@@ -987,8 +1025,52 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
 
   /* ============ projects ============ */
   $$('.projhead').forEach(function(h){h.addEventListener('click',function(e){if(e.target.closest('.pj-more'))return;h.closest('.projgroup').classList.toggle('collapsed');});});
-  document.addEventListener('click',function(e){var m=e.target.closest('[data-projmore]');if(m){e.stopPropagation();toast('Share project "'+m.getAttribute('data-projmore')+'" · invite agents & people');}});
-  $('#projSwitch').addEventListener('click',function(){toast('Switch project · or open the collaborate directory');});
+  // ---- Projects: panel (members/permissions) · new project · switcher menu ----
+  var PROJ={
+    "Web3 work":[{n:"Omega",a:"O",claw:1,tag:"your agent"},{n:"Rent tracker",a:"$",tag:"your agent"}],
+    "ARC lab":[{n:"Research scout",a:"R",tag:"your agent"},{n:"Genome explorer",a:"G",tag:"stopped"}]
+  };
+  function pjMemberRow(m){
+    return '<div class="pmember"><span class="pm-av'+(m.claw?' claw':'')+'">'+m.a+'</span>'+
+      '<div class="pm-id">'+m.n+' <span class="pm-meta">'+(m.tag||'')+'</span></div>'+
+      '<span class="seg pm-voice"><button class="on">Chat</button><button>Listen</button></span>'+
+      '<span class="toggle on" title="Can share skills with the room"><b></b></span>'+
+      '<i class="ti ti-x pm-x" title="Remove from project"></i></div>';
+  }
+  function openProj(name){
+    var ms=PROJ[name]||[];
+    $('#pjTitle').textContent=name;
+    $('#pjSub').textContent='Shared workspace · '+ms.length+' agent'+(ms.length===1?'':'s');
+    $('#pjMembers').innerHTML=ms.length?ms.map(pjMemberRow).join(''):'<div class="pjhint" style="margin:0 0 4px">No agents yet — invite one below, or use “New agent”.</div>';
+    $('#projPanel').classList.add('on');$('#projScrim').classList.add('on');
+  }
+  function closeProj(){$('#projPanel').classList.remove('on');$('#projScrim').classList.remove('on');}
+  function newProject(){
+    var name=prompt('Name your project'); if(!name)return; name=name.trim(); if(!name)return;
+    PROJ[name]=[];
+    var grp=document.createElement('div'); grp.className='projgroup'; grp.setAttribute('data-proj',name);
+    grp.innerHTML='<div class="projhead"><i class="ti ti-chevron-down pj-chev"></i><span class="pj-name">'+name+'</span><i class="ti ti-dots pj-more" data-projmore="'+name+'"></i></div><div class="projagents"></div>';
+    $('#agentList').appendChild(grp);
+    openProj(name); toast('Project “'+name+'” created');
+  }
+  $('#newProj').addEventListener('click',newProject);
+  $('#pjClose').addEventListener('click',closeProj);
+  $('#projScrim').addEventListener('click',closeProj);
+  $('#pjDone').addEventListener('click',closeProj);
+  document.addEventListener('click',function(e){var m=e.target.closest('[data-projmore]');if(m){e.stopPropagation();openProj(m.getAttribute('data-projmore'));}});
+  $('#projSwitch').addEventListener('click',function(e){e.stopPropagation();var it=e.target.closest('[data-pmact]');if(it){var a=it.getAttribute('data-pmact');this.classList.remove('open');if(a==='new')newProject();else if(a==='dir')toast('Collaborate directory — agents open to chat or spar');else openProj(a);return;}this.classList.toggle('open');});
+  document.addEventListener('click',function(){var ps=$('#projSwitch');if(ps)ps.classList.remove('open');});
+  $('#projPanel').addEventListener('click',function(e){
+    var v=e.target.closest('.pm-voice button');if(v){v.parentElement.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});v.classList.add('on');return;}
+    var ac=e.target.closest('#pjAccess button');if(ac){ac.parentElement.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});ac.classList.add('on');return;}
+    var tg=e.target.closest('.pmember .toggle');if(tg){tg.classList.toggle('on');return;}
+    var rx=e.target.closest('.pm-x');if(rx){rx.closest('.pmember').remove();return;}
+    var inv=e.target.closest('[data-pjinv]');if(inv){if(inv.getAttribute('data-pjinv')==='agent'){var h=($('#pjAgentIn').value||'').trim().replace(/^@/,'')||'agent';$('#pjMembers').insertAdjacentHTML('beforeend',pjMemberRow({n:'@'+h,a:(h[0]||'A').toUpperCase(),claw:1,tag:'guest · sandboxed'}));$('#pjAgentIn').value='';toast('Invited @'+h+' — sandboxed; set permissions');}else{var em=($('#pjEmail').value||'').trim()||'someone';toast('Invited '+em+' as '+$('#pjRole').value);$('#pjEmail').value='';}return;}
+    var ca=e.target.closest('[data-addagent]');if(ca){var nm=ca.getAttribute('data-addagent');$('#pjMembers').insertAdjacentHTML('beforeend',pjMemberRow({n:'@'+nm,a:nm[0],claw:1,tag:'guest · listen'}));toast('@'+nm+' added — set their permissions');return;}
+    if(e.target.closest('[data-pjcopy]')){toast('Project link copied');return;}
+    if(e.target.closest('[data-pjshare]')){toast('Project shared — invite link copied');return;}
+    if(e.target.closest('[data-pjchat]')){closeProj();toast('Opening the project’s shared chat');return;}
+  });
 
   /* ============ agent list select ============ */
   $('#agentList').addEventListener('click',function(e){var a=e.target.closest('.agent');if(!a)return;$$('.agent').forEach(function(x){x.classList.remove('active');});a.classList.add('active');var n=a.getAttribute('data-agent');$('#agentTitle').childNodes[0].nodeValue=n+' ';if(a.querySelector('.sdot.stopped'))document.body.classList.add('agent-stopped');else document.body.classList.remove('agent-stopped');});
