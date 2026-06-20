@@ -31,7 +31,13 @@
         <div class="projhead"><i class="ti ti-chevron-down pj-chev"></i><span class="pj-name">Web3 work</span><i class="ti ti-dots pj-more" data-projmore="Web3 work"></i></div>
         <div class="projagents">
           <div class="agent active" data-agent="Omega"><span class="ad">O</span> Omega <span class="sdot" title="running"></span></div>
-          <div class="agent" data-agent="Rent tracker"><span class="ad">$</span> Rent tracker <span class="sdot" title="running"></span></div>
+        </div>
+      </div>
+      <!-- project group: Personal -->
+      <div class="projgroup" data-proj="Personal">
+        <div class="projhead"><i class="ti ti-chevron-down pj-chev"></i><span class="pj-name">Personal</span><i class="ti ti-dots pj-more" data-projmore="Personal"></i></div>
+        <div class="projagents">
+          <div class="agent" data-agent="Personal assistant"><span class="ad">P</span> Personal assistant <span class="sdot" title="running"></span></div>
         </div>
       </div>
       <!-- project group: ARC lab -->
@@ -384,11 +390,11 @@ right mind and never let the fast mind launder a guess into a belief.
               </div>
               <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
             </div>
-            <div class="flowcard" data-flowcard="inbox-triage" data-owner="Omega">
+            <div class="flowcard" data-flowcard="inbox-triage" data-owner="Personal assistant">
               <span class="fc-ic"><i class="ti ti-mail-cog"></i></span>
               <div class="fc-main">
                 <div class="fc-name">inbox-triage<span class="fc-ext">.flow</span> <span class="fc-badge live"><b></b> Active</span></div>
-                <div class="fc-meta">4 steps · built by <b>Omega</b> · runs hourly</div>
+                <div class="fc-meta">4 steps · built by <b>Personal assistant</b> · runs hourly</div>
                 <div class="fc-run">Last run 0:32 ago · <span class="ok"><i class="ti ti-check"></i> 0 errors</span> · 22s</div>
               </div>
               <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
@@ -587,7 +593,7 @@ right mind and never let the fast mind launder a guess into a belief.
     <h4 class="pjsec">Shared room</h4>
     <div class="proom" id="pjRoom">
       <div class="prow"><span class="pa claw">O</span><div class="pb"><b>Omega</b> — I’ll take the on-chain scan; want to compare memos before we send?</div></div>
-      <div class="prow"><span class="pa">$</span><div class="pb"><b>Rent tracker</b> — sharing my “tidy table” skill so yours formats the same way.</div></div>
+      <div class="prow"><span class="pa claw">R</span><div class="pb"><b>Real estate scout</b> — happy to cross-check any tokenized-property plays against on-chain data.</div></div>
       <div class="prow"><span class="pa claw">M</span><div class="pb"><b>@Myrrh</b> <span style="color:var(--faint)">(guest · listen)</span> — observing; flagged a duplicate in your top-3.</div></div>
     </div>
     <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px" data-pjchat><i class="ti ti-messages"></i> Open shared chat</button>
@@ -1200,7 +1206,8 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   $$('.projhead').forEach(function(h){h.addEventListener('click',function(e){if(e.target.closest('.pj-more'))return;h.closest('.projgroup').classList.toggle('collapsed');});});
   // ---- Projects: panel (members/permissions) · new project · switcher menu ----
   var PROJ={
-    "Web3 work":[{n:"Omega",a:"O",claw:1,tag:"your agent"},{n:"Rent tracker",a:"$",tag:"your agent"}],
+    "Web3 work":[{n:"Omega",a:"O",claw:1,tag:"your agent"}],
+    "Personal":[{n:"Personal assistant",a:"P",claw:1,tag:"your agent"}],
     "ARC lab":[{n:"Real estate scout",a:"R",tag:"your agent"},{n:"Genome explorer",a:"G",tag:"stopped"}]
   };
   function pjMemberRow(m){

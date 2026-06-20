@@ -180,8 +180,10 @@
       '<div class="artifact" data-subscribe="genomics"><span class="ai"><i class="ti ti-dna-2"></i></span><div><div class="at">Genomics Knowledge Graph</div><div class="as">180M curated edges · $199/mo · not subscribed</div></div><span class="open">Subscribe <i class="ti ti-arrow-up-right"></i></span></div></div></div>'+
       '<div class="row me"><div class="av me">K</div><div class="bub">which genes are linked to early-onset Parkinson’s?</div></div>'+
       '<div class="row"><div class="av claw">G</div><div class="bub"><div class="who">Genome explorer</div>Subscribe to the Genomics KG and I’ll return ranked gene–disease associations with citations and a subgraph you can explore.</div></div>',
-    "Rent tracker":
-      '<div class="row"><div class="av claw">$</div><div class="bub"><div class="who">Rent tracker</div>3 of 4 units have paid this month. I drafted a friendly reminder for unit 2B — want me to send it?</div></div>'
+    "Personal assistant":
+      '<div class="row"><div class="av claw">P</div><div class="bub"><div class="who">Personal assistant</div>Morning — I triaged your inbox: <b>4 need a reply</b>, 11 archived, 2 flagged as important. Your calendar is clear until your 2:00pm sync. Want me to draft the 4 replies?</div></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">yes, draft them — and block 3–4pm for focus time.</div></div>'+
+      '<div class="row"><div class="av claw">P</div><div class="bub"><div class="who">Personal assistant</div>Done — 4 drafts are in your Drafts folder for a quick look before they send, and I held <b>3:00–4:00pm</b> as Focus. I run this inbox triage every hour as a flow — open it under <b>Flows</b> to change what counts as “important.”</div></div>'
   };
   var DRAWER_TAB = { "Genome explorer":"Knowledge" };
   function renderAgent(name){
