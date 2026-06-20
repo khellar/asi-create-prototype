@@ -117,7 +117,11 @@
     if(input.value!==undefined) input.value=''; else input.textContent='';
     setTimeout(function(){
       var r=document.createElement('div'); r.className='row';
-      r.innerHTML='<div class="av claw">'+ai+'</div><div class="bub"><div class="who">'+an+'</div>On it — I’ll pull from the connectors you have switched on and report back with sources.</div>';
+      if(an==='Real estate scout'){
+        r.innerHTML='<div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>On it — I turned that into a flow. Open it to see every step, drag to rearrange, or tweak any node:<div class="artifact" data-flow="real-estate-scout"><span class="ai"><i class="ti ti-sitemap"></i></span><div><div class="at">real-estate-scout.flow</div><div class="as">6 steps · built by Real estate scout · ready to schedule</div></div><span class="open">Open <i class="ti ti-arrow-up-right"></i></span></div></div>';
+      } else {
+        r.innerHTML='<div class="av claw">'+ai+'</div><div class="bub"><div class="who">'+an+'</div>On it — I’ll pull from the connectors you have switched on and report back with sources.</div>';
+      }
       thread.appendChild(r); thread.scrollTop=thread.scrollHeight;
     },420);
     thread.scrollTop=thread.scrollHeight;
@@ -160,14 +164,17 @@
   // ===== per-agent threads =====
   var THREADS = {
     "Omega":
-      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Hey khellar — I’m set up and ready. I can read files, browse, and run any tools you switch on in the drawer. What should we work on first?</div></div>'+
-      '<div class="row me"><div class="av me">K</div><div class="bub">Find promising new web3 projects and draft a short memo on the top 3.</div></div>'+
-      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Searching now and cross-checking on-chain activity. I’ll use Perplexity + your Drive notes.<div class="callout" style="margin-top:10px"><i class="ti ti-puzzle"></i> Suggested skill — <b>Token-spend tracker</b> by Jon Grove. Want me to install it so you can watch cost live? <span style="text-decoration:underline;cursor:pointer">Install</span></div></div></div>',
-    "Research scout":
-      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Research scout</div>Morning — I ran today’s scan and turned it into a reusable flow so it repeats on its own every day at 7am. Here’s the automation I wrote for you:'+
-      '<div class="artifact" data-flow="research-scout"><span class="ai"><i class="ti ti-subtask"></i></span><div><div class="at">research-scout.flow</div><div class="as">5 steps · built by Research scout · runs daily 7:00am</div></div><span class="open">Open <i class="ti ti-arrow-up-right"></i></span></div></div></div>'+
-      '<div class="row me"><div class="av me">K</div><div class="bub">nice. can you also have it skip anything under $1M daily volume?</div></div>'+
-      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Research scout</div>Done — I added an on-chain filter step. Open the flow to fine-tune the threshold yourself, or just tell me a number.</div></div>',
+      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Rebooted and back — I kept vision on and all your connectors. I’m running continuously; flip to <b>Activity</b> any time to watch me think. What should we work on?</div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">Find promising new web3 projects and draft a memo on the top 3.</div></div>'+
+      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>On it — searching + cross-checking on-chain, using Perplexity and your Drive notes.<div class="callout" style="margin-top:10px"><i class="ti ti-checkup-list"></i><div>Your last edit changed my <b>summarizer skill</b> — saved as <b>v7</b>. Want me to benchmark it against the previous version (<b>v6</b>) before you rely on it?<div style="margin-top:9px"><button class="btn btn-primary" id="goTests" style="font-size:12.5px;padding:6px 13px;height:auto">Run benchmark <i class="ti ti-arrow-right" style="font-size:14px"></i></button></div></div></div></div></div>'+
+      '<div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>I also <b>revised my belief</b> about <code style="font-family:var(--mono);font-size:12px">send_email</code> after last week’s bounce — it now needs explicit confirm. <span style="text-decoration:underline;cursor:pointer" data-insp="beliefs">Want to see why?</span></div></div>',
+    "Real estate scout":
+      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>I watch the market for you and surface what fits. Tell me what you’re hunting for and I’ll turn it into a flow you can run every morning.</div></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">Every morning, find new 3-bed listings under $750k near top-rated schools, and text me the top 5.</div></div>'+
+      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>Done — I built it into a flow. Open it to see every step, drag to rearrange, or tweak any node:'+
+      '<div class="artifact" data-flow="real-estate-scout"><span class="ai"><i class="ti ti-sitemap"></i></span><div><div class="at">real-estate-scout.flow</div><div class="as">6 steps · built by Real estate scout · runs daily 7:00am</div></div><span class="open">Open <i class="ti ti-arrow-up-right"></i></span></div></div></div>'+
+      '<div class="row me"><div class="av me">K</div><div class="bub">nice — can you also skip anything over $800k?</div></div>'+
+      '<div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>Done — I tightened the <b>Filter &amp; score</b> step. Open the flow to fine-tune the cap yourself, or just tell me a number.</div></div>',
     "Genome explorer":
       '<div class="row"><div class="av claw">G</div><div class="bub"><div class="who">Genome explorer</div>I can answer genomics questions, but I’m far more accurate with a knowledge graph connected. The <b>Genomics KG</b> is in your drawer.'+
       '<div class="artifact" data-subscribe="genomics"><span class="ai"><i class="ti ti-dna-2"></i></span><div><div class="at">Genomics Knowledge Graph</div><div class="as">180M curated edges · $199/mo · not subscribed</div></div><span class="open">Subscribe <i class="ti ti-arrow-up-right"></i></span></div></div></div>'+
@@ -183,6 +190,7 @@
     var title=document.getElementById('agentTitle'); if(title && title.firstChild) title.firstChild.textContent=name+' ';
     var ci=document.getElementById('composerInput'); if(ci) ci.placeholder='Message '+name+'…';
     t.innerHTML = THREADS[name] || THREADS["Omega"]; t.scrollTop=0;
+    if(window.filterFlows) window.filterFlows(name);
     var tb=document.querySelector('[data-dtab="'+(DRAWER_TAB[name]||'Connectors')+'"]'); if(tb) tb.click();
   }
   document.addEventListener('click', function(e){ var a=e.target.closest('#agentList .agent'); if(a) renderAgent(a.getAttribute('data-agent')); });
@@ -200,7 +208,7 @@
     var c=NODE_CFG[n], ins=document.getElementById('inspector');
     if(c&&ins) ins.innerHTML='<div class="ih"><i class="ti '+c.ic+'"></i> '+c.t+' · node config</div><div class="ttl">'+c.ttl+'</div>'+c.html;
   }
-  function openFlow(){ document.getElementById('flowPanel').classList.add('open'); document.getElementById('scrim').classList.add('open'); selectNode('filter'); }
+  function openFlow(){ if(window.openFlowTab){ window.openFlowTab(); return; } var p=document.getElementById('flowPanel'); if(!p) return; p.classList.add('open'); var sc=document.getElementById('scrim'); if(sc) sc.classList.add('open'); selectNode('filter'); }
   function closeFlow(){ document.getElementById('flowPanel').classList.remove('open'); document.getElementById('scrim').classList.remove('open'); }
 
   // ===== knowledge graph subscribe =====
