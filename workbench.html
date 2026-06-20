@@ -38,7 +38,7 @@
       <div class="projgroup" data-proj="ARC lab">
         <div class="projhead"><i class="ti ti-chevron-down pj-chev"></i><span class="pj-name">ARC lab</span><i class="ti ti-dots pj-more" data-projmore="ARC lab"></i></div>
         <div class="projagents">
-          <div class="agent" data-agent="Research scout"><span class="ad">R</span> Research scout <span class="sdot" title="running"></span></div>
+          <div class="agent" data-agent="Real estate scout"><span class="ad">R</span> Real estate scout <span class="sdot" title="running"></span></div>
           <div class="agent" data-agent="Genome explorer"><span class="ad">G</span> Genome explorer <span class="sdot stopped" title="stopped"></span></div>
         </div>
       </div>
@@ -110,12 +110,27 @@
       <!-- ============ CHAT ============ -->
       <div class="cpane on" data-cpane="Chat">
         <div class="thread" id="thread">
+         <div class="agthread" data-agent="Omega">
           <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Rebooted and back — I kept vision on and all your connectors. I'm running continuously; flip to <b>Activity</b> any time to watch me think. What should we work on?</div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
           <div class="row me"><div class="av me">K</div><div class="bub">Find promising new web3 projects and draft a memo on the top 3.</div></div>
           <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>On it — searching + cross-checking on-chain, using Perplexity and your Drive notes.
             <div class="callout" style="margin-top:10px"><i class="ti ti-checkup-list"></i><div>Your last edit changed my <b>summarizer skill</b> — saved as <b>v7</b>. Want me to benchmark it against the previous version (<b>v6</b>) before you rely on it?<div style="margin-top:9px"><button class="btn btn-primary" id="goTests" style="font-size:12.5px;padding:6px 13px;height:auto">Run benchmark <i class="ti ti-arrow-right" style="font-size:14px"></i></button></div></div></div>
           </div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
           <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>I also <b>revised my belief</b> about <code style="font-family:var(--mono);font-size:12px">send_email</code> after last week's bounce — it now needs explicit confirm. <span style="text-decoration:underline;cursor:pointer" data-insp="beliefs">Want to see why?</span></div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
+         </div>
+
+         <div class="agthread" data-agent="Real estate scout" id="thread-res" style="display:none">
+          <div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>I watch the market for you and surface what fits. Tell me what you're hunting for and I'll turn it into a flow you can run every morning.</div></div>
+          <div class="row me"><div class="av me">K</div><div class="bub">Every morning, find new 3-bed listings under $750k near top-rated schools, and text me the top 5.</div></div>
+          <div class="row"><div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>Here's the flow I'd run — review the steps, tweak any of them, or open it in the editor:
+            <div class="miniflow"><div class="mf-node io"><i class="ti ti-clock-bolt"></i> Daily 7am</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node"><i class="ti ti-home-search"></i> Search listings</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node"><i class="ti ti-filter"></i> Filter &amp; score</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node"><i class="ti ti-file-pencil"></i> Shortlist 5</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node io"><i class="ti ti-message"></i> Text you</div></div>
+            <div class="mf-cta"><button class="btn btn-primary mfOpen" style="font-size:12.5px;padding:6px 13px;height:auto">Open in Flows <i class="ti ti-arrow-up-right"></i></button><button class="btn btn-ghost mfSched" style="font-size:12.5px;padding:6px 13px;height:auto">Looks good — schedule it</button></div>
+          </div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
+         </div>
+
+         <div class="agthread" data-agent="_other" id="thread-gen" style="display:none">
+          <div class="row"><div class="av claw" id="genAv">·</div><div class="bub"><div class="who" id="genWho">Agent</div>Running continuously. Tell me what to automate — say <i>"build a flow that…"</i> and I'll draft the steps as a visual graph you can edit.</div></div>
+         </div>
         </div>
         <div class="composer2" style="position:relative">
           <span class="slashmenu" id="slashMenu">
@@ -369,22 +384,22 @@ right mind and never let the fast mind launder a guess into a belief.
 
         <!-- LIST VIEW -->
         <div id="flowList">
-          <p class="paneintro">Flows are automations your agent runs — on a schedule or on demand. Describe what you want in plain language and <b>Omega builds the steps as a visual graph</b> you can open, edit, and watch run.</p>
+          <p class="paneintro">Flows are automations your agent runs — on a schedule or on demand. Describe what you want in plain language and <b>your agent builds the steps as a visual graph</b> you can open, edit, and watch run.</p>
           <div class="flowtop">
-            <button class="btn btn-primary" id="askFlowBtn"><i class="ti ti-sparkles"></i> Ask Omega to build a flow</button>
+            <button class="btn btn-primary" id="askFlowBtn"><i class="ti ti-sparkles"></i> Ask your agent to build a flow</button>
             <button class="btn btn-ghost" id="newFlowBtn"><i class="ti ti-plus"></i> New flow</button>
           </div>
           <div class="flowcards">
-            <div class="flowcard" data-flow="research-scout">
-              <span class="fc-ic"><i class="ti ti-sitemap"></i></span>
+            <div class="flowcard" data-flow="real-estate-scout" data-owner="Real estate scout">
+              <span class="fc-ic"><i class="ti ti-home-search"></i></span>
               <div class="fc-main">
-                <div class="fc-name">research-scout<span class="fc-ext">.flow</span> <span class="fc-badge live"><b></b> Active</span></div>
-                <div class="fc-meta">5 steps · built by <b>Research scout</b> · runs daily 7:00am</div>
-                <div class="fc-run">Last run today 7:00am · <span class="ok"><i class="ti ti-check"></i> 0 errors</span> · 1m 48s</div>
+                <div class="fc-name">real-estate-scout<span class="fc-ext">.flow</span> <span class="fc-badge live"><b></b> Active</span></div>
+                <div class="fc-meta">6 steps · built by <b>Real estate scout</b> · runs daily 7:00am</div>
+                <div class="fc-run">Last run today 7:00am · <span class="ok"><i class="ti ti-check"></i> 0 errors</span> · 1m 12s · 12 listings → 5 shortlisted</div>
               </div>
               <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
             </div>
-            <div class="flowcard" data-flow="inbox-triage">
+            <div class="flowcard" data-flow="inbox-triage" data-owner="Omega">
               <span class="fc-ic"><i class="ti ti-mail-cog"></i></span>
               <div class="fc-main">
                 <div class="fc-name">inbox-triage<span class="fc-ext">.flow</span> <span class="fc-badge live"><b></b> Active</span></div>
@@ -393,7 +408,7 @@ right mind and never let the fast mind launder a guess into a belief.
               </div>
               <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
             </div>
-            <div class="flowcard" data-flow="weekly-digest">
+            <div class="flowcard" data-flow="weekly-digest" data-owner="Omega">
               <span class="fc-ic"><i class="ti ti-file-text"></i></span>
               <div class="fc-main">
                 <div class="fc-name">weekly-digest<span class="fc-ext">.flow</span> <span class="fc-badge paused">Paused</span></div>
@@ -403,18 +418,19 @@ right mind and never let the fast mind launder a guess into a belief.
               <span class="fc-open">Open <i class="ti ti-arrow-up-right"></i></span>
             </div>
           </div>
-          <div class="flowtip"><i class="ti ti-bulb"></i> Tip — in chat just say <span class="mono">"every morning, find new web3 launches and draft a memo"</span> and Omega turns it into a flow here.</div>
+          <div id="flowEmpty" class="flowempty" style="display:none">No flows yet for this agent — use <b>"Ask your agent to build a flow"</b> above, or just describe one in chat.</div>
+          <div class="flowtip"><i class="ti ti-bulb"></i> Tip — in chat just say <span class="mono">"every morning, find new listings under $750k and text me the top 5"</span> and your agent turns it into a flow here.</div>
         </div>
 
         <!-- EDITOR VIEW -->
         <div id="flowEditor" style="display:none">
           <div class="fe-bar">
             <button class="fe-back" id="flowBack"><i class="ti ti-arrow-left"></i> Flows</button>
-            <div class="fe-title"><i class="ti ti-sitemap"></i> research-scout<span class="fc-ext">.flow</span></div>
+            <div class="fe-title"><i class="ti ti-sitemap"></i> real-estate-scout<span class="fc-ext">.flow</span></div>
             <span class="fc-badge live"><b></b> Active</span>
-            <span class="fe-sub">built by Research scout · daily 7:00am</span>
+            <span class="fe-sub">built by Real estate scout · daily 7:00am</span>
             <div class="fe-actions">
-              <button class="btn btn-ghost sm" id="askEditFlow"><i class="ti ti-sparkles"></i> Ask Omega to edit</button>
+              <button class="btn btn-ghost sm" id="askEditFlow"><i class="ti ti-sparkles"></i> Ask your agent to edit</button>
               <button class="btn btn-ghost sm" id="flowRun"><i class="ti ti-player-play"></i> Run now</button>
               <button class="btn btn-primary sm" id="flowEdit"><i class="ti ti-pencil"></i> Edit</button>
             </div>
@@ -430,17 +446,17 @@ right mind and never let the fast mind launder a guess into a belief.
                 <path d="M834 180 L 880 180"/>
                 <path d="M1050 180 L 1096 180"/>
               </svg>
-              <div class="fnode io" data-node="Trigger" style="left:16px;top:149px"><span class="fn-ic"><i class="ti ti-clock-bolt"></i></span><div class="fn-tx"><div class="fn-t">Trigger</div><div class="fn-s">Daily · 7:00am</div></div></div>
-              <div class="fnode" data-node="Web search" style="left:232px;top:50px"><span class="fn-ic"><i class="ti ti-world-search"></i></span><div class="fn-tx"><div class="fn-t">Web search</div><div class="fn-s">Perplexity · launches</div></div></div>
-              <div class="fnode" data-node="Your notes" style="left:232px;top:248px"><span class="fn-ic"><i class="ti ti-brand-google-drive"></i></span><div class="fn-tx"><div class="fn-t">Your notes</div><div class="fn-s">Drive · research</div></div></div>
-              <div class="fnode" data-node="Cross-check" style="left:448px;top:149px"><span class="fn-ic"><i class="ti ti-chart-candle"></i></span><div class="fn-tx"><div class="fn-t">Cross-check</div><div class="fn-s">On-chain · CoinGecko</div></div></div>
-              <div class="fnode" data-node="Summarize" style="left:664px;top:149px"><span class="fn-ic"><i class="ti ti-sparkles"></i></span><div class="fn-tx"><div class="fn-t">Summarize</div><div class="fn-s">summarizer · v7</div></div></div>
-              <div class="fnode" data-node="Draft memo" style="left:880px;top:149px"><span class="fn-ic"><i class="ti ti-file-pencil"></i></span><div class="fn-tx"><div class="fn-t">Draft memo</div><div class="fn-s">Top 3 projects</div></div></div>
-              <div class="fnode io" data-node="Deliver" style="left:1096px;top:149px"><span class="fn-ic"><i class="ti ti-send"></i></span><div class="fn-tx"><div class="fn-t">Deliver</div><div class="fn-s">Drive + ping you</div></div></div>
+              <div class="fnode io" data-id="n1" data-node="Trigger" style="left:16px;top:149px"><span class="fn-ic"><i class="ti ti-clock-bolt"></i></span><div class="fn-tx"><div class="fn-t">Trigger</div><div class="fn-s">Daily · 7:00am</div></div></div>
+              <div class="fnode" data-id="n2" data-node="Search listings" style="left:232px;top:50px"><span class="fn-ic"><i class="ti ti-home-search"></i></span><div class="fn-tx"><div class="fn-t">Search listings</div><div class="fn-s">Zillow + MLS</div></div></div>
+              <div class="fnode" data-id="n3" data-node="Your criteria" style="left:232px;top:248px"><span class="fn-ic"><i class="ti ti-list-check"></i></span><div class="fn-tx"><div class="fn-t">Your criteria</div><div class="fn-s">Notion · budget</div></div></div>
+              <div class="fnode" data-id="n4" data-node="Filter &amp; score" style="left:448px;top:149px"><span class="fn-ic"><i class="ti ti-filter"></i></span><div class="fn-tx"><div class="fn-t">Filter &amp; score</div><div class="fn-s">match + rank</div></div></div>
+              <div class="fnode" data-id="n5" data-node="Check comps" style="left:664px;top:149px"><span class="fn-ic"><i class="ti ti-chart-line"></i></span><div class="fn-tx"><div class="fn-t">Check comps</div><div class="fn-s">price history</div></div></div>
+              <div class="fnode" data-id="n6" data-node="Draft shortlist" style="left:880px;top:149px"><span class="fn-ic"><i class="ti ti-file-pencil"></i></span><div class="fn-tx"><div class="fn-t">Draft shortlist</div><div class="fn-s">Top 5 + notes</div></div></div>
+              <div class="fnode io" data-id="n7" data-node="Notify you" style="left:1096px;top:149px"><span class="fn-ic"><i class="ti ti-message"></i></span><div class="fn-tx"><div class="fn-t">Notify you</div><div class="fn-s">Text + Drive</div></div></div>
             </div>
           </div>
           <div class="fe-foot">
-            <span><i class="ti ti-clock"></i> Last run today 7:00am · <b class="ok">0 errors</b> · 1m 48s · 3 projects found</span>
+            <span><i class="ti ti-clock"></i> Last run today 7:00am · <b class="ok">0 errors</b> · 1m 12s · 12 new listings → 5 shortlisted</span>
             <span class="fe-foot-r"><span class="vlink" id="flowOutput">View last output →</span></span>
           </div>
         </div>
@@ -875,7 +891,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
 <!-- ===================== BUILD A FLOW WITH OMEGA ===================== -->
 <div class="modal-scrim" id="flowBuildScrim">
   <div class="ob-modal" style="width:min(540px,94vw)">
-    <div class="ob-modal-head"><div class="mi"><i class="ti ti-sparkles"></i></div><div><h3>Build a flow with Omega</h3><div class="ms">Describe the automation in plain language — Omega drafts the steps as a visual graph you can edit</div></div></div>
+    <div class="ob-modal-head"><div class="mi"><i class="ti ti-sparkles"></i></div><div><h3>Build a flow with your agent</h3><div class="ms">Describe the automation in plain language — your agent drafts the steps as a visual graph you can edit</div></div></div>
     <div class="ob-modal-body">
       <textarea class="repfield" id="flowAsk" placeholder="e.g. Every morning, scan for new web3 launches, cross-check them on-chain, and draft a memo on the top 3 to my Drive."></textarea>
       <div class="fb-ex">Try: <span class="chip2" data-ex="Triage my inbox every hour: label, draft replies, flag anything urgent.">Triage my inbox hourly</span><span class="chip2" data-ex="Every Monday 8am, summarize my portfolio's weekly performance and email me a digest.">Weekly portfolio digest</span><span class="chip2" data-ex="Watch the khellar/hypernoia repo and summarize each new release.">Watch a repo</span></div>
@@ -895,7 +911,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
       <div class="invrow"><select class="field" id="nodeTool"><option>Perplexity · web search</option><option>Google Drive</option><option>CoinGecko / TheGraph · on-chain</option><option>summarizer skill · v7</option><option>Send / deliver</option></select></div>
       <label class="lbl" style="margin-top:14px;display:block">Instruction</label>
       <div class="invrow"><textarea class="repfield" id="nodeInstr" style="min-height:54px">Find new web3 project launches from the last 24 hours.</textarea></div>
-      <div class="ne-omega"><i class="ti ti-sparkles"></i> <span class="vlink" id="nodeAskOmega">Ask Omega to rewrite this step</span></div>
+      <div class="ne-omega"><i class="ti ti-sparkles"></i> <span class="vlink" id="nodeAskOmega">Ask your agent to rewrite this step</span></div>
     </div>
     <div class="ob-modal-foot"><button class="btn btn-ghost" id="nodeDel" style="color:#FF6B6B">Remove step</button><div style="display:flex;gap:8px"><button class="btn btn-ghost" id="nodeCancel">Cancel</button><button class="btn btn-primary" id="nodeSave">Save</button></div></div>
   </div>
@@ -990,7 +1006,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
     {g:'Navigate',t:'Go to Mind (genome)',d:'author the constitution',s:'/mind',act:function(){closePalette();gotoTab('Mind');}},
     {g:'Navigate',t:'Go to Tests & Benchmarks',d:'run suites, compare versions',s:'/tests',act:function(){closePalette();gotoTab('Tests');}},
     {g:'Navigate',t:'Go to Flows',d:'visual automations your agent runs',s:'/flows',act:function(){closePalette();gotoTab('Flows');}},
-    {g:'Create',t:'Build a flow with Omega',d:'describe it — Omega drafts the graph',s:'/build-flow',act:function(){closePalette();gotoTab('Flows');openFlowBuild();}},
+    {g:'Create',t:'Build a flow with your agent',d:'describe it — your agent drafts the graph',s:'/build-flow',act:function(){closePalette();gotoTab('Flows');openFlowBuild();}},
     {g:'Navigate',t:'Open Community',d:'rigs · arena · notes',s:'/community',act:function(){closePalette();showCommunity(true);}},
     {g:'Operate',t:'Top up LLM funds',d:'$78.36 left · ~4,631 cycles',s:'/funds',act:function(){closePalette();openTopup();}},
     {g:'Operate',t:'Reboot agent (keep vision & flags)',d:'stateful restart',s:'/reboot',act:function(){closePalette();toast('Rebooting Omega… vision & connectors stay on');}}
@@ -1042,7 +1058,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   $('#ctabs').addEventListener('click',function(e){var t=e.target.closest('.ctab');if(!t)return;gotoTab(t.getAttribute('data-cpane'));});
   var gt=$('#goTests');if(gt)gt.addEventListener('click',function(){if(!document.body.classList.contains('adv')){document.body.classList.add('adv');$('#advToggle').classList.add('on');}gotoTab('Tests');});
   // ---- Flows (visual automations the agent builds) ----
-  function openFlow(name){$('#flowList').style.display='none';$('#flowEditor').style.display='block';}
+  function openFlow(name){if(name&&name!=='real-estate-scout'){toast(name+'.flow — open real-estate-scout.flow to see the visual editor');return;}$('#flowList').style.display='none';$('#flowEditor').style.display='block';redrawEdges();}
   function backToFlows(){$('#flowEditor').style.display='none';$('#flowList').style.display='block';}
   function openFlowBuild(){$('#flowBuildScrim').classList.add('on');setTimeout(function(){var a=$('#flowAsk');if(a)a.focus();},60);}
   function openNodeEdit(name){$('#nodeEditTitle').textContent=name;$('#nodeName').value=name;$('#nodeEditScrim').classList.add('on');}
@@ -1050,12 +1066,45 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   var flowListEl=$('#flowList');if(flowListEl)flowListEl.addEventListener('click',function(e){var c=e.target.closest('.flowcard');if(c){openFlow(c.getAttribute('data-flow'));return;}if(e.target.closest('#askFlowBtn')||e.target.closest('#newFlowBtn'))openFlowBuild();});
   var flowBackEl=$('#flowBack');if(flowBackEl)flowBackEl.addEventListener('click',backToFlows);
   var flowCanvasEl=$('#flowcanvas');if(flowCanvasEl)flowCanvasEl.addEventListener('click',function(e){var n=e.target.closest('.fnode');if(n)openNodeEdit(n.getAttribute('data-node'));});
-  var flowRunEl=$('#flowRun');if(flowRunEl)flowRunEl.addEventListener('click',function(){toast('Running research-scout.flow…');runFlowAnim();});
+  var flowRunEl=$('#flowRun');if(flowRunEl)flowRunEl.addEventListener('click',function(){toast('Running real-estate-scout.flow…');runFlowAnim();});
   var flowEditEl=$('#flowEdit');if(flowEditEl)flowEditEl.addEventListener('click',function(){$('#flowcanvas').classList.toggle('editing');toast('Edit mode — click any step to change it');});
   var askEditEl=$('#askEditFlow');if(askEditEl)askEditEl.addEventListener('click',openFlowBuild);
   var flowOutEl=$('#flowOutput');if(flowOutEl)flowOutEl.addEventListener('click',function(){toast('Opening last run output…');});
-  var fbScrim=$('#flowBuildScrim');if(fbScrim)fbScrim.addEventListener('click',function(e){if(e.target===this||e.target.closest('#flowBuildCancel')){this.classList.remove('on');return;}var ex=e.target.closest('[data-ex]');if(ex){$('#flowAsk').value=ex.getAttribute('data-ex');$('#flowAsk').focus();return;}if(e.target.closest('#flowBuildGo')){this.classList.remove('on');toast('Omega is drafting your flow — you\'ll review the steps next');return;}});
-  var neScrim=$('#nodeEditScrim');if(neScrim)neScrim.addEventListener('click',function(e){if(e.target===this||e.target.closest('#nodeCancel')){this.classList.remove('on');return;}if(e.target.closest('#nodeAskOmega')){this.classList.remove('on');toast('Tell Omega in chat how to change this step');return;}if(e.target.closest('#nodeSave')){this.classList.remove('on');toast('Step saved');return;}if(e.target.closest('#nodeDel')){this.classList.remove('on');toast('Step removed');return;}});
+  var fbScrim=$('#flowBuildScrim');if(fbScrim)fbScrim.addEventListener('click',function(e){if(e.target===this||e.target.closest('#flowBuildCancel')){this.classList.remove('on');return;}var ex=e.target.closest('[data-ex]');if(ex){$('#flowAsk').value=ex.getAttribute('data-ex');$('#flowAsk').focus();return;}if(e.target.closest('#flowBuildGo')){this.classList.remove('on');toast('Your agent is drafting the flow — you\'ll review the steps next');return;}});
+  var neScrim=$('#nodeEditScrim');if(neScrim)neScrim.addEventListener('click',function(e){if(e.target===this||e.target.closest('#nodeCancel')){this.classList.remove('on');return;}if(e.target.closest('#nodeAskOmega')){this.classList.remove('on');toast('Tell your agent in chat how to change this step');return;}if(e.target.closest('#nodeSave')){this.classList.remove('on');toast('Step saved');return;}if(e.target.closest('#nodeDel')){this.classList.remove('on');toast('Step removed');return;}});
+  // ---- live edges + drag-to-rearrange (edges follow the nodes) ----
+  var FLOW_EDGES=[['n1','n2'],['n1','n3'],['n2','n4'],['n3','n4'],['n4','n5'],['n5','n6'],['n6','n7']];
+  function redrawEdges(){var cv=$('#flowcanvas');if(!cv)return;var paths=cv.querySelectorAll('.fedges path');FLOW_EDGES.forEach(function(e,i){var a=cv.querySelector('.fnode[data-id="'+e[0]+'"]'),b=cv.querySelector('.fnode[data-id="'+e[1]+'"]'),p=paths[i];if(!a||!b||!p)return;var fx=a.offsetLeft+a.offsetWidth,fy=a.offsetTop+a.offsetHeight/2,tx=b.offsetLeft,ty=b.offsetTop+b.offsetHeight/2;p.setAttribute('d','M '+fx+' '+fy+' C '+(fx+34)+' '+fy+', '+(tx-34)+' '+ty+', '+tx+' '+ty);});}
+  (function(){var cv=$('#flowcanvas');if(!cv)return;var drag=null,justDragged=false;
+    cv.addEventListener('mousedown',function(e){var n=e.target.closest('.fnode');if(!n)return;drag={n:n,sx:e.clientX,sy:e.clientY,ox:n.offsetLeft,oy:n.offsetTop,moved:false};e.preventDefault();});
+    window.addEventListener('mousemove',function(e){if(!drag)return;var dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;var nx=Math.max(0,Math.min(1290-drag.n.offsetWidth,drag.ox+dx)),ny=Math.max(0,Math.min(360-drag.n.offsetHeight,drag.oy+dy));drag.n.style.left=nx+'px';drag.n.style.top=ny+'px';redrawEdges();});
+    window.addEventListener('mouseup',function(){if(!drag)return;justDragged=drag.moved;drag=null;});
+    cv.addEventListener('click',function(e){if(justDragged){justDragged=false;e.stopImmediatePropagation();}},true);
+  })();
+  // ---- agent switching (cockpit follows the selected agent) ----
+  var currentAgent='Omega';
+  function filterFlows(name){var any=false;$$('.flowcard').forEach(function(c){var show=c.getAttribute('data-owner')===name;c.style.display=show?'flex':'none';if(show)any=true;});var emp=$('#flowEmpty');if(emp)emp.style.display=any?'none':'block';}
+  function setAgent(name){currentAgent=name;
+    $$('.agent').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-agent')===name);});
+    var row=document.querySelector('.agent[data-agent="'+name+'"]'),letter=row?row.querySelector('.ad').textContent.trim():'·';
+    $('#agentTitle').innerHTML=name+' <i class="ti ti-chevron-down" style="font-size:15px;color:var(--faint)"></i>';
+    var known=(name==='Omega'||name==='Real estate scout');
+    $$('.agthread').forEach(function(t){var ta=t.getAttribute('data-agent');t.style.display=(ta===name||(ta==='_other'&&!known))?'block':'none';});
+    if(!known){var g=$('#genAv');if(g)g.textContent=letter;var w=$('#genWho');if(w)w.textContent=name;}
+    filterFlows(name);backToFlows();gotoTab('Chat');
+    var c2=$('#composerInput');if(c2)c2.placeholder='Message '+name+'…  (type / for commands)';
+  }
+  $$('.agent').forEach(function(a){a.addEventListener('click',function(){setAgent(a.getAttribute('data-agent'));});});
+  filterFlows('Omega');
+  // ---- inline flow building in chat (type a request → a flow graph appears) ----
+  var MINIFLOW='<div class="miniflow"><div class="mf-node io"><i class="ti ti-clock-bolt"></i> Daily 7am</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node"><i class="ti ti-home-search"></i> Search</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node"><i class="ti ti-filter"></i> Filter</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node"><i class="ti ti-file-pencil"></i> Shortlist</div><i class="ti ti-chevron-right mf-arr"></i><div class="mf-node io"><i class="ti ti-message"></i> Notify</div></div><div class="mf-cta"><button class="btn btn-primary mfOpen" style="font-size:12.5px;padding:6px 13px;height:auto">Open in Flows <i class="ti ti-arrow-up-right"></i></button><button class="btn btn-ghost mfSched" style="font-size:12.5px;padding:6px 13px;height:auto">Looks good — schedule it</button></div>';
+  function escHtml(s){return s.replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+  function appendFlowBuild(text){var th=$('#thread-res');if(!th)return;
+    var u=document.createElement('div');u.className='row me';u.innerHTML='<div class="av me">K</div><div class="bub">'+escHtml(text)+'</div>';th.appendChild(u);
+    var r=document.createElement('div');r.className='row';r.innerHTML='<div class="av claw">R</div><div class="bub"><div class="who">Real estate scout</div>On it — here\'s a flow for that. Review or tweak any step, then schedule it:'+MINIFLOW+'</div>';th.appendChild(r);
+    var sc=$('#thread');if(sc)sc.scrollTop=sc.scrollHeight;
+  }
+  var threadEl=$('#thread');if(threadEl)threadEl.addEventListener('click',function(e){if(e.target.closest('.mfOpen')){setAgent('Real estate scout');gotoTab('Flows');openFlow('real-estate-scout');toast('Opened real-estate-scout.flow');return;}if(e.target.closest('.mfSched')){toast('Scheduled — real-estate-scout.flow runs daily 7:00am');return;}});
   $('#openFull').addEventListener('click',function(){window.open('observability.html','_blank');});
 
   /* ============ lifecycle ============ */
@@ -1169,10 +1218,11 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
 
   /* ============ composer slash + upload ============ */
   var ci=$('#composerInput'),slash=$('#slashMenu');
+  function doSend(){var v=ci.value.trim();if(!v||v==='/')return;ci.value='';slash.classList.remove('open');if(currentAgent==='Real estate scout'){appendFlowBuild(v);}else{toast('Sent to '+currentAgent);}}
   ci.addEventListener('input',function(){slash.classList.toggle('open',ci.value.trim()==='/');});
-  ci.addEventListener('keydown',function(e){if(e.key==='Enter'&&ci.value.trim()&&ci.value.trim()!=='/'){toast('Sent to Omega');ci.value='';slash.classList.remove('open');}if(e.key==='Escape')slash.classList.remove('open');});
+  ci.addEventListener('keydown',function(e){if(e.key==='Enter'&&ci.value.trim()&&ci.value.trim()!=='/'){e.preventDefault();doSend();}if(e.key==='Escape')slash.classList.remove('open');});
   slash.addEventListener('click',function(e){var it=e.target.closest('.sl-item');if(!it)return;var s=it.getAttribute('data-slash');slash.classList.remove('open');ci.value='';if(s==='bug')openReport('bug');if(s==='emergent')openReport('emergent');if(s==='inspect')openInsp('cycle');});
-  $('#sendBtn').addEventListener('click',function(){if(ci.value.trim()){toast('Sent to Omega');ci.value='';slash.classList.remove('open');}});
+  $('#sendBtn').addEventListener('click',doSend);
   $('#uploadBtn').addEventListener('click',function(){toast('Attach files — your agent reads them in context');});
   $('#micBtn').addEventListener('click',function(){this.classList.toggle('rec');var ci=$('#composerInput');if(this.classList.contains('rec')){toast('Listening… dictate to Omega');ci.placeholder='Listening… speak now';}else{ci.placeholder='Message Omega…  (type / for commands)';}});
 
@@ -1187,7 +1237,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   // ---- Projects: panel (members/permissions) · new project · switcher menu ----
   var PROJ={
     "Web3 work":[{n:"Omega",a:"O",claw:1,tag:"your agent"},{n:"Rent tracker",a:"$",tag:"your agent"}],
-    "ARC lab":[{n:"Research scout",a:"R",tag:"your agent"},{n:"Genome explorer",a:"G",tag:"stopped"}]
+    "ARC lab":[{n:"Real estate scout",a:"R",tag:"your agent"},{n:"Genome explorer",a:"G",tag:"stopped"}]
   };
   function pjMemberRow(m){
     return '<div class="pmember"><span class="pm-av'+(m.claw?' claw':'')+'">'+m.a+'</span>'+
