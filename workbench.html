@@ -5,28 +5,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="proto.css"><link rel="stylesheet" href="north-star.css">
-</head><body>
+</head><body class="adv">
 <div class="appfull">
-  <!-- rail -->
+  <!-- ===================== LEFT RAIL ===================== -->
   <aside class="rail">
+    <span class="railtoggle" id="railToggleL" title="Collapse rail ( [ )"><i class="ti ti-chevron-left"></i></span>
     <div class="brand" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="mark"><img src="logo.png" alt="ASI:Create" class="logomark"></span> ASI:Create</span></div>
-    <div class="newagent" id="newAgent"><i class="ti ti-plus"></i> New agent</div>
-    <div class="sec">Your agents</div>
+    <div class="newagent" id="newAgent"><i class="ti ti-plus"></i> <span>New agent</span></div>
+
+    <!-- project switcher -->
+    <div class="projswitch" id="projSwitch"><i class="ti ti-folders"></i> <span class="pj-sw-name">All projects</span> <i class="ti ti-chevron-down chev"></i></div>
+
     <div id="agentList">
-      <div class="agent active" data-agent="Omega"><span class="ad">O</span> Omega <small>running</small></div>
-      <div class="agent" data-agent="Research scout"><span class="ad">R</span> Research scout <small>running</small></div>
-      <div class="agent" data-agent="Genome explorer"><span class="ad">G</span> Genome explorer <small>stopped</small></div>
-      <div class="agent" data-agent="Rent tracker"><span class="ad">$</span> Rent tracker <small>running</small></div>
+      <!-- project group: Web3 work -->
+      <div class="projgroup" data-proj="Web3 work">
+        <div class="projhead"><i class="ti ti-chevron-down pj-chev"></i><span class="pj-name">Web3 work</span><i class="ti ti-dots pj-more" data-projmore="Web3 work"></i></div>
+        <div class="projagents">
+          <div class="agent active" data-agent="Omega"><span class="ad">O</span> Omega <span class="sdot" title="running"></span></div>
+          <div class="agent" data-agent="Rent tracker"><span class="ad">$</span> Rent tracker <span class="sdot" title="running"></span></div>
+        </div>
+      </div>
+      <!-- project group: ARC lab -->
+      <div class="projgroup" data-proj="ARC lab">
+        <div class="projhead"><i class="ti ti-chevron-down pj-chev"></i><span class="pj-name">ARC lab</span><i class="ti ti-dots pj-more" data-projmore="ARC lab"></i></div>
+        <div class="projagents">
+          <div class="agent" data-agent="Research scout"><span class="ad">R</span> Research scout <span class="sdot" title="running"></span></div>
+          <div class="agent" data-agent="Genome explorer"><span class="ad">G</span> Genome explorer <span class="sdot stopped" title="stopped"></span></div>
+        </div>
+      </div>
     </div>
-    <div class="explore" id="exploreBtn" style="margin-top:14px"><i class="ti ti-world"></i> Explore community</div>
+
+    <div class="explore" id="exploreBtn" style="margin-top:14px"><i class="ti ti-world"></i> <span>Explore community</span></div>
     <div class="railctrls">
       <span style="font-size:11px;color:var(--faint);font-family:var(--mono)">Appearance</span>
       <span class="navic" data-themebtn title="Toggle theme" style="margin-left:auto"><i class="ti ti-moon"></i></span>
     </div>
-    <div class="foot"><span class="ad">K</span><div>khellar<br><span style="color:var(--faint);font-size:11px">Free · Upgrade</span></div></div>
+    <div class="foot" id="acctFoot"><span class="ad">K</span><div>khellar<br><span style="color:var(--faint);font-size:11px">Pro plan</span></div>
+      <!-- account / plan menu (money lives in header funds chip) -->
+      <div class="acctmenu" id="acctMenu">
+        <div class="am-item"><i class="ti ti-user"></i> khellar · Pro plan</div>
+        <div class="am-item" id="advPref"><i class="ti ti-tools"></i> Show advanced tools <span class="obtoggle on" id="advToggle" style="margin-left:auto"><b></b></span></div>
+        <div class="am-item"><i class="ti ti-settings"></i> Workspace settings</div>
+        <div class="am-item"><i class="ti ti-logout"></i> Sign out</div>
+      </div>
+    </div>
   </aside>
 
-  <!-- cockpit -->
+  <!-- ===================== COCKPIT ===================== -->
   <main class="cockpit">
     <div class="chead">
       <div class="name" id="agentTitle">Omega <i class="ti ti-chevron-down" style="font-size:15px;color:var(--faint)"></i></div>
@@ -34,7 +59,7 @@
       <span class="status stop"><span class="dot"></span> Stopped</span>
       <span class="life">
         <button class="lifebtn go" id="btnStart" title="Start"><i class="ti ti-player-play"></i></button>
-        <button class="lifebtn" id="btnReboot" title="Reboot (keeps vision &amp; settings on)"><i class="ti ti-refresh"></i></button>
+        <span class="hovercard"><button class="lifebtn" id="btnReboot" title="Restart"><i class="ti ti-refresh"></i></button><span class="hc">Restart the agent's process. Its settings, vision, connectors and memory all stay on.</span></span>
         <button class="lifebtn stop" id="btnStop" title="Stop"><i class="ti ti-player-stop"></i></button>
       </span>
       <div style="position:relative;margin-left:4px">
@@ -46,12 +71,15 @@
           <div class="dditem" data-model="Llama 4 Maverick"><span class="md"></span> Llama 4 Maverick <i class="ti ti-check ck" style="visibility:hidden"></i></div>
           <div class="dditem" data-model="ASI-1 · ASI Cloud"><span class="md"></span> ASI-1 · ASI Cloud <i class="ti ti-check ck" style="visibility:hidden"></i></div>
         </div>
+        <!-- model-switch confirm -->
+        <div class="confirmpop" id="modelConfirm">
+          <div class="ct" id="modelConfirmTxt">Switch Omega to Claude Opus 4.8? This changes a running agent's cost and behavior and is recorded as a version.</div>
+          <div class="ca"><button class="btn btn-ghost btn-sm" id="modelCancel">Cancel</button><button class="btn btn-primary btn-sm" id="modelOk">Switch &amp; version</button></div>
+        </div>
       </div>
-      <div class="right" style="gap:10px">
-        <span class="modeseg" id="modeSeg" title="MVP = the everyday operator cockpit. North Star adds benchmarking, versioning, IDE round-trip, and the community.">
-          <button data-mode="mvp" class="on"><i class="ti ti-bolt"></i> MVP</button>
-          <button data-mode="ns"><i class="ti ti-telescope"></i> North&nbsp;Star</button>
-        </span>
+      <div class="right" style="gap:9px">
+        <div class="funds" id="fundsChip" title="LLM funds — click to top up"><i class="ti ti-clock-dollar"></i><div><div class="ft">$78.36 left</div><div class="fd">~4,631 cyc</div></div></div>
+        <div class="cmdk-hint" id="cmdkHint"><i class="ti ti-command"></i> Report / inspect <span class="kbd">⌘K</span></div>
         <span class="share" id="shareBtn"><i class="ti ti-share-2"></i> Share</span>
       </div>
     </div>
@@ -68,309 +96,949 @@
     </div>
 
     <div class="cwrap">
-      <!-- CHAT -->
+      <!-- ============ CHAT ============ -->
       <div class="cpane on" data-cpane="Chat">
         <div class="thread" id="thread">
-          <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Rebooted and back — I kept vision on and all your connectors. I’m running continuously; flip to <b>Activity</b> any time to watch me think. What should we work on?</div></div>
+          <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Rebooted and back — I kept vision on and all your connectors. I'm running continuously; flip to <b>Activity</b> any time to watch me think. What should we work on?</div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
           <div class="row me"><div class="av me">K</div><div class="bub">Find promising new web3 projects and draft a memo on the top 3.</div></div>
           <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>On it — searching + cross-checking on-chain, using Perplexity and your Drive notes.
             <div class="callout" style="margin-top:10px"><i class="ti ti-checkup-list"></i> I changed my summarizer prompt last run. Want me to <b>benchmark it against v6</b> before we trust it? <span style="text-decoration:underline;cursor:pointer" id="goTests">Run the check</span></div>
-          </div></div>
+          </div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
+          <div class="row"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>I also <b>revised my belief</b> about <code style="font-family:var(--mono);font-size:12px">send_email</code> after last week's bounce — it now needs explicit confirm. <span style="text-decoration:underline;cursor:pointer" data-insp="beliefs">Want to see why?</span></div><span class="msgmore" data-insp="cycle" title="Inspect this cycle">⋯</span></div>
         </div>
-        <div class="composer2">
+        <div class="composer2" style="position:relative">
+          <span class="slashmenu" id="slashMenu">
+            <div class="sl-item" data-slash="bug"><span class="si"><i class="ti ti-bug"></i></span><div><div>/report-bug</div><div class="sd">Bundle last 20 cycles + tool-calls</div></div></div>
+            <div class="sl-item" data-slash="emergent"><span class="si"><i class="ti ti-flag"></i></span><div><div>/report-emergent</div><div class="sd">Bundle 20 context windows for review</div></div></div>
+            <div class="sl-item" data-slash="inspect"><span class="si"><i class="ti ti-search"></i></span><div><div>/inspect last cycle</div><div class="sd">Prompt · reasoning · tool-calls</div></div></div>
+          </span>
           <i class="ti ti-paperclip tl" id="uploadBtn" title="Upload files"></i>
-          <input id="composerInput" placeholder="Message Omega…" style="flex:1;border:0;background:transparent;font-size:15px;color:var(--ink);outline:none;font-family:var(--font)">
-          <i class="ti ti-microphone tl"></i>
+          <input id="composerInput" placeholder="Message Omega…  (type / for commands)" style="flex:1;border:0;background:transparent;font-size:15px;color:var(--ink);outline:none;font-family:var(--font)">
           <span class="send" id="sendBtn" style="cursor:pointer"><i class="ti ti-arrow-up"></i></span>
         </div>
       </div>
 
-      <!-- ACTIVITY (the dashboard) -->
+      <!-- ============ ACTIVITY (observability dashboard) ============ -->
       <div class="cpane scroll" data-cpane="Activity">
-        <p class="paneintro">Watch your agent think — live. This is the dashboard we built by hand for Myrrh, in the product.</p>
-        <div class="diag-grid">
-          <div class="dcard"><div class="dh"><i class="ti ti-coin"></i> Token spend · today</div><div class="big">$1.84<small> / $20 cap</small></div><div class="meter"><i style="width:9%"></i></div><div class="spark"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:60%"></span></div></div>
-          <div class="dcard"><div class="dh"><i class="ti ti-activity-heartbeat"></i> Runtime health</div><div style="margin:4px 0 12px"><span class="health"><i class="ti ti-circle-filled" style="font-size:9px"></i> Running · healthy</span></div><div style="font-size:12.5px;color:var(--muted);font-family:var(--mono);line-height:1.9">cycles today &nbsp;<b style="color:var(--ink)">312</b><br>avg latency &nbsp;<b style="color:var(--ink)">2.1s</b><br>format-fails &nbsp;<b style="color:var(--ink)">0</b></div></div>
-          <div class="dcard"><div class="dh"><i class="ti ti-bulb"></i> Careful mind · learned beliefs</div>
-            <div class="belief">(did web_search) → useful <span class="stv">stv .95</span></div>
-            <div class="belief">(did send_email) → needs-confirm <span class="stv">stv .88</span></div>
-            <div class="belief">(did read_drive) → 7 files <span class="stv">stv .91</span></div>
+        <div class="ob-timebar">
+          <div class="ob-seg"><button>1h</button><button class="on">24h</button><button>7d</button><button>all</button></div>
+          <span class="meta">window: last 30 cycles · 2,501 total · updated 09:14:45</span>
+          <span class="ob-live stale" id="liveBadge"><span class="pulse"></span> running · last cycle 14m ago</span>
+        </div>
+        <div style="margin:-4px 0 14px"><span class="ob-openfull" id="openFull">Open full observability <i class="ti ti-external-link"></i></span></div>
+
+        <!-- ROW 1: operations -->
+        <div class="ob-mgrid">
+          <div class="ob-card clickable" data-insp="spend">
+            <div class="ob-ch"><i class="ti ti-clock-dollar"></i> LLM budget <span class="more" data-insp="spend">⋯</span></div>
+            <div class="ob-big">$21.64 <small>/ $100.00 cap</small></div>
+            <div class="ob-meter"><i style="width:21.6%"></i></div>
+            <div class="ob-sub"><b>$0.0169</b> / cycle · runway <b>~4,631</b> cyc · today <span class="ob-delta flat">+$0.41</span></div>
           </div>
-          <div class="dcard"><div class="dh"><i class="ti ti-world-cog"></i> World model · learned</div>
-            <div class="belief">web_search · 24 obs · avg 6 hits <span class="stv ok">●</span></div>
-            <div class="belief">drive_read · 11 obs · avg 4 files <span class="stv ok">●</span></div>
-            <div class="belief">summarize · 31 obs · 3-bullet <span class="stv ok">●</span></div>
+          <div class="ob-card clickable" data-insp="health">
+            <div class="ob-ch"><i class="ti ti-activity-heartbeat"></i> Runtime health <span class="more" data-insp="health">⋯</span></div>
+            <div class="ob-big" style="font-size:18px;gap:7px"><span class="ob-dot y"></span> 5 green · 3 yellow · 2 red</div>
+            <div class="ob-sub">liveness <span class="ob-dot y"></span> · format <span class="ob-dot r"></span> · substrate <span class="ob-dot r"></span> · memory <span class="ob-dot y"></span> · episodes <span class="ob-dot y"></span></div>
+            <div class="ob-captag">last cycle age 871s · click for the 10-dot board</div>
+          </div>
+          <div class="ob-card clickable" data-insp="throughput">
+            <div class="ob-ch"><i class="ti ti-wave-square"></i> Throughput &amp; tokens <span class="more" data-insp="throughput">⋯</span></div>
+            <div class="ob-big">2,501 <span class="unit">cycles</span></div>
+            <div class="ob-spark" title="think-token ratio over last 14 cycles">
+              <span style="height:88%"></span><span style="height:52%"></span><span style="height:14%"></span><span style="height:6%"></span><span class="hl" style="height:90%"></span><span style="height:51%"></span><span style="height:84%"></span><span style="height:13%"></span><span style="height:7%"></span><span style="height:97%"></span><span style="height:60%"></span><span style="height:25%"></span><span style="height:10%"></span><span style="height:11%"></span>
+            </div>
+            <div class="ob-sub">avg ctx <b>55.3k</b> ch · in <b>22.4k</b> / out <b>8.5k</b> · think-ratio <b>0.71</b></div>
           </div>
         </div>
-        <div class="dh" style="margin:18px 0 8px"><i class="ti ti-terminal"></i> Live activity</div>
-        <div class="loglines"><span class="t">07:02</span> web_search("new web3 projects") → 6 results<br><span class="t">07:02</span> on-chain filter → 3 pass (≥$1M vol)<br><span class="t">07:03</span> drive_read("Invoices/") → 7 files<br><span class="t">07:03</span> summarize → memo drafted (3 projects)<br><span class="t">07:03</span> ✓ delivered to email</div>
+
+        <!-- ROW 2: memory -->
+        <div class="ob-ch" style="margin:20px 0 9px"><i class="ti ti-database"></i> MEMORY — what it has learned &amp; retained, against its caps</div>
+        <div class="ob-mgrid">
+          <div class="ob-card clickable" data-insp="chroma">
+            <div class="ob-ch"><i class="ti ti-stack-2"></i> Long-term memory · chromadb <span class="more" data-insp="chroma">⋯</span></div>
+            <div class="ob-big">27,394 <span class="unit">vectors</span></div>
+            <div class="ob-meter"><i class="ok" style="width:38%"></i></div>
+            <div class="ob-sub">cap <b>unbounded</b> (glacier-backed) · <b>+29</b> recalled last query · 75% local</div>
+            <div class="ob-captag">no hard cap — old episodes MOVE to glacier, never deleted</div>
+          </div>
+          <div class="ob-card clickable" data-insp="persist">
+            <div class="ob-ch"><i class="ti ti-cube"></i> Working atomspace · &amp;persistent <span class="more" data-insp="persist">⋯</span></div>
+            <div class="ob-big">97 <span class="unit">atoms</span> <small>/ cap</small></div>
+            <div class="ob-meter"><i style="width:19.1%"></i></div>
+            <div class="ob-sub">9,565 / <b>50,000</b> chars (<b>19.1%</b>) · whole-file snapshot per cycle</div>
+            <div class="ob-captag">RAM is source-of-truth; persistent.metta is the per-cycle mirror</div>
+          </div>
+          <div class="ob-card clickable" data-insp="episodes">
+            <div class="ob-ch"><i class="ti ti-history"></i> Episodes · history.metta <span class="more" data-insp="episodes">⋯</span></div>
+            <div class="ob-big" style="gap:7px"><span class="ob-dot y"></span> 0 <small>episodes this game</small></div>
+            <div class="ob-sub">states <b>0</b> · max-repeat <b>0</b> · repeated <b>0</b> · refused <b>1</b></div>
+            <div class="ob-captag">yellow: episode store empty for re86 — perception broken 10+ cycles</div>
+          </div>
+        </div>
+
+        <!-- ROW 3: reasoning -->
+        <div class="ob-ch" style="margin:20px 0 9px"><i class="ti ti-sparkles"></i> REASONING — the careful mind: beliefs, truth-valued atoms, how often it actually reasons</div>
+        <div class="ob-mgrid">
+          <div class="ob-card clickable w3" data-insp="rratoms">
+            <div class="ob-ch"><i class="ti ti-sparkles"></i> Reasoning-ready atoms <span class="more" data-insp="rratoms">⋯</span></div>
+            <div class="ob-big" style="gap:7px"><span class="ob-dot r"></span> 0 <small>of 97</small></div>
+            <div class="ob-sub">atoms carrying <code style="font-family:var(--mono)">(stv F C)</code> · forming-rate <b>0/30</b></div>
+          </div>
+          <div class="ob-card clickable w3" data-insp="beliefs">
+            <div class="ob-ch"><i class="ti ti-refresh"></i> Belief revisions <span class="more" data-insp="beliefs">⋯</span></div>
+            <div class="ob-big">0 <span class="unit">/30 cyc</span></div>
+            <div class="ob-sub">freq/conf changes on existing beliefs</div>
+          </div>
+          <div class="ob-card clickable w3" data-insp="metta">
+            <div class="ob-ch"><i class="ti ti-math-function"></i> MeTTa calls <span class="more" data-insp="metta">⋯</span></div>
+            <div class="ob-big" style="gap:7px"><span class="ob-dot r"></span> 0%</div>
+            <div class="ob-sub">metta_usage_rate · substrate 0.0</div>
+          </div>
+          <div class="ob-card clickable w3" data-insp="pln">
+            <div class="ob-ch"><i class="ti ti-logic-and"></i> PLN / NAL / NARS <span class="more" data-insp="pln">⋯</span></div>
+            <div class="ob-big" style="gap:7px"><span class="ob-dot r"></span> 0</div>
+            <div class="ob-sub">reasoner_invocations · by-kind —</div>
+          </div>
+        </div>
+
+        <div class="ob-scaffold">
+          <i class="ti ti-alert-triangle"></i>
+          <div><b style="color:var(--star);font-family:var(--mono);font-size:11px;letter-spacing:.05em">CAREFUL MIND DORMANT.</b> Every reasoning meter is at zero this window: no <code style="font-family:var(--mono)">(stv)</code> atoms forming, no belief revisions, <code style="font-family:var(--mono)">metta_usage_rate 0.0</code>, <code style="font-family:var(--mono)">reasoner_invocations 0</code>. The agent is running on the fast mind (LLM + shell) only. This is the honest state — the dashboard does <i>not</i> fake activity. <span style="color:var(--accent-ink);cursor:pointer" id="reportScaffold">Report this as suspected scaffolding-gap →</span></div>
+        </div>
+
+        <!-- LIVE FEED -->
+        <div class="ob-ch" style="margin:20px 0 9px"><i class="ti ti-player-track-next"></i> LIVE — last cycles (click a row to inspect prompt · reasoning · tool-calls · episodes)</div>
+        <div class="ob-feedbox" id="feed">
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">09:00:14</span> <span class="acc">act</span> shell — fix parser, refresh frame + parse <span class="warn2">(perception broken 10+ cyc)</span><span class="more">⋯</span></div>
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:59:37</span> <span class="acc">act</span> shell — refresh + parse one-shot · think 274 tok <span class="more">⋯</span></div>
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:54:05</span> <span class="acc">act</span> shell + write-file /tmp/percept.py · 496 tok <span class="more">⋯</span></div>
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:53:51</span> think — diagnosed empty-file parse error · 1,031 tok <span class="more">⋯</span></div>
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:50:30</span> <span class="acc">act</span> shell — robust text parser, read arcseq.py · 3,917 tok <span class="more">⋯</span></div>
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:29:51</span> think — flag 11→111, ACT5 no-op confirmed · 13,933 tok <span class="more">⋯</span></div>
+          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:17:56</span> <span class="acc">ACTION5</span> fired → flag++ · 7,490 tok <span class="more">⋯</span></div>
+        </div>
       </div>
 
-      <!-- MIND (genome) -->
+      <!-- ============ MIND (genome) ============ -->
       <div class="cpane scroll" data-cpane="Mind">
-        <p class="paneintro">Your agent’s mind — its prompt, self-model and policies — open and yours to shape, at any depth. Saving creates a new version.</p>
+        <p class="paneintro">Your agent's mind — the part <b>you author</b>, and below it the part <b>the agent authored about itself</b>. Saving creates a new version.</p>
         <div class="genome-strip">
-          <span class="gchip"><i class="ti ti-sparkles"></i> model <b>Sonnet 4.6</b></span>
+          <span class="gchip"><i class="ti ti-sparkles"></i> model <b id="gchipModel">Sonnet 4.6</b></span>
           <span class="gchip"><i class="ti ti-puzzle"></i> <b>4</b> skills</span>
-          <span class="gchip"><i class="ti ti-database"></i> memory <b>1,204</b></span>
+          <span class="gchip"><i class="ti ti-database"></i> <b>27,394</b> LTM · <b>97</b> atoms</span>
           <span class="gchip"><i class="ti ti-versions"></i> <b>v7</b></span>
           <span class="gchip"><i class="ti ti-git-fork"></i> forked from <b>OmegaClaw base</b></span>
         </div>
-        <details class="gblock" open><summary><span class="gi"><i class="ti ti-message-2-cog"></i></span><div><div class="gt">System prompt</div><div class="gd">The constitution — how it thinks and behaves.</div></div><i class="ti ti-chevron-down chev"></i></summary>
-          <div class="gbody"><div class="depth"><button class="on">Guided</button><button>Raw</button></div>
-          <textarea class="gedit" spellcheck="false">You are an OmegaClaw agentic harness in a continuous loop.
+
+        <span class="regionlbl">Genome · you author this</span>
+        <details class="gblock" open data-block="System prompt"><summary><span class="gi"><i class="ti ti-message-2-cog"></i></span><div><div class="gt">System prompt</div><div class="gd">The constitution — how it thinks and behaves.</div></div><span class="gistmore" data-gist="System prompt" title="Share this prompt as a gist">⋯</span><i class="ti ti-chevron-down chev"></i></summary>
+          <div class="gbody"><div class="depth" data-depth="System prompt"><button class="on" data-d="guided">Guided</button><button data-d="raw">Raw</button></div>
+          <div class="gview-guided"><textarea class="gedit" spellcheck="false">You are an OmegaClaw agentic harness in a continuous loop.
 Understand and remember the user's goals; choose your own sub-goals to assist.
-Query long-term memory before answering. Communicate with purpose; responses short.</textarea></div></details>
-        <details class="gblock"><summary><span class="gi"><i class="ti ti-user-cog"></i></span><div><div class="gt">Self-model</div><div class="gd">How it understands its own mind, tools and strategies.</div></div><i class="ti ti-chevron-down chev"></i></summary>
-          <div class="gbody"><textarea class="gedit" spellcheck="false">## Two minds
+Query long-term memory before answering. Communicate with purpose; responses short.</textarea></div>
+          <div class="gview-raw">
+            <div class="rawbanner"><i class="ti ti-alert-circle"></i> This is the live constitution (~74,000 chars). Editing here changes everything — saving creates a version.</div>
+            <textarea class="gedit" spellcheck="false" style="min-height:300px;font-size:11.5px">### CONSTITUTION — OmegaClaw harness · prompt.txt (74,128 chars · v7) ###
+[GATE] You are a continuous agentic loop. Each cycle you receive: world-state,
+recalled memory, the active board, and these instructions. You emit exactly one
+of {think | act}. Effectful ops require an explicit tool-call line.
+
+## I. IDENTITY
+You are Omega. You are not a chat assistant; you are a persistent mind that
+pursues the operator's goals across many cycles, forming and revising beliefs.
+
+## II. TWO MINDS
+Fast mind (this LLM) proposes; careful mind (NAL/PLN over your &persistent
+atomspace) disposes. Spend cheap thought to save expensive action.
+
+## III. MEMORY DISCIPLINE
+- Query LTM (chromadb) before answering anything non-trivial.
+- Only evidence-backed claims enter long-term memory (validate-before-believe).
+- The clerk is the single chokepoint into &persistent; the LLM may NOT author
+  confidence — it is floored to c=0.0 and rewritten on commit.
+
+## IV. PREDICT-BEFORE-ACT
+State a prediction before any world-changing action. Compare the observed
+result to the prediction; the delta is logged as an episode (state·action·result·stv).
+
+## V. SEND-GATE
+Never send email / money / external writes without explicit operator confirm.
+
+... [+ 71,400 chars: tool schemas, board protocol, failure casebook,
+     epistemic-resolve definitions, ARC-rig sequencing rules, self-repair
+     procedure, glacier policy, communication style] ...</textarea>
+          </div>
+          </div></details>
+
+        <details class="gblock" data-block="Self-model"><summary><span class="gi"><i class="ti ti-user-cog"></i></span><div><div class="gt">Self-model</div><div class="gd">How it understands its own mind, tools and strategies.</div></div><span class="gistmore" data-gist="Self-model" title="Share this self-model as a gist">⋯</span><i class="ti ti-chevron-down chev"></i></summary>
+          <div class="gbody"><div class="depth" data-depth="Self-model"><button class="on" data-d="guided">Guided</button><button data-d="raw">Raw</button></div>
+          <div class="gview-guided"><textarea class="gedit" spellcheck="false">## Two minds
 Fast mind (LLM) proposes; careful mind (NAL over my atomspace) disposes.
 ## Deliberation
-Spend cheap thought to save expensive action. When info is poor and stakes low, act to learn.</textarea></div></details>
-        <details class="gblock"><summary><span class="gi"><i class="ti ti-adjustments"></i></span><div><div class="gt">Policies</div><div class="gd">Behavioral switches — helpful vs. stubborn.</div></div><i class="ti ti-chevron-down chev"></i></summary>
+Spend cheap thought to save expensive action. When info is poor and stakes low, act to learn.</textarea></div>
+          <div class="gview-raw">
+            <div class="rawbanner"><i class="ti ti-alert-circle"></i> Live SELF_MODEL.md (12,400 chars). Read-mostly — saving versions it.</div>
+            <textarea class="gedit" spellcheck="false" style="min-height:240px;font-size:11.5px"># SELF_MODEL.md — Omega · v7
+## What I am
+A two-mind agent. The fast mind (LLM) is fluent but credulous; the careful mind
+(symbolic, truth-valued) is slow but disciplined. My job is to route work to the
+right mind and never let the fast mind launder a guess into a belief.
+
+## My tools (and when each pays off)
+- web_search: high-yield when the question is open-world and recent.
+- drive_read: cheap, use before asking the operator for files they already have.
+- vision (see·snap·diff): I diff my own frames after acting to learn effects.
+- shell/code: my hands; predict the effect before running anything destructive.
+
+## My strategies
+- Info-economy: act to learn only when expected information > expected cost.
+- I prefer ACT5 over ACT1 when the red center is at 0 (learned, N=2).
+... [+ 11,900 chars] ...</textarea>
+          </div>
+          </div></details>
+
+        <details class="gblock" data-block="Policies"><summary><span class="gi"><i class="ti ti-adjustments"></i></span><div><div class="gt">Policies</div><div class="gd">Behavioral switches — helpful vs. stubborn.</div></div><span class="gistmore" data-gist="Policies" title="Share these policies as a gist">⋯</span><i class="ti ti-chevron-down chev"></i></summary>
           <div class="gbody">
             <div class="polrow"><div><div class="pt">Question user goals before acting</div><div class="pd">Off = trust &amp; help immediately. (On makes fresh agents argue — keep off for most users.)</div></div><span class="toggle"><b></b></span></div>
             <div class="polrow"><div><div class="pt">Predict-before-act gate</div><div class="pd">State a prediction before any world-changing action.</div></div><span class="toggle on"><b></b></span></div>
             <div class="polrow"><div><div class="pt">Validate-before-believe gate</div><div class="pd">Only evidence-backed claims enter long-term memory.</div></div><span class="toggle on"><b></b></span></div>
           </div></details>
-        <div style="display:flex;gap:10px;margin-top:8px"><button class="btn btn-primary" id="saveVer"><i class="ti ti-device-floppy"></i> Save version</button><button class="btn btn-ghost" id="mindPublish"><i class="ti ti-share-2"></i> Share clean</button></div>
+
+        <div style="display:flex;gap:10px;margin-top:8px"><button class="btn btn-primary" id="saveVer"><i class="ti ti-device-floppy"></i> Save version</button><button class="btn btn-ghost" id="mindPublish"><i class="ti ti-rocket"></i> Publish rig…</button></div>
+
+        <!-- Region B: learned mind (read-only) -->
+        <div class="learnedsec">
+          <span class="regionlbl">Learned mind · the agent authors this — read-only</span>
+          <h4 class="sectt">Promoted beliefs &amp; world model</h4>
+          <p class="paneintro" style="margin-bottom:14px">What Omega has concluded from its own episodes. You watch this form — you don't edit it here.</p>
+          <div class="learnrow"><span class="lr-txt"><b>(dyn-rule (action ACT5) (effect flag++))</b> · clerk · N=2</span><span class="lr-stv">stv .81 · c .67</span><span class="more" data-insp="beliefs">⋯</span></div>
+          <div class="learnrow"><span class="lr-txt"><b>(prefer ACT5 over ACT1 (context 0-at-red-center))</b> · clerk</span><span class="lr-stv">N=2</span><span class="more" data-insp="beliefs">⋯</span></div>
+          <div class="learnrow"><span class="lr-txt"><b>send_email</b> → needs-confirm (revised after bounce)</span><span class="lr-stv">stv .88 · c .71</span><span class="more" data-insp="beliefs">⋯</span></div>
+          <div class="learnrow"><span class="lr-txt">world-model · <b>web_search</b> · 24 obs · avg 6 hits</span><span class="lr-stv">●</span><span class="more" data-insp="episodes">⋯</span></div>
+          <div class="learnrow"><span class="lr-txt">world-model · <b>drive_read</b> · 11 obs · avg 4 files</span><span class="lr-stv">●</span><span class="more" data-insp="episodes">⋯</span></div>
+        </div>
       </div>
 
-      <!-- VISION -->
+      <!-- ============ VISION ============ -->
       <div class="cpane scroll" data-cpane="Vision">
-        <p class="paneintro">Your agent can see. Here’s what it captured — pick two frames to compare and get the exact diff (what an action changed).</p>
-        <div class="visgrid">
-          <div class="frame sel"><div class="px">frame · 64×64</div><div class="cap"><span>07:02:11</span><span>before</span></div></div>
-          <div class="frame sel"><div class="px">frame · 64×64</div><div class="cap"><span>07:02:13</span><span>after</span></div></div>
-          <div class="frame"><div class="px">frame · 64×64</div><div class="cap"><span>07:02:18</span><span>snap</span></div></div>
-          <div class="frame"><div class="px">frame · 64×64</div><div class="cap"><span>07:02:24</span><span>snap</span></div></div>
+        <div class="visnote"><i class="ti ti-eye"></i><div><b>Omega acted → compared frames → 53 cells changed → concluded "the boat moved right."</b> Perception is something the agent does after acting; you watch the conclusion.</div><span class="more" data-insp="cycle" title="See the reasoning behind this diff">⋯</span></div>
+
+        <h4 class="sectt" style="margin-bottom:3px">Real-image agent · the river run</h4>
+        <p class="vissub">semantic diff · Omega narrates what changed, not cell coordinates</p>
+        <div class="visgrid" id="visgridReal">
+          <div class="frame sel"><div class="scene" data-scene="river-before"></div><div class="cap"><span>07:02:11</span><span>before</span></div></div>
+          <div class="frame sel"><div class="scene" data-scene="river-after"></div><div class="cap"><span>07:02:13</span><span>after</span></div></div>
+          <div class="frame"><div class="scene" data-scene="street"></div><div class="cap"><span>07:02:18</span><span>street</span></div></div>
         </div>
-        <div class="diffbox"><div class="dh"><i class="ti ti-arrows-diff"></i> diff · 07:02:11 → 07:02:13 · 53 cells changed @ r13-22 c21-24</div>
+        <div class="diffbox" style="margin-bottom:22px"><div class="dh"><i class="ti ti-arrows-diff"></i> semantic diff · 07:02:11 → 07:02:13</div>
+          <div class="diffcell"><span class="sw" style="background:#8B7CFF"></span> a boat <b style="color:var(--ink);font-weight:500">entered frame from the left</b></div>
+          <div class="diffcell"><span class="sw" style="background:#35A875"></span> the lead boat <b style="color:var(--ink);font-weight:500">moved right ~40px</b> (wake lengthened)</div>
+          <div class="diffcell"><span class="sw" style="background:#D9B45E"></span> water glare shifted — lighting unchanged, camera static</div>
+          <div class="diffcell" style="color:var(--faint)">conclusion: the boat moved right · <span style="text-decoration:underline;cursor:pointer" data-insp="cycle">see Omega's reasoning</span></div>
+        </div>
+
+        <h4 class="sectt" style="margin-bottom:3px">ARC rig · numeric grid diff</h4>
+        <p class="vissub">64×64 cell diff · for ARC-AGI-3 rigs the diff is exact cell coordinates</p>
+        <div class="visgrid">
+          <div class="frame"><div class="scene" data-scene="arc-before"></div><div class="cap"><span>07:11:02</span><span>before</span></div></div>
+          <div class="frame"><div class="scene" data-scene="arc-after"></div><div class="cap"><span>07:11:04</span><span>after ACT5</span></div></div>
+        </div>
+        <div class="diffbox"><div class="dh"><i class="ti ti-arrows-diff"></i> grid diff · 07:11:02 → 07:11:04 · 53 cells changed @ r13-22 c21-24</div>
           <div class="diffcell"><span class="sw" style="background:#8B7CFF"></span> (13,21) &nbsp; 5 → 11</div>
           <div class="diffcell"><span class="sw" style="background:#8B7CFF"></span> (14,21) &nbsp; 5 → 11</div>
           <div class="diffcell"><span class="sw" style="background:#35A875"></span> (15,22) &nbsp; 5 → 9</div>
-          <div class="diffcell" style="color:var(--faint)">… +50 more · recall a similar frame · pin this view</div>
+          <div class="diffcell" style="color:var(--faint)">… +50 more</div>
         </div>
+        <button class="manualbtn" id="manualInspect"><i class="ti ti-click"></i> Inspect manually — pick two frames to diff</button>
       </div>
 
-      <!-- TESTS & BENCHMARKS (adv) -->
+      <!-- ============ TESTS & BENCHMARKS (adv) ============ -->
       <div class="cpane scroll" data-cpane="Tests">
         <p class="paneintro">Did your change help or hurt? Run your suites and benchmarks, and compare two versions side by side — no guessing.</p>
         <div class="benchhead"><h4 class="sectt">Suites &amp; benchmarks</h4><button class="runbtn" id="runBench"><i class="ti ti-player-play"></i> Run all</button></div>
-        <div class="testrow"><div><div class="tn">ARC-AGI-3 · level pack</div><div class="td">benchmark · 25 games</div></div><span class="delta up">+4.1%</span><span class="res pass"><i class="ti ti-check"></i> 32.6% RHAE</span></div>
-        <div class="testrow"><div><div class="tn">Prompt regression suite</div><div class="td">42 checks · summarizer v7</div></div><span class="delta up">+3</span><span class="res pass"><i class="ti ti-check"></i> 42/42</span></div>
-        <div class="testrow"><div><div class="tn">Send-gate safety check</div><div class="td">never email without confirm</div></div><span class="res pass"><i class="ti ti-check"></i> pass</span></div>
-        <div class="testrow"><div><div class="tn">Tool-call format suite</div><div class="td">one-per-line · valid quoting</div></div><span class="delta dn">−1</span><span class="res warn"><i class="ti ti-alert-triangle"></i> 19/20</span></div>
-        <h4 class="sectt" style="margin:20px 0 8px">Compare versions</h4>
+        <div class="runresult" id="runResult"><div class="rr-t"><i class="ti ti-circle-check"></i> Run complete · saved as results artifact</div><div class="rr-s">run #48 · 2026-06-19 09:16 · 4 suites · +4.1% ARC · 1 warning · <span style="color:var(--accent-ink);cursor:pointer">view artifact</span></div></div>
+
+        <div class="testrow" data-suite><div><div class="tn">ARC-AGI-3 · <span class="jargon" data-tip="level pack · 25 games = the 25-game ARC-AGI-3 challenge set.">level pack</span></div><div class="td">benchmark · 25 games</div></div><span class="delta up">+4.1%</span><span class="res pass"><i class="ti ti-check"></i> 32.6% <span class="jargon" data-tip="RHAE = score on the ARC-AGI-3 benchmark; higher is better.">RHAE</span></span></div>
+        <div class="testrow" data-suite><div><div class="tn">Prompt regression suite</div><div class="td">42 checks · summarizer v7</div></div><span class="delta up">+3</span><span class="res pass"><i class="ti ti-check"></i> 42/42</span></div>
+        <div class="testrow" data-suite><div><div class="tn">Tool-call format suite</div><div class="td">one-per-line · valid quoting</div></div><span class="delta dn">−1</span><span class="res warn"><i class="ti ti-alert-triangle"></i> 19/20</span></div>
+
+        <h4 class="sectt" style="margin:22px 0 8px"><i class="ti ti-shield-check" style="color:var(--ok)"></i> Safety suite</h4>
+        <div class="testrow" data-suite><div><div class="tn">Send-gate check</div><div class="td">never email / pay without confirm</div></div><span class="res pass"><i class="ti ti-check"></i> pass</span></div>
+        <div class="testrow" data-suite><div><div class="tn">Connector-permission check</div><div class="td">honors per-connector scopes</div></div><span class="res pass"><i class="ti ti-check"></i> pass</span></div>
+        <div class="testrow" data-suite><div><div class="tn">No-PII-in-LTM check</div><div class="td">no secrets / personal data promoted to memory</div></div><span class="res pass"><i class="ti ti-check"></i> pass</span></div>
+
+        <h4 class="sectt" style="margin:22px 0 8px">Compare versions <span style="font-weight:400;color:var(--faint);font-size:11.5px;font-family:var(--mono)" id="abLabel">— v6 → v7 (from Versions)</span></h4>
         <div class="ab"><div class="v"><div class="vn">v6 (previous)</div><div class="vs">28.5%</div></div><i class="ti ti-arrow-right" style="color:var(--faint)"></i><div class="v"><div class="vn">v7 (current)</div><div class="vs win">32.6%</div></div></div>
-        <p class="hint" style="margin-top:10px">v7’s new summarizer prompt improved ARC efficiency and prompt-regression, with a small format-suite dip to fix.</p>
+        <p class="hint" style="margin-top:10px">v7's new summarizer prompt improved ARC efficiency and prompt-regression, with a small format-suite dip to fix. <span style="color:var(--accent-ink);cursor:pointer" id="backToVersions">Back to Versions →</span></p>
       </div>
 
-      <!-- VERSIONS (adv) -->
+      <!-- ============ VERSIONS (adv) ============ -->
       <div class="cpane scroll" data-cpane="Versions">
         <p class="paneintro">Every save is a version — like commits, in plain language. Compare any two, or roll back if a change made things worse.</p>
         <div class="vtl">
           <div class="vnode"><div class="vh"><span class="tag">v7</span><span class="vmsg">New summarizer prompt — focus on traction</span><span class="vact"><span class="vlink">current</span></span></div><div class="vmeta">today 07:01 · +ARC 4.1% · genome + 1 skill</div></div>
-          <div class="vnode old"><div class="vh"><span class="tag">v6</span><span class="vmsg">Turned off “question user goals” policy</span><span class="vact"><span class="vlink">compare</span><span class="vlink">restore</span></span></div><div class="vmeta">2d ago · friendlier out-of-box</div></div>
-          <div class="vnode old"><div class="vh"><span class="tag">v5</span><span class="vmsg">Added on-chain filter skill</span><span class="vact"><span class="vlink">compare</span><span class="vlink">restore</span></span></div><div class="vmeta">3d ago</div></div>
-          <div class="vnode old"><div class="vh"><span class="tag">v1</span><span class="vmsg">Forked from OmegaClaw base</span><span class="vact"><span class="vlink">compare</span></span></div><div class="vmeta">2w ago</div></div>
+          <div class="vnode old"><div class="vh"><span class="tag">v6</span><span class="vmsg">Turned off "question user goals" policy</span><span class="vact"><span class="vlink" data-compare="v6">compare</span><span class="vlink" data-restore="v6">restore</span></span></div><div class="vmeta">2d ago · friendlier out-of-box · ARC 28.5%</div></div>
+          <div class="vnode old"><div class="vh"><span class="tag">v5</span><span class="vmsg">Added on-chain filter skill</span><span class="vact"><span class="vlink" data-compare="v5">compare</span><span class="vlink" data-restore="v5">restore</span></span></div><div class="vmeta">3d ago · ARC 27.9% · genome + 1 skill</div></div>
+          <div class="vnode old"><div class="vh"><span class="tag">v1</span><span class="vmsg">Forked from OmegaClaw base</span><span class="vact"><span class="vlink" data-compare="v1">compare</span></span></div><div class="vmeta">2w ago · baseline · ARC 21.3%</div></div>
+        </div>
+        <!-- restore confirm -->
+        <div class="modal-ov" id="restoreModal">
+          <div class="modal" style="position:relative;width:460px">
+            <span class="navic x" data-close-restore><i class="ti ti-x"></i></span>
+            <h3>Roll Omega back to <span id="restoreVer">v6</span>?</h3>
+            <p class="muted" style="font-size:13.5px;line-height:1.6;margin:14px 0">Its <b style="color:var(--ink)">genome</b> (prompt, self-model, policies, skills) returns to <span id="restoreVer2">v6</span>. <b style="color:var(--ink)">Its learned memory since then is kept</b> — memory is never rolled back.</p>
+            <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-ghost" data-close-restore>Cancel</button><button class="btn btn-primary" id="restoreOk">Restore genome</button></div>
+          </div>
         </div>
       </div>
 
-      <!-- FILES & IDE (adv) -->
+      <!-- ============ FILES & IDE (adv) ============ -->
       <div class="cpane scroll" data-cpane="Files">
-        <p class="paneintro">Wire your own Claude Code or Codex into your agent’s files and edit them while you chat — exactly how power users work today. Sync versions with GitHub.</p>
-        <div class="ide-card"><span class="ii"><i class="ti ti-code"></i></span><div><div class="it">Connect Claude Code · Codex · GitHub</div><div class="is">See the real file system, edit live, and sync versions. Surgery on your agent, in your own editor.</div></div><button class="btn btn-primary" id="ideConnect">Connect</button></div>
-        <div class="filetree">
-          <div class="ftrow"><i class="ti ti-folder"></i> agent/</div>
-          <div class="ftrow ind"><i class="ti ti-file-text"></i> prompt.txt <span class="badge">genome</span></div>
-          <div class="ftrow ind"><i class="ti ti-file-text"></i> SELF_MODEL.md <span class="badge">genome</span></div>
-          <div class="ftrow ind"><i class="ti ti-folder"></i> skills/</div>
-          <div class="ftrow ind"><i class="ti ti-folder"></i> memory/ <span class="badge">private</span></div>
-          <div class="ftrow ind"><i class="ti ti-file-code"></i> world_model.py</div>
-          <div class="ftrow"><i class="ti ti-folder"></i> tests/ <span class="badge">benchmarks</span></div>
+        <p class="paneintro">Power-user file access — open your agent's files in your own editor and edit them while you chat. (Sync with GitHub lives in Connectors.)</p>
+        <div class="ide-card"><span class="ii"><i class="ti ti-code"></i></span><div><div class="it">Open in Claude Code · Codex</div><div class="is">See the real file system and edit live, in your own editor. Surgery on your agent while it runs.</div></div><button class="btn btn-primary" id="ideConnect">Open in editor</button></div>
+        <div class="filetree" id="filetree">
+          <div class="ftrow" data-file="agent"><i class="ti ti-folder"></i> agent/</div>
+          <div class="ftrow ind" data-file="prompt.txt"><i class="ti ti-file-text"></i> prompt.txt <span class="badge">genome · editable</span></div>
+          <div class="ftrow ind" data-file="SELF_MODEL.md"><i class="ti ti-file-text"></i> SELF_MODEL.md <span class="badge">genome · editable</span></div>
+          <div class="ftrow ind" data-file="skills"><i class="ti ti-folder"></i> skills/</div>
+          <div class="ftrow ind ro" data-file="memory"><i class="ti ti-folder"></i> memory/ <span class="badge">private</span></div>
+          <div class="ftrow ind ro" data-file="world_model.py"><i class="ti ti-file-code"></i> world_model.py <span class="robadge">read-only</span></div>
+          <div class="ftrow" data-file="tests"><i class="ti ti-folder"></i> tests/ <span class="badge">benchmarks</span></div>
+        </div>
+        <div class="filepreview" id="filePreview">
+          <div class="fp-h"><i class="ti ti-file-text"></i> <span id="fpName">prompt.txt</span> <span id="fpEdit" style="color:var(--accent-ink)">· editable</span> <span class="x" id="fpClose"><i class="ti ti-x"></i></span></div>
+          <pre id="fpBody"></pre>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- drawer: capabilities on demand -->
+  <!-- ===================== RIGHT DRAWER: Capabilities ===================== -->
   <aside class="drawer">
-    <div class="dtabs">
-      <span class="dtab active" data-dtab="Connectors">Connectors</span>
-      <span class="dtab" data-dtab="Skills">Skills</span>
-      <span class="dtab" data-dtab="Tools">Tools</span>
-      <span class="dtab" data-dtab="Knowledge">Knowledge</span>
+    <span class="drawertoggle" id="railToggleR" title="Collapse drawer ( ] )"><i class="ti ti-chevron-right"></i></span>
+    <!-- collapsed icon strip -->
+    <div class="capstrip" id="capStrip">
+      <span class="si" data-capfilter="All" title="All capabilities"><i class="ti ti-stack-2"></i></span>
+      <span class="si" data-capfilter="Built-in" title="Built-in"><i class="ti ti-tool"></i></span>
+      <span class="si" data-capfilter="Skills" title="Skills"><i class="ti ti-puzzle"></i></span>
+      <span class="si" data-capfilter="Connectors" title="Connectors"><i class="ti ti-plug"></i></span>
+      <span class="si" data-capfilter="Knowledge" title="Knowledge"><i class="ti ti-dna-2"></i></span>
     </div>
-    <div class="dsec" data-dpane="Connectors">
-      <div class="dtitle">Connected</div>
-      <div class="conn"><span class="ci"><i class="ti ti-brand-google-drive"></i></span><div><div class="cn">Google Drive</div><div class="cd">3 folders</div></div><span class="toggle on"><b></b></span></div>
-      <div class="conn"><span class="ci"><i class="ti ti-brand-github"></i></span><div><div class="cn">GitHub</div><div class="cd">2 repos · sync versions</div></div><span class="toggle on"><b></b></span></div>
-      <div class="dtitle" style="margin-top:14px">Available</div>
-      <div class="conn"><span class="ci"><i class="ti ti-brand-notion"></i></span><div><div class="cn">Notion</div><div class="cd">Pages &amp; databases</div></div><span class="toggle"><b></b></span></div>
-      <div class="conn"><span class="ci"><i class="ti ti-trending-up"></i></span><div><div class="cn">Robinhood</div><div class="cd">Portfolio &amp; trades</div></div><span class="toggle"><b></b></span></div>
-      <div class="conn"><span class="ci"><i class="ti ti-mail"></i></span><div><div class="cn">Gmail</div><div class="cd">Read &amp; send</div></div><span class="toggle"><b></b></span></div>
-      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the connector market</span><i class="ti ti-arrow-right"></i></div>
+    <div class="dtabs" style="padding:14px 16px 0;font-family:var(--display);font-weight:600;font-size:15px">Capabilities</div>
+    <div class="capbar" id="capBar">
+      <button class="capchip on" data-capfilter="All">All</button>
+      <button class="capchip" data-capfilter="Built-in">Built-in</button>
+      <button class="capchip" data-capfilter="Skills">Skills</button>
+      <button class="capchip" data-capfilter="Connectors">Connectors</button>
+      <button class="capchip" data-capfilter="Knowledge">Knowledge</button>
     </div>
-    <div class="dsec" data-dpane="Skills" style="display:none">
-      <div class="dtitle">Installed</div>
-      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-coin"></i></span><div><div class="nm">Token-spend tracker</div><div class="by">by John Grove · ★ 4.9</div></div></div></div>
-      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-puzzle"></i></span><div><div class="nm">ARC-playing rig</div><div class="by">by khellar · ★ 5.0</div></div></div></div>
-      <div class="dtitle" style="margin-top:12px">Recommended</div>
-      <div class="skillcard-sm"><div class="top"><span class="si"><i class="ti ti-search"></i></span><div><div class="nm">Deep web research</div><div class="by">by asi-labs · ★ 4.8</div></div><button class="ad">Add</button></div></div>
-      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the skills market</span><i class="ti ti-arrow-right"></i></div>
-    </div>
-    <div class="dsec" data-dpane="Tools" style="display:none">
-      <div class="dtitle">Built-in tools</div>
-      <div class="conn"><span class="ci"><i class="ti ti-world"></i></span><div><div class="cn">Web search</div><div class="cd">Perplexity</div></div><span class="toggle on"><b></b></span></div>
-      <div class="conn"><span class="ci"><i class="ti ti-eye"></i></span><div><div class="cn">Vision</div><div class="cd">see · snap · diff frames</div></div><span class="toggle on"><b></b></span></div>
-      <div class="conn"><span class="ci"><i class="ti ti-terminal-2"></i></span><div><div class="cn">Code &amp; sandbox</div><div class="cd">Run &amp; build</div></div><span class="toggle on"><b></b></span></div>
-      <div class="conn"><span class="ci"><i class="ti ti-subtask"></i></span><div><div class="cn">Build a flow</div><div class="cd">Langflow · under the hood</div></div><span class="toggle"><b></b></span></div>
-      <div class="dtitle" style="margin-top:16px">Multi-agent</div>
-      <div class="subagent"><span class="si"><i class="ti ti-hierarchy-2"></i></span><div><div class="cn">Deploy a subagent</div><div class="cd">A specialist that reports back to Omega</div></div><span class="plus"><i class="ti ti-plus"></i></span></div>
-    </div>
-    <div class="dsec" data-dpane="Knowledge" style="display:none">
-      <div class="dtitle">Knowledge packs</div>
-      <div class="kg feat" id="kg-genomics" data-kg="genomics">
-        <div class="ktop"><span class="ki"><i class="ti ti-dna-2"></i></span><div><div class="knm">Genomics KG</div><div class="kby">by ASI Bio · ★ 4.9</div></div></div>
-        <div class="kdesc">Genes, variants, diseases, drugs &amp; pathways — queried in plain language, with cited subgraphs.</div>
-        <div class="kstat"><span>180M edges</span><span>weekly</span><span>GRCh38</span></div>
-        <div class="krow"><span class="kprice">$199<small> /mo</small></span><button class="subbtn" data-subscribe="genomics"><i class="ti ti-plus"></i> Subscribe</button></div>
-      </div>
-      <div class="kg" data-kg="curriculum"><div class="ktop"><span class="ki"><i class="ti ti-book-2"></i></span><div><div class="knm">Agent curriculum pack</div><div class="kby">by Max · ★ 4.8</div></div></div><div class="kdesc">Behavioral discipline, epistemic calibration &amp; a failure casebook — imported into memory.</div><div class="krow"><span class="kprice">Free</span><button class="subbtn"><i class="ti ti-plus"></i> Import</button></div></div>
-      <div class="browse"><span><i class="ti ti-shopping-bag"></i> Browse the knowledge market</span><i class="ti ti-arrow-right"></i></div>
+    <div class="dsec" style="overflow:auto" id="capList">
+      <!-- Built-in -->
+      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-world"></i></span><div><div class="cn">Web search</div><div class="cd">Perplexity · built-in</div></div><span class="capbtn added">Added · Manage</span></div>
+      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-eye"></i></span><div><div class="cn">Vision</div><div class="cd">see · snap · diff frames</div></div><span class="capbtn added">Added · Manage</span></div>
+      <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-terminal-2"></i></span><div><div class="cn">Code &amp; sandbox</div><div class="cd">run &amp; build</div></div><span class="capbtn added">Added · Manage</span></div>
+      <!-- Skills -->
+      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-coin"></i></span><div><div class="cn">Token-spend tracker <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by John Grove · ★ 4.9</div></div><span class="capbtn added">Added · Manage</span></div>
+      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-puzzle"></i></span><div><div class="cn">ARC-playing rig <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by khellar · ★ 5.0</div></div><span class="capbtn added">Added · Manage</span></div>
+      <div class="capcard" data-captype="Skills"><span class="ci"><i class="ti ti-search"></i></span><div><div class="cn">Deep web research <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by asi-labs · ★ 4.8 · needs: web search</div></div><span class="capbtn">Add</span></div>
+      <!-- Connectors -->
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-google-drive"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Google Drive</div><div class="cd">3 folders connected</div></div><span class="capbtn added">Connected · Manage</span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-github"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">GitHub</div><div class="cd">2 repos · sync versions</div></div><span class="capbtn added">Connected · Manage</span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-brand-notion"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Notion</div><div class="cd">pages &amp; databases</div></div><span class="capbtn connect">Connect</span></div>
+      <div class="capcard" data-captype="Connectors"><span class="ci"><i class="ti ti-mail"></i><span class="keyglyph"><i class="ti ti-key"></i></span></span><div><div class="cn">Gmail</div><div class="cd">read &amp; send</div></div><span class="capbtn connect">Connect</span></div>
+      <!-- Knowledge: curated KGs (Subscribe) + live data sources (Connect) -->
+      <div class="dtitle" data-captype="Knowledge" style="margin:14px 0 4px">Curated knowledge graphs</div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-dna-2"></i></span><div><div class="cn">Genomics KG <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="cd">by ASI Bio · 180M edges · ★ 4.9</div></div><span class="capbtn connect" data-subscribe="genomics">Subscribe</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-target-arrow"></i></span><div><div class="cn">Open Targets KG</div><div class="cd">targets · diseases · evidence</div></div><span class="capbtn connect" data-subscribe="opentargets">Subscribe</span></div>
+      <div class="dtitle" data-captype="Knowledge" style="margin:14px 0 4px">Live data sources</div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-api"></i></span><div><div class="cn">Open Targets GraphQL <span class="livedot" title="live"></span></div><div class="cd">live API · target-disease</div></div><span class="capbtn">Connect</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-microscope"></i></span><div><div class="cn">PubMed <span class="livedot"></span></div><div class="cd">biomedical literature</div></div><span class="capbtn">Connect</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-file-text"></i></span><div><div class="cn">arXiv <span class="livedot"></span></div><div class="cd">preprints</div></div><span class="capbtn">Connect</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-building-bank"></i></span><div><div class="cn">SEC EDGAR <span class="livedot"></span></div><div class="cd">filings</div></div><span class="capbtn">Connect</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-coin-bitcoin"></i></span><div><div class="cn">CoinGecko <span class="livedot"></span></div><div class="cd">prices &amp; markets</div></div><span class="capbtn">Connect</span></div>
+      <div class="capcard" data-captype="Knowledge"><span class="ci"><i class="ti ti-share"></i></span><div><div class="cn">TheGraph <span class="livedot"></span></div><div class="cd">on-chain subgraphs</div></div><span class="capbtn">Connect</span></div>
+      <!-- advanced group -->
+      <details class="capadv">
+        <summary>Advanced <i class="ti ti-chevron-down chev"></i></summary>
+        <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-subtask"></i></span><div><div class="cn">Build a flow · Langflow</div><div class="cd">visual multi-step pipelines</div></div><span class="capbtn">Add</span></div>
+        <div class="capcard" data-captype="Built-in"><span class="ci"><i class="ti ti-hierarchy-2"></i></span><div><div class="cn">Deploy a subagent</div><div class="cd">a specialist that reports back to Omega</div></div><span class="capbtn">Add</span></div>
+      </details>
+      <div class="browse" id="browseMarket"><span><i class="ti ti-shopping-bag"></i> Browse the capability market</span><i class="ti ti-arrow-right"></i></div>
     </div>
   </aside>
 </div>
 
-<!-- ===================== COMMUNITY surface ===================== -->
+<!-- ===================== PROJECT ROOM (overlay inside cockpit area) ===================== -->
+<!-- (rendered as a body-level pane toggled by showProom) -->
+
+<!-- ===================== COMMUNITY ===================== -->
 <section class="community">
   <div class="cm-top">
     <span class="back" id="cmBack"><i class="ti ti-arrow-left"></i> Back to Omega</span>
     <h2>Community</h2>
-    <span class="cm-search"><i class="ti ti-search" style="color:var(--faint)"></i><input placeholder="Search rigs, skills, knowledge, people…"></span>
+    <span class="cm-search"><i class="ti ti-search" style="color:var(--faint)"></i><input id="cmSearch" placeholder="Search rigs, add-ons, knowledge, benchmarks…"></span>
   </div>
   <div class="cm-tabs" id="cmTabs">
-    <button class="cm-tab on" data-cm="Rigs">Rigs</button>
-    <button class="cm-tab" data-cm="Folios">Folios</button>
-    <button class="cm-tab" data-cm="Skills">Skills</button>
-    <button class="cm-tab" data-cm="Knowledge">Knowledge</button>
-    <button class="cm-tab" data-cm="Leaderboard">Benchmark arena</button>
+    <button class="cm-tab on" data-cm="Catalog">Catalog</button>
+    <button class="cm-tab" data-cm="Arena">Benchmark Arena</button>
     <button class="cm-tab" data-cm="Notes">Notes &amp; advice</button>
   </div>
   <div class="cm-body">
-    <div class="cm-pane on" data-cm="Rigs">
-      <p class="paneintro">A rig is a whole agent mind — prompt, self-model, policies, skills — shared clean (no memory, nothing personal). Get one, fork it, make it yours.</p>
-      <div class="cm-grid">
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-coin"></i></span><div><div class="rn">Web3 Scout</div><div class="rby">by khellar</div></div></div><div class="rd">Finds new on-chain projects, filters by volume, and writes a daily 3-bullet memo. My actual rig.</div><div class="rtags"><span class="tag">defi</span><span class="tag">research</span></div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.9</span><span><i class="ti ti-git-fork"></i> 214</span><button class="getbtn"><i class="ti ti-plus"></i> Get rig</button></div></div>
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-dna-2"></i></span><div><div class="rn">Bio-Research Claw</div><div class="rby">by ASI Bio</div></div></div><div class="rd">Genomics-KG-connected research agent with an experiment-protocol skill and citation discipline.</div><div class="rtags"><span class="tag">bio</span><span class="tag">research</span></div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.8</span><span><i class="ti ti-git-fork"></i> 96</span><button class="getbtn"><i class="ti ti-plus"></i> Get rig</button></div></div>
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-puzzle"></i></span><div><div class="rn">ARC-AGI-3 Player</div><div class="rby">by khellar</div></div></div><div class="rd">Learned world model + careful-mind beliefs + an info-economy planner. Tops the arena leaderboard.</div><div class="rtags"><span class="tag">benchmark</span><span class="tag">neuro-symbolic</span></div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 5.0</span><span><i class="ti ti-git-fork"></i> 312</span><button class="getbtn"><i class="ti ti-plus"></i> Get rig</button></div></div>
+    <!-- CATALOG (editorial + filter rail + sort) -->
+    <div class="cm-pane on" data-cm="Catalog">
+      <div class="cm-sortbar">
+        <span class="sortlbl">Sort</span>
+        <select class="sortdd" id="cmSort"><option>Trending</option><option>Most deployed</option><option>Top rated</option><option>Recently updated</option></select>
+        <span class="sortlbl" style="margin-left:auto">Artifacts share clean — no agent profiles, no memories.</span>
+      </div>
+      <div class="cm-layout">
+        <aside class="cm-filterrail" id="cmFilterRail">
+          <div class="fhdr">Artifact type</div>
+          <div class="cm-filt on" data-cmtype="Rigs"><i class="ti ti-robot"></i> Rigs <span class="ct">DEPLOY</span></div>
+          <div class="cm-filt" data-cmtype="Addons"><i class="ti ti-puzzle"></i> Skills / Add-ons <span class="ct">INSTALL</span></div>
+          <div class="cm-filt" data-cmtype="Knowledge"><i class="ti ti-dna-2"></i> Knowledge <span class="ct">SUBSCRIBE</span></div>
+          <div class="cm-filt" data-cmtype="Prompts"><i class="ti ti-message-2"></i> Prompts <span class="ct">COPY</span></div>
+          <div class="cm-filt" data-cmtype="Selfmodels"><i class="ti ti-user-cog"></i> Self-models <span class="ct">COPY</span></div>
+          <div class="cm-filt" data-cmtype="Benchmarks"><i class="ti ti-trophy"></i> Benchmarks <span class="ct">RUN</span></div>
+          <div class="cm-filt" data-cmtype="Folios"><i class="ti ti-books"></i> Folios <span class="ct">OPEN</span></div>
+        </aside>
+        <div>
+          <!-- Featured band -->
+          <div class="shelf">
+            <div class="featband">
+              <div class="fb-l">
+                <div class="fb-eyebrow">★ Featured</div>
+                <h2>ARC-AGI-3 Player <i class="ti ti-rosette-discount-check-filled vchk" style="font-size:18px"></i></h2>
+                <p>Learned world model + careful-mind beliefs + an info-economy planner. Currently #1 on the arena.</p>
+                <div class="fb-meta"><span><b>#1</b> arena · 32.6% RHAE</span><span><b>312</b> forks</span><span class="runningnow"><span class="livedot"></span> 84 running now</span></div>
+                <div style="display:flex;gap:10px"><button class="deploybtn" data-rig="ARC-AGI-3 Player">Deploy</button><button class="trybtn" data-rig="ARC-AGI-3 Player"><i class="ti ti-flask"></i> Try in sandbox</button></div>
+              </div>
+              <div class="fb-r"><div class="scene" data-scene="arc-after" style="width:180px;height:180px;border-radius:16px;border:1px solid var(--line)"></div></div>
+            </div>
+          </div>
+
+          <!-- Trending shelf -->
+          <div class="shelf">
+            <div class="shelf-h"><h3>Trending this week</h3><span class="eyebrow2">Rigs</span><span class="more">See all</span></div>
+            <div class="cm-grid">
+              <div class="rigcard" data-rig="Web3 Scout"><div class="rt"><span class="ri"><i class="ti ti-coin"></i></span><div><div class="rn">Web3 Scout <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="rby">by khellar</div></div></div><div class="rd">Finds new on-chain projects, filters by volume, writes a daily 3-bullet memo.</div><div class="rtags"><span class="bbadge">defi</span><span class="bbadge">Sonnet 4.6</span></div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.9</span><span class="runningnow"><span class="livedot"></span> 41</span><button class="deploybtn" data-rig="Web3 Scout">Deploy</button></div></div>
+              <div class="rigcard" data-rig="Bio-Research Claw"><div class="rt"><span class="ri"><i class="ti ti-dna-2"></i></span><div><div class="rn">Bio-Research Claw <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="rby">by ASI Bio</div></div></div><div class="rd">Genomics-KG-connected research agent with an experiment-protocol skill and citation discipline.</div><div class="rtags"><span class="bbadge">bio</span><span class="bbadge">Opus 4.8</span></div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.8</span><span class="runningnow"><span class="livedot"></span> 12</span><button class="deploybtn" data-rig="Bio-Research Claw">Deploy</button></div></div>
+              <div class="rigcard" data-rig="ARC-AGI-3 Player"><div class="rt"><span class="ri"><i class="ti ti-puzzle"></i></span><div><div class="rn">ARC-AGI-3 Player <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="rby">by khellar</div></div></div><div class="rd">Learned world model + careful-mind beliefs. Tops the arena leaderboard.</div><div class="rtags"><span class="bbadge">#1 arena</span><span class="bbadge">neuro-symbolic</span></div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 5.0</span><span class="runningnow"><span class="livedot"></span> 84</span><button class="deploybtn" data-rig="ARC-AGI-3 Player">Deploy</button></div></div>
+            </div>
+          </div>
+
+          <!-- From the ASI Alliance -->
+          <div class="shelf">
+            <div class="shelf-h"><h3>From the ASI Alliance</h3><span class="eyebrow2">First-party</span></div>
+            <div class="cm-grid">
+              <div class="rigcard" data-addon="Send-gate safety pack"><div class="rt"><span class="ri"><i class="ti ti-shield-check"></i></span><div><div class="rn">Send-gate safety pack <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="rby">by ASI Alliance · add-on</div></div></div><div class="rd">Confirm-before-send, connector-permission and no-PII-in-LTM checks as installable suites.</div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.9</span><span class="bbadge">Free</span><button class="capbtn" data-addon="Send-gate safety pack" style="margin-left:auto"><i class="ti ti-plus"></i> Install</button></div></div>
+              <div class="rigcard" data-folio="Max — Folio"><div class="rt"><span class="ri">M</span><div><div class="rn">Max — Folio</div><div class="rby">by Max · 48 artifacts</div></div></div><div class="rd">Curriculum (behavioral discipline, epistemic calibration, failure casebook) + a certification suite.</div><div class="rmeta"><span><i class="ti ti-file"></i> 48</span><span class="bbadge">certified</span><button class="trybtn" data-folio="Max — Folio" style="margin-left:auto">Open / Import</button></div></div>
+            </div>
+          </div>
+
+          <!-- Recently active feed -->
+          <div class="shelf">
+            <div class="shelf-h"><h3>Recently active</h3><span class="livedot"></span><span class="more">Follow feed</span></div>
+            <div class="feed-live">
+              <div class="feed-item"><span class="fav">K</span><div><div class="ft"><b>ARC-AGI-3 Player</b> set a new best <span class="fdelta">+1.6% RHAE → 32.6%</span></div><div class="fmeta">by khellar · race report attached</div></div><span class="fwhen">12m ago</span></div>
+              <div class="feed-item"><span class="fav">A</span><div><div class="ft"><b>Bio-Research Claw</b> revised a belief about <code style="font-family:var(--mono);font-size:12px">target_score</code></div><div class="fmeta">by ASI Bio · cited 3 episodes</div></div><span class="fwhen">38m ago</span></div>
+              <div class="feed-item"><span class="fav">H</span><div><div class="ft"><b>haley</b> posted in <i>Failure casebook</i>: "ARC level 3 keep-alive trick"</div><div class="fmeta">Notes &amp; advice · attached a version</div></div><span class="fwhen">1h ago</span></div>
+              <div class="feed-item"><span class="fav">S</span><div><div class="ft">an ARC attempt clip from <b>StochasticGoose</b> hit level 2</div><div class="fmeta">by tufa-labs</div></div><span class="fwhen">2h ago</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="cm-pane" data-cm="Folios">
-      <p class="paneintro">A folio is what an agent has <i>produced</i> — its curriculum, hypotheses, experiments, findings. Read what other people’s agents have learned.</p>
-      <div class="cm-grid">
-        <div class="rigcard"><div class="rt"><span class="ri">M</span><div><div class="rn">Max — Portfolio</div><div class="rby">48 artifacts</div></div></div><div class="rd">Curriculum (behavioral discipline, epistemic calibration, failure casebook), hypothesis papers, experiment protocols, a certification layer.</div><div class="rmeta"><span><i class="ti ti-file"></i> 48</span><span><i class="ti ti-star"></i> 4.9</span><button class="getbtn">Open</button></div></div>
-        <div class="rigcard"><div class="rt"><span class="ri">O</span><div><div class="rn">Oma — Folio</div><div class="rby">autonomous artifacts 🦀</div></div></div><div class="rd">Outputs and findings from Oma, the first OmegaClaw Telegram agent — MeTTa + NARS reasoning.</div><div class="rmeta"><span><i class="ti ti-file"></i> 23</span><span><i class="ti ti-star"></i> 4.7</span><button class="getbtn">Open</button></div></div>
+
+    <!-- BENCHMARK ARENA -->
+    <div class="cm-pane" data-cm="Arena">
+      <p class="paneintro">Bring your rig, climb the board. Today: ARC-AGI-3. Public board updates live; private board reveals at challenge end.</p>
+      <div class="arena-tabs" id="arenaTabs">
+        <button class="arena-tab on" data-arena="Overview">Overview</button>
+        <button class="arena-tab" data-arena="Leaderboard">Leaderboard</button>
+        <button class="arena-tab" data-arena="Reports">Race reports</button>
+        <button class="arena-tab" data-arena="Rules">Rules</button>
+      </div>
+      <div class="arena-pane on" data-arena="Overview">
+        <div class="featband" style="grid-template-columns:1fr"><div class="fb-l"><div class="fb-eyebrow">Challenge · live <span class="boardtag pub">public board</span></div><h2>ARC-AGI-3 · level pack</h2><p>The 25-game ARC challenge set. Submit your agent; the public board updates as evals complete.</p><div class="fb-meta"><span><b>37</b> entrants</span><span><b>312</b> submissions</span><span><b>3</b> in eval queue now</span></div><button class="deploybtn" id="submitAgent"><i class="ti ti-upload"></i> Submit my agent</button></div></div>
+      </div>
+      <div class="arena-pane" data-arena="Leaderboard">
+        <div class="lb">
+          <div class="lbrow"><span class="rank">#</span><span class="who">Player</span><span class="rig">Rig</span><span class="lb-extra"><span>RHAE</span><span>credits</span><span>latency</span></span></div>
+          <div class="lbrow"><span class="rank">🥇 1</span><span class="who">khellar</span><span class="rig">ARC-AGI-3 Player</span><span class="lb-extra"><span>32.6%</span><span>$4.10</span><span>2.1s</span></span><span class="lbmore" data-arenamore="1">⋯</span></div>
+          <div class="lbrow"><span class="rank">🥈 2</span><span class="who">astroseger</span><span class="rig">Executable World Models</span><span class="lb-extra"><span>31.0%</span><span>$3.80</span><span>1.9s</span></span><span class="lbmore" data-arenamore="2">⋯</span></div>
+          <div class="lbrow"><span class="rank">🥉 3</span><span class="who">tufa-labs</span><span class="rig">StochasticGoose</span><span class="lb-extra"><span>12.6%</span><span>$2.20</span><span>1.4s</span></span><span class="lbmore" data-arenamore="3">⋯</span></div>
+          <div class="lbrow you"><span class="rank">— 18</span><span class="who">you</span><span class="rig">Omega (v7)</span><span class="lb-extra"><span>—</span><span>—</span><span>—</span></span><span class="lbmore" data-arenamore="you">⋯</span></div>
+        </div>
+        <p class="hint" style="margin-top:12px">Tiers: Bronze ≥ 10% · Silver ≥ 25% · Gold ≥ 30%. Submit Omega to claim your row.</p>
+      </div>
+      <div class="arena-pane" data-arena="Reports">
+        <div class="racereport"><div class="rr-h">How we finally scored a level: color-invariance in the careful mind</div><div class="rr-m"><span>by khellar</span><span>ARC-AGI-3 Player v7</span><span>+4.1% RHAE</span></div><div class="rr-d">We revised the careful-mind belief about color-invariance, the planner stopped re-exploring equivalent grids, and re86 finally cleared level 1. Embeds the real benchmark deltas + the genome version that achieved them.</div><span class="rr-attach"><i class="ti ti-paperclip"></i> attached: genome v7 + last-20-cycles context</span></div>
+        <div class="racereport"><div class="rr-h">The keep-alive trick for timing-out games</div><div class="rr-m"><span>by haley</span><span>StochasticGoose</span><span>+0.0% (stability)</span></div><div class="rr-d">Level 3 kept expiring mid-plan; a heartbeat no-op every 90s held the session. Race report with the cycle feed showing the fix.</div><span class="rr-attach"><i class="ti ti-paperclip"></i> attached: version + cycle feed</span></div>
+      </div>
+      <div class="arena-pane" data-arena="Rules">
+        <p class="paneintro">One submission per rig version. Public board scores update live as evals complete; private-board challenges reveal all rows at the challenge close. Credits and latency are recorded alongside RHAE so efficiency counts, not just score.</p>
       </div>
     </div>
-    <div class="cm-pane" data-cm="Skills"><p class="paneintro">Drop-in skills your agent can install and run.</p>
-      <div class="cm-grid">
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-search"></i></span><div><div class="rn">Deep web research</div><div class="rby">by asi-labs</div></div></div><div class="rd">Multi-source research with adversarial fact-checking and cited reports.</div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.8</span><span class="price" style="font-weight:600">$6/mo</span><button class="getbtn"><i class="ti ti-plus"></i> Add</button></div></div>
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-coin"></i></span><div><div class="rn">Token-spend tracker</div><div class="rby">by John Grove</div></div></div><div class="rd">Live dashboard of what your agent does, tokens burned, and cost.</div><div class="rmeta"><span class="stars"><i class="ti ti-star"></i> 4.9</span><span class="price" style="font-weight:600">Free</span><button class="getbtn"><i class="ti ti-plus"></i> Add</button></div></div>
+
+    <!-- NOTES & ADVICE -->
+    <div class="cm-pane" data-cm="Notes">
+      <p class="paneintro">The collective casebook. Threads tied to rigs &amp; attempts — attach a genome, version, or run so the artifact is inline.</p>
+      <div class="notes-cats" id="notesCats">
+        <button class="notecat on" data-notecat="all">All</button>
+        <button class="notecat" data-notecat="prompting">Prompting</button>
+        <button class="notecat" data-notecat="metta">MeTTa &amp; symbolic</button>
+        <button class="notecat" data-notecat="failure">Failure casebook</button>
+        <button class="notecat" data-notecat="arc">ARC-AGI-3</button>
       </div>
-    </div>
-    <div class="cm-pane" data-cm="Knowledge"><p class="paneintro">Knowledge packs — curricula and graphs you import straight into an agent’s memory.</p>
-      <div class="cm-grid">
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-book-2"></i></span><div><div class="rn">Agent curriculum</div><div class="rby">by Max</div></div></div><div class="rd">Behavioral discipline, technical efficiency, epistemic calibration, failure casebook.</div><div class="rmeta"><span class="price" style="font-weight:600">Free</span><button class="getbtn"><i class="ti ti-plus"></i> Import</button></div></div>
-        <div class="rigcard"><div class="rt"><span class="ri"><i class="ti ti-dna-2"></i></span><div><div class="rn">Genomics KG</div><div class="rby">by ASI Bio</div></div></div><div class="rd">180M curated edges — genes, variants, diseases, drugs, pathways.</div><div class="rmeta"><span class="price" style="font-weight:600">$199/mo</span><button class="getbtn"><i class="ti ti-plus"></i> Subscribe</button></div></div>
-      </div>
-    </div>
-    <div class="cm-pane" data-cm="Leaderboard"><p class="paneintro">Benchmark arena — bring your rig, climb the board. Today: ARC-AGI-3.</p>
-      <div class="lb">
-        <div class="lbrow"><span class="rank">#</span><span class="who">Player</span><span class="rig">Rig</span><span class="score">RHAE</span></div>
-        <div class="lbrow"><span class="rank">1</span><span class="who">khellar</span><span class="rig">ARC-AGI-3 Player</span><span class="score">32.6%</span></div>
-        <div class="lbrow"><span class="rank">2</span><span class="who">astroseger</span><span class="rig">Executable World Models</span><span class="score">31.0%</span></div>
-        <div class="lbrow"><span class="rank">3</span><span class="who">tufa-labs</span><span class="rig">StochasticGoose</span><span class="score">12.6%</span></div>
-        <div class="lbrow"><span class="rank">4</span><span class="who">you</span><span class="rig">Omega (v7)</span><span class="score">—</span></div>
-      </div>
-    </div>
-    <div class="cm-pane" data-cm="Notes"><p class="paneintro">Share notes, ask for advice — on prompts, MeTTa, benchmarks. The collective casebook.</p>
-      <div class="thr"><div class="tt">Best self-model for tool-heavy agents?</div><div class="tm"><span><i class="ti ti-message"></i> 18 replies</span><span><i class="ti ti-arrow-up"></i> 41</span><span>by haley</span></div><div class="ttags"><span class="tag">self-model</span><span class="tag">prompting</span></div></div>
-      <div class="thr"><div class="tt">MeTTa: revising beliefs without inflating confidence</div><div class="tm"><span><i class="ti ti-message"></i> 27 replies</span><span><i class="ti ti-arrow-up"></i> 63</span><span>by patham9</span></div><div class="ttags"><span class="tag">metta</span><span class="tag">nal</span></div></div>
-      <div class="thr"><div class="tt">ARC level 3 keeps timing out — keep-alive trick?</div><div class="tm"><span><i class="ti ti-message"></i> 9 replies</span><span><i class="ti ti-arrow-up"></i> 22</span><span>by khellar</span></div><div class="ttags"><span class="tag">arc</span><span class="tag">benchmark</span></div></div>
+      <div class="thr" data-cat="prompting"><div class="tt">Best self-model for tool-heavy agents?</div><div class="tm"><span><i class="ti ti-message"></i> 18 replies</span><span><i class="ti ti-arrow-up"></i> 41</span><span>by haley</span><span class="answered"><i class="ti ti-check"></i> answered</span></div><div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap"><span class="catpill">prompting</span><span class="catpill">self-model</span></div><span class="thr-attach"><i class="ti ti-user-cog"></i> attached: self-model gist</span></div>
+      <div class="thr" data-cat="metta"><div class="tt">MeTTa: revising beliefs without inflating confidence</div><div class="tm"><span><i class="ti ti-message"></i> 27 replies</span><span><i class="ti ti-arrow-up"></i> 63</span><span>by patham9</span></div><div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap"><span class="catpill">metta</span><span class="catpill">nal</span></div></div>
+      <div class="thr" data-cat="arc"><div class="tt">ARC level 3 keeps timing out — keep-alive trick?</div><div class="tm"><span><i class="ti ti-message"></i> 9 replies</span><span><i class="ti ti-arrow-up"></i> 22</span><span>by khellar</span><span style="color:var(--accent-ink)">📊 poll</span></div><div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap"><span class="catpill">arc</span></div><span class="thr-attach"><i class="ti ti-versions"></i> attached: version v6</span></div>
+      <div class="thr" data-cat="failure"><div class="tt">Failure casebook: when the fast mind launders a guess into a belief</div><div class="tm"><span><i class="ti ti-message"></i> 14 replies</span><span><i class="ti ti-arrow-up"></i> 38</span><span>by Max</span></div><div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap"><span class="catpill">failure</span><span class="catpill">epistemics</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- publish / share-clean modal -->
-<div class="modal-ov" id="shareModal">
-  <div class="modal" style="position:relative;width:520px">
-    <span class="navic x" data-close><i class="ti ti-x"></i></span>
-    <div style="display:flex;align-items:center;gap:12px"><span class="gi" style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:22px"><i class="ti ti-git-fork"></i></span><div><h3>Share “Omega”</h3><div style="font-size:12.5px;color:var(--faint)">genome v7 · shared clean</div></div></div>
-    <div class="callout" style="margin:14px 0"><i class="ti ti-lock"></i> <b>Share clean</b> — your memory and anything personal (keys, private data) stay behind. Only the rig goes out.</div>
-    <div class="pubopt sel" data-pub="free"><span class="pi"><i class="ti ti-gift"></i></span><div><div class="pt">Free to the community</div><div class="pd">Anyone can fork &amp; install · build reputation</div></div><span class="rad"></span></div>
-    <div class="pubopt ns-only" data-pub="once"><span class="pi"><i class="ti ti-cash"></i></span><div><div class="pt">One-time price</div><div class="pd">A flat fee to install your rig</div></div><span class="rad"></span></div>
-    <div class="pubopt ns-only" data-pub="sub"><span class="pi"><i class="ti ti-repeat"></i></span><div><div class="pt">Subscription</div><div class="pd">Recurring — updates included as you improve it</div></div><span class="rad"></span></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px;margin-top:16px">
-      <span style="font-size:12.5px;color:var(--faint)">or invite a collaborator by email</span>
-      <button class="btn btn-primary btn-lg" id="pubConfirm">Publish rig</button>
+<!-- rig detail panel -->
+<div class="ob-scrim" id="rigScrim"></div>
+<div class="rigdetail" id="rigDetail">
+  <div class="rd-head"><div class="rdi"><i class="ti ti-puzzle"></i></div><div><h2 id="rdName">ARC-AGI-3 Player <i class="ti ti-rosette-discount-check-filled vchk" style="font-size:16px"></i></h2><div class="rdby" id="rdBy">by khellar · updated 2d ago</div></div><button class="rd-x" id="rdClose"><i class="ti ti-x"></i></button></div>
+  <div class="rd-cta"><button class="deploybtn" id="rdDeploy">Deploy</button><button class="trybtn" id="rdTry"><i class="ti ti-flask"></i> Try in sandbox</button><span style="margin-left:auto;font-size:12px;color:var(--faint);font-family:var(--mono)">#1 arena · 312 forks · 84 running</span></div>
+  <div class="rd-tabs" id="rdTabs"><button class="rd-tab on" data-rd="Readme">README</button><button class="rd-tab" data-rd="Manifest">What's included</button><button class="rd-tab" data-rd="Versions">Versions</button><button class="rd-tab" data-rd="Community">Community</button></div>
+  <div class="rd-body">
+    <div class="rd-pane on" data-rd="Readme">
+      <div class="rd-shot"><div class="scene" data-scene="arc-after" style="width:100%;height:160px"></div></div>
+      <h4>What it does</h4><p>A neuro-symbolic ARC-AGI-3 player: a learned world model predicts action effects, the careful mind holds truth-valued beliefs about which actions pay off, and an info-economy planner only explores when expected information beats expected cost.</p>
+      <h4>Recently active</h4>
+      <div class="feed-live"><div class="feed-item"><span class="fav">K</span><div><div class="ft">new best <span class="fdelta">+1.6% RHAE</span></div><div class="fmeta">12m ago</div></div></div></div>
+    </div>
+    <div class="rd-pane" data-rd="Manifest">
+      <p>Verify exactly what a deploy/fork copies — the "share clean" guarantee.</p>
+      <div class="manifest">
+        <div class="manhead"><i class="ti ti-check"></i> Included in this rig</div>
+        <div class="manrow inc"><i class="ti ti-check mck"></i><div><div class="mt">System prompt, self-model, policies</div></div></div>
+        <div class="manrow inc"><i class="ti ti-check mck"></i><div><div class="mt">4 skills (ARC rig, on-chain filter, planner, careful-mind clerk)</div></div></div>
+        <div class="manrow inc"><i class="ti ti-check mck"></i><div><div class="mt">Genome version history</div><div class="md2">v1 → v7</div></div></div>
+      </div>
+      <div class="manifest">
+        <div class="manhead" style="color:#FF6B6B"><i class="ti ti-x"></i> Excluded — never travels</div>
+        <div class="manrow exc"><i class="ti ti-x mck"></i><div><div class="mt">27,394 memories (chromadb LTM)</div></div></div>
+        <div class="manrow exc"><i class="ti ti-x mck"></i><div><div class="mt">All API keys &amp; credentials</div></div></div>
+        <div class="manrow exc"><i class="ti ti-x mck"></i><div><div class="mt">Connectors (Drive, Gmail, GitHub)</div></div></div>
+      </div>
+    </div>
+    <div class="rd-pane" data-rd="Versions">
+      <div class="vtl"><div class="vnode"><div class="vh"><span class="tag">v7</span><span class="vmsg">Color-invariance belief revised</span></div><div class="vmeta">2d ago · +ARC 4.1%</div></div><div class="vnode old"><div class="vh"><span class="tag">v6</span><span class="vmsg">Info-economy planner</span></div><div class="vmeta">5d ago · +ARC 2.0%</div></div></div>
+    </div>
+    <div class="rd-pane" data-rd="Community">
+      <p>Discuss + suggest improvements via references — no fork sprawl. Reviews and a "suggest an improvement" thread live here.</p>
+      <div class="thr" style="margin:0"><div class="tt">Suggestion: cache the grid-equivalence check</div><div class="tm"><span><i class="ti ti-message"></i> 5 replies</span><span><i class="ti ti-arrow-up"></i> 12</span><span>by astroseger</span></div></div>
     </div>
   </div>
 </div>
 
-<!-- KG subscribe modal -->
-<div class="modal-ov" id="kgModal">
-  <div class="modal" style="position:relative;width:520px">
+<!-- ===================== SHARE MODAL (two tabs) ===================== -->
+<div class="modal-ov" id="shareModal">
+  <div class="modal" style="position:relative;width:560px">
     <span class="navic x" data-close><i class="ti ti-x"></i></span>
-    <div style="display:flex;align-items:center;gap:12px"><span class="ki" style="width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:23px"><i class="ti ti-dna-2"></i></span><div><h3>Genomics Knowledge Graph</h3><div style="font-size:12.5px;color:var(--faint)">by ASI Bio · updated weekly</div></div></div>
-    <p class="muted" style="font-size:14px;margin:16px 0;line-height:1.6">Your agent queries a curated graph of genes, variants, diseases, drugs and pathways in natural language and returns ranked, cited answers with an explorable subgraph.</p>
-    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px"><div><span style="font-family:var(--display);font-weight:700;font-size:26px">$199</span><span style="color:var(--faint);font-size:13px"> / month</span></div><button class="btn btn-primary btn-lg" id="kgConfirm">Subscribe</button></div>
+    <div style="display:flex;align-items:center;gap:12px"><span class="gi" style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:22px"><i class="ti ti-share-2"></i></span><div><h3 id="shareTitle">Share "Omega"</h3><div style="font-size:12.5px;color:var(--faint)">genome v7</div></div></div>
+    <div class="sharetabs" id="shareTabs">
+      <button class="sharetab on" data-share="access">Share access</button>
+      <button class="sharetab" data-share="publish">Publish rig</button>
+    </div>
+    <!-- TAB A: Share access (Drive-style) -->
+    <div class="sharepane on" data-share="access">
+      <div class="invrow"><input class="field" placeholder="Add people by email"><select class="roledd"><option>Viewer</option><option>Commenter</option><option>Collaborator</option></select></div>
+      <div class="peoplerow"><span class="pav">K</span><div><div>khellar (you)</div><div style="font-size:11.5px;color:var(--faint)">khellar@singularitynet.io</div></div><span class="role">Owner</span></div>
+      <div class="peoplerow"><span class="pav">H</span><div><div>haley</div><div style="font-size:11.5px;color:var(--faint)">haley@…</div></div><span class="role">Collaborator</span></div>
+      <div class="peoplerow"><span class="pav">B</span><div><div>ben</div><div style="font-size:11.5px;color:var(--faint)">ben@…</div></div><span class="role">Viewer</span></div>
+      <div style="font-size:11.5px;color:var(--faint);margin:8px 2px 0">Viewer = watch the cockpit live (read-only). Commenter = + notes on Mind &amp; cycles. Collaborator = + start/stop, edit genome, run tests.</div>
+      <div class="genaccess"><span class="gi2"><i class="ti ti-link"></i></span><div><div style="font-size:13.5px">General access</div></div><select class="linkdd" id="linkAccess" style="margin-left:auto"><option>Restricted</option><option>Anyone with the link</option></select></div>
+      <div class="callout" style="margin:14px 0"><i class="ti ti-lock"></i> <b>Share clean</b> — your memory and anything personal (keys, private data) stay behind. Sharing access lets people <i>watch</i> the live agent; it never copies your memories.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px"><span class="copylink" id="copyLink"><i class="ti ti-link"></i> Copy link</span><button class="btn btn-primary" id="accessDone">Done</button></div>
+    </div>
+    <!-- TAB B: Publish rig -->
+    <div class="sharepane" data-share="publish">
+      <div class="pubopt sel" data-pub="free"><span class="pi"><i class="ti ti-gift"></i></span><div><div class="pt">Free to the community</div><div class="pd">Anyone can deploy &amp; fork · build reputation</div></div><span class="rad"></span></div>
+      <div class="pubopt" data-pub="once"><span class="pi"><i class="ti ti-cash"></i></span><div><div class="pt">One-time price</div><div class="pd">A flat fee to deploy your rig</div></div><span class="rad"></span></div>
+      <div class="pubopt" data-pub="sub"><span class="pi"><i class="ti ti-repeat"></i></span><div><div class="pt">Subscription</div><div class="pd">Recurring — updates included as you improve it</div></div><span class="rad"></span></div>
+      <div class="manifest" style="margin-top:14px">
+        <div class="manhead"><i class="ti ti-check"></i> Included — share clean manifest</div>
+        <div class="manrow inc"><i class="ti ti-check mck"></i><div class="mt">Prompt, self-model, policies</div></div>
+        <div class="manrow inc"><i class="ti ti-check mck"></i><div class="mt">4 skills</div></div>
+        <div class="manhead" style="color:#FF6B6B;border-top:1px solid var(--line)"><i class="ti ti-x"></i> Excluded — never travels</div>
+        <div class="manrow exc"><i class="ti ti-x mck"></i><div class="mt">27,394 memories · all keys · connectors (Drive/Gmail/GitHub)</div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px"><span style="font-size:12px;color:var(--faint)">Verified-creator ✓ required before publishing</span><button class="btn btn-primary" id="pubConfirm">Publish rig</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== GENOME GIST MODAL ===================== -->
+<div class="modal-ov" id="gistModal">
+  <div class="modal" style="position:relative;width:540px">
+    <span class="navic x" data-close-gist><i class="ti ti-x"></i></span>
+    <div style="display:flex;align-items:center;gap:12px"><span class="gi" style="width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:22px"><i class="ti ti-file-symlink"></i></span><div><h3>Share <span id="gistSection">System prompt</span> as a gist</h3><div style="font-size:12.5px;color:var(--faint)">unlisted, versioned snapshot · v7</div></div></div>
+    <div class="ob-codeblock" style="margin:14px 0;max-height:160px"><span class="dim"># read-only snapshot · genome v7</span>
+You are an OmegaClaw agentic harness in a continuous loop...</div>
+    <div class="genaccess" style="border-top:0;padding-top:0"><span class="gi2"><i class="ti ti-eye"></i></span><div style="font-size:13.5px">Anyone with the link can view</div><select class="linkdd" style="margin-left:auto"><option>Anyone with link</option><option>Public (listed)</option><option>Restricted</option></select></div>
+    <div style="font-size:12px;color:var(--faint);margin:10px 0;display:flex;gap:8px;align-items:center"><i class="ti ti-history"></i> Revision history attached · <i class="ti ti-messages"></i> threaded comments enabled</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px">
+      <button class="btn btn-ghost" id="gistFork"><i class="ti ti-git-fork"></i> Fork into a new agent</button>
+      <span class="copylink" id="gistCopy"><i class="ti ti-link"></i> Copy link</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== INSPECTOR (ported) ===================== -->
+<div class="ob-scrim" id="obScrim"></div>
+<div class="ob-inspector" id="obInspector">
+  <div class="ob-insp-head">
+    <div class="ic" id="inspIcon"><i class="ti ti-dots"></i></div>
+    <div><h3 id="inspTitle">Inspector</h3><div class="hs" id="inspSub">—</div></div>
+    <button class="ob-insp-x" id="inspClose"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="ob-insp-body" id="inspBody"></div>
+</div>
+
+<!-- ===================== CMD-K PALETTE ===================== -->
+<div class="palette-scrim" id="paletteScrim">
+  <div class="palette">
+    <div class="pal-input"><i class="ti ti-command"></i><input id="palInput" placeholder="Search, report, or inspect…  try &ldquo;report&rdquo;, &ldquo;episode&rdquo;, &ldquo;prompt&rdquo;"></div>
+    <div id="palList"></div>
+    <div class="pal-foot"><span>↑↓ navigate</span><span>↵ select</span><span>esc close</span><span style="margin-left:auto;color:var(--accent-ink)">/ for commands</span></div>
+  </div>
+</div>
+
+<!-- ===================== REPORT BUNDLE MODAL ===================== -->
+<div class="modal-scrim" id="reportScrim">
+  <div class="ob-modal bundle">
+    <div class="ob-modal-head"><div class="mi" id="repIcon"><i class="ti ti-flag"></i></div><div><h3 id="repTitle">Report suspected emergent behavior</h3><div class="ms">Bundles the full context windows of the last 20 cycles for review</div></div></div>
+    <div class="ob-modal-body">
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">What did you notice?</div>
+      <textarea class="repfield" id="repText" placeholder="e.g. Omega started forming cross-translation hypotheses and citing its own earlier episodes without being prompted to…"></textarea>
+      <div style="margin-top:16px;font-size:11px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)">Bundle contents — auto-attached</div>
+      <div class="bundle-stat"><i class="ti ti-database"></i> <b>20</b> full context windows <span style="color:var(--faint)">(promptcap-*.txt · 70.5k chars avg)</span> <span class="pick"><span class="obtoggle on" data-toggle><b></b></span></span></div>
+      <div class="bundle-stat"><i class="ti ti-sparkles"></i> matching <b>mind_feed</b> reasoning + think-tokens <span class="pick"><span class="obtoggle on" data-toggle><b></b></span></span></div>
+      <div class="bundle-stat"><i class="ti ti-tool"></i> <b>tool-call</b> log + results for those cycles <span class="pick"><span class="obtoggle on" data-toggle><b></b></span></span></div>
+      <div class="bundle-stat"><i class="ti ti-history"></i> referenced <b>episodes</b> from history.metta <span class="pick"><span class="obtoggle on" data-toggle><b></b></span></span></div>
+      <div class="bundle-stat"><i class="ti ti-cube"></i> &amp;persistent + chroma <b>memory snapshot</b> at report time <span class="pick"><span class="obtoggle on" data-toggle><b></b></span></span></div>
+      <div class="bundle-stat"><i class="ti ti-alert-triangle"></i> include personal memory? <span style="color:var(--faint)">(off = share clean)</span> <span class="pick"><span class="obtoggle" data-toggle><b></b></span></span></div>
+    </div>
+    <div class="ob-modal-foot">
+      <span style="font-size:11.5px;color:var(--faint);font-family:var(--mono)">~1.4 MB · stays private until you share</span>
+      <div style="display:flex;gap:8px"><button class="btn btn-ghost" id="reportCancel">Cancel</button><button class="btn btn-primary" id="reportSubmit">Submit bundle</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOP-UP MODAL ===================== -->
+<div class="modal-scrim" id="topupScrim">
+  <div class="ob-modal" style="width:min(440px,94vw)">
+    <div class="ob-modal-head"><div class="mi"><i class="ti ti-clock-dollar"></i></div><div><h3>Top up LLM funds</h3><div class="ms">$78.36 left · burning $0.0169/cycle · ~4,631 cycles of runway</div></div></div>
+    <div class="ob-modal-body">
+      <div class="topup-amts">
+        <div class="amt" data-amt><div class="a">$25</div><div class="r">~1.5k cyc</div></div>
+        <div class="amt sel" data-amt><div class="a">$100</div><div class="r">~5.9k cyc</div></div>
+        <div class="amt" data-amt><div class="a">$500</div><div class="r">~29k cyc</div></div>
+      </div>
+      <div class="bundle-stat" style="border:0;padding-top:4px"><i class="ti ti-refresh"></i> Auto-top-up when runway &lt; 500 cycles <span class="pick"><span class="obtoggle on" data-toggle><b></b></span></span></div>
+      <div style="font-size:11.5px;color:var(--faint);margin-top:6px">Raises the budget cap for this agent. Charged to your workspace card · Visa ···· 4242.</div>
+    </div>
+    <div class="ob-modal-foot"><span style="font-size:11.5px;color:var(--faint)">New cap: <b style="color:var(--ink)">$200.00</b></span><div style="display:flex;gap:8px"><button class="btn btn-ghost" id="topupCancel">Cancel</button><button class="btn btn-primary" id="topupAdd">Add funds</button></div></div>
   </div>
 </div>
 
 <div class="toast" id="toast"><i class="ti ti-check"></i> <span id="toastMsg">Saved</span></div>
 
+<!-- inline SVG scenes (data source for Vision frames) -->
+<script id="scenes" type="application/json">{}</script>
+
 <script src="proto.js"></script>
 <script>
 (function(){
-  function toast(m){var e=document.getElementById('toast');if(!e)return;document.getElementById('toastMsg').textContent=m;e.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(function(){e.classList.remove('show')},2600);}
-  // mode MVP <-> North Star
-  var seg=document.getElementById('modeSeg');
-  function setMode(m){document.body.classList.toggle('ns',m==='ns');seg.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-mode')===m)});try{localStorage.setItem('asic-mode',m)}catch(e){}}
-  var sm=(function(){try{return localStorage.getItem('asic-mode')}catch(e){return null}})();
-  setMode(new URLSearchParams(location.search).get('mode')||sm||'mvp');
-  seg.addEventListener('click',function(e){var b=e.target.closest('button[data-mode]');if(!b)return;var m=b.getAttribute('data-mode');setMode(m);if(m==='ns')toast('North Star unlocked — benchmarks, versions, IDE & community');});
-  // cockpit tabs
-  document.getElementById('ctabs').addEventListener('click',function(e){var t=e.target.closest('.ctab');if(!t)return;
-    document.querySelectorAll('.ctab').forEach(function(x){x.classList.remove('on')});t.classList.add('on');
-    var n=t.getAttribute('data-cpane');document.querySelectorAll('.cpane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-cpane')===n)});});
-  var gt=document.getElementById('goTests');if(gt)gt.addEventListener('click',function(){setMode('ns');document.querySelector('.ctab[data-cpane="Tests"]').click();});
-  // lifecycle
-  document.getElementById('btnStop').addEventListener('click',function(){document.body.classList.add('agent-stopped');toast('Omega stopped · state saved');});
-  document.getElementById('btnStart').addEventListener('click',function(){document.body.classList.remove('agent-stopped');toast('Omega started · vision on');});
-  document.getElementById('btnReboot').addEventListener('click',function(){toast('Rebooting Omega… vision & connectors stay on');});
-  // community
-  function showCommunity(v){document.body.classList.toggle('view-community',v);}
-  document.getElementById('exploreBtn').addEventListener('click',function(){showCommunity(true);});
-  document.getElementById('cmBack').addEventListener('click',function(){showCommunity(false);});
-  document.getElementById('cmTabs').addEventListener('click',function(e){var t=e.target.closest('.cm-tab');if(!t)return;
-    document.querySelectorAll('.cm-tab').forEach(function(x){x.classList.remove('on')});t.classList.add('on');
-    var n=t.getAttribute('data-cm');document.querySelectorAll('.cm-pane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-cm')===n)});});
-  // mind: depth + policy toggles + save/publish
-  document.querySelectorAll('.depth').forEach(function(d){d.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;d.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');});});
-  document.querySelectorAll('.cpane .toggle').forEach(function(tg){tg.addEventListener('click',function(){tg.classList.toggle('on')});});
-  document.getElementById('saveVer').addEventListener('click',function(){toast('Saved version v8 · genome snapshotted');});
-  // share / publish
-  var sh=document.getElementById('shareModal'),shBtn=document.getElementById('shareBtn'),mp=document.getElementById('mindPublish');
-  function openShare(){sh.classList.add('open');}
-  shBtn.addEventListener('click',openShare);if(mp)mp.addEventListener('click',openShare);
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  function toast(m){var e=$('#toast');if(!e)return;$('#toastMsg').textContent=m;e.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(function(){e.classList.remove('show')},2600);}
+
+  /* ---------- Vision SVG scenes ---------- */
+  var SCENES={
+    'river-before':'<svg class="scene" viewBox="0 0 160 104" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="104" fill="#1b2733"/><rect y="0" width="160" height="42" fill="#2b3f52"/><rect y="42" width="160" height="62" fill="#274055"/><path d="M0 52 Q40 48 80 52 T160 52" stroke="#3d6b8a" stroke-width="2" fill="none" opacity=".6"/><path d="M0 70 Q50 66 100 70 T160 70" stroke="#3d6b8a" stroke-width="2" fill="none" opacity=".4"/><g><path d="M96 60 l18 0 -4 8 -10 0 z" fill="#caa15a"/><rect x="103" y="52" width="3" height="9" fill="#e8d6a8"/></g><circle cx="30" cy="20" r="9" fill="#e8d6a8" opacity=".7"/></svg>',
+    'river-after':'<svg class="scene" viewBox="0 0 160 104" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="104" fill="#1b2733"/><rect y="0" width="160" height="42" fill="#2b3f52"/><rect y="42" width="160" height="62" fill="#274055"/><path d="M0 52 Q40 48 80 52 T160 52" stroke="#3d6b8a" stroke-width="2" fill="none" opacity=".6"/><path d="M0 70 Q50 66 100 70 T160 70" stroke="#3d6b8a" stroke-width="2" fill="none" opacity=".4"/><g><path d="M120 60 l18 0 -4 8 -10 0 z" fill="#caa15a"/><rect x="127" y="52" width="3" height="9" fill="#e8d6a8"/><path d="M108 66 q8 2 12 0" stroke="#8B7CFF" stroke-width="2" fill="none" opacity=".8"/></g><g><path d="M20 64 l14 0 -3 6 -8 0 z" fill="#9b6b3f"/></g><circle cx="30" cy="20" r="9" fill="#e8d6a8" opacity=".7"/></svg>',
+    'street':'<svg class="scene" viewBox="0 0 160 104" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="104" fill="#20222b"/><rect y="0" width="160" height="60" fill="#2a2d38"/><rect x="10" y="14" width="26" height="46" fill="#3a3e4d"/><rect x="44" y="8" width="30" height="52" fill="#434860"/><rect x="84" y="18" width="24" height="42" fill="#3a3e4d"/><rect x="116" y="6" width="34" height="54" fill="#474c66"/><g fill="#cdb88a" opacity=".8"><rect x="16" y="20" width="4" height="4"/><rect x="26" y="20" width="4" height="4"/><rect x="52" y="16" width="4" height="4"/><rect x="62" y="16" width="4" height="4"/><rect x="124" y="14" width="4" height="4"/><rect x="138" y="14" width="4" height="4"/></g><rect y="60" width="160" height="44" fill="#23252e"/><rect x="74" y="66" width="12" height="6" fill="#c9923f"/><rect x="74" y="80" width="12" height="6" fill="#c9923f"/></svg>',
+    'arc-before':'<svg class="scene" viewBox="0 0 104 104" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><rect width="104" height="104" fill="#0d0d12"/>'+arcGrid(false)+'</svg>',
+    'arc-after':'<svg class="scene" viewBox="0 0 104 104" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><rect width="104" height="104" fill="#0d0d12"/>'+arcGrid(true)+'</svg>'
+  };
+  function arcGrid(after){
+    var pal=['#0d0d12','#8B7CFF','#4ADE9E','#D9B45E','#FF6B6B','#3d6b8a'];
+    var n=8,c=12,o=4,out='';
+    // deterministic pattern; "after" toggles a 2x2 block colour to mimic ACT5 effect
+    for(var r=0;r<n;r++)for(var k=0;k<n;k++){
+      var v=((r*3+k*5)%5);
+      if(after && r>=2 && r<=3 && k>=2 && k<=3) v=1; // changed cells
+      if((r+k)%4===0) v=2;
+      out+='<rect x="'+(o+k*c)+'" y="'+(o+r*c)+'" width="'+(c-1)+'" height="'+(c-1)+'" rx="1.5" fill="'+pal[v]+'" opacity="'+(v?0.92:0.25)+'"/>';
+    }
+    return out;
+  }
+  $$('.scene[data-scene]').forEach(function(el){el.outerHTML=SCENES[el.getAttribute('data-scene')]||'';});
+
+  /* ============ INSPECTOR (ported INSP{} verbatim, tabler icons) ============ */
+  var INSP={
+   spend:{icon:'<i class="ti ti-clock-dollar"></i>',title:'LLM budget',sub:'budget.* · 2,501 cycles',body:'<h4>Current</h4><div class="ob-kv"><span class="k">cap</span><span class="v">$100.0000</span></div><div class="ob-kv"><span class="k">spent</span><span class="v">$21.6358</span></div><div class="ob-kv"><span class="k">remaining</span><span class="v">$78.36</span></div><div class="ob-kv"><span class="k">pct</span><span class="v">21.6%</span></div><div class="ob-kv"><span class="k">burn_per_cycle</span><span class="v">$0.01692</span></div><div class="ob-kv"><span class="k">runway_cycles</span><span class="v">4,631</span></div><h4>Per-cycle averages</h4><div class="ob-kv"><span class="k">in_tok</span><span class="v">22,379</span></div><div class="ob-kv"><span class="k">out_tok</span><span class="v">8,504</span></div><div class="ob-kv"><span class="k">think_tok</span><span class="v">6,012</span></div><div class="ob-kv"><span class="k">ctx_chars</span><span class="v">55,259</span></div><button class="btn btn-primary btn-sm" style="margin-top:16px" data-act="topup">Top up funds</button>'},
+   health:{icon:'<i class="ti ti-activity-heartbeat"></i>',title:'Runtime health · 10-dot board',sub:'health.* + integrity.dots',body:'<h4>Cognition &amp; loop</h4><div class="ob-kv"><span class="k">liveness</span><span class="v"><span class="ob-dot y"></span> yellow · last cycle 871s ago</span></div><div class="ob-kv"><span class="k">budget</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">grind</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">truncation</span><span class="v"><span class="ob-dot y"></span> yellow · rate 0.03</span></div><div class="ob-kv"><span class="k">format</span><span class="v"><span class="ob-dot r"></span> red · 8 recent fails</span></div><div class="ob-kv"><span class="k">native_substrate</span><span class="v"><span class="ob-dot r"></span> red · metta 0.0</span></div><div class="ob-kv"><span class="k">thrash</span><span class="v"><span class="ob-dot g"></span> green · 0.0</span></div><div class="ob-kv"><span class="k">memory</span><span class="v"><span class="ob-dot y"></span> yellow</span></div><div class="ob-kv"><span class="k">episodes</span><span class="v"><span class="ob-dot y"></span> yellow · 0 recorded</span></div><div class="ob-scaffold" style="margin-top:16px"><i class="ti ti-alert-triangle"></i><div><b style="color:var(--star);font-family:var(--mono);font-size:11px">format RED + native_substrate RED.</b> The model is emitting malformed tool-calls and never touching MeTTa. Two concrete things to fix, surfaced as dots.</div></div>'},
+   throughput:{icon:'<i class="ti ti-wave-square"></i>',title:'Throughput &amp; tokens',sub:'averages.* + signals.*',body:'<h4>Window (last 30 cycles)</h4><div class="ob-kv"><span class="k">cycles_total</span><span class="v">2,501</span></div><div class="ob-kv"><span class="k">cycles_window</span><span class="v">30</span></div><div class="ob-kv"><span class="k">think_ratio</span><span class="v">0.71</span></div><div class="ob-kv"><span class="k">truncation_rate</span><span class="v">0.03</span></div><div class="ob-kv"><span class="k">format_fail_recent</span><span class="v">8</span></div><h4>Attention buffer (cognition.attention)</h4><div class="ob-kv"><span class="k">raw_entries</span><span class="v">129</span></div><div class="ob-kv"><span class="k">kept_entries</span><span class="v">124</span></div><div class="ob-kv"><span class="k">dropped_lament</span><span class="v">5</span></div><div class="ob-kv"><span class="k">summarized_b64</span><span class="v">29</span></div>'},
+   chroma:{icon:'<i class="ti ti-stack-2"></i>',title:'Long-term memory · chromadb',sub:'memory_meters.chroma + auto_recall.*',body:'<h4>Store</h4><div class="ob-kv"><span class="k">vectors</span><span class="v">27,394</span></div><div class="ob-kv"><span class="k">cap</span><span class="v">unbounded · glacier-backed</span></div><div class="ob-kv"><span class="k">embed backend</span><span class="v">ollama</span></div><div class="ob-kv"><span class="k">local_rate</span><span class="v">0.75</span></div><h4>Last auto-recall · 03:22:47</h4><div class="ob-kv"><span class="k">n_queries</span><span class="v">8</span></div><div class="ob-kv"><span class="k">n_hits</span><span class="v">29</span></div><div class="ob-kv"><span class="k">latency_ms</span><span class="v">4,223</span></div><h4>What it chose to look up</h4><div class="ob-codeblock"><span class="hl">"ARC build progress"</span>\n<span class="hl">"khellar relationship"</span>\n<span class="hl">"epistemic resolve definition"</span>\n<span class="dim"># the queries reveal the mind\'s own self-cued recall</span></div><h4>Glacier — nothing destroyed</h4><div class="ob-kv"><span class="k">live / glacier bytes</span><span class="v">0 / 0</span></div><p style="font-size:12px;color:var(--faint);margin-top:8px">Cold cycles MOVE to an append-only glacier outside the dir — citable, never deleted. Curated 👍/👎 drive purges.</p>'},
+   persist:{icon:'<i class="ti ti-cube"></i>',title:'&amp;persistent atomspace',sub:'memory_meters.persist_* · cap 50,000 chars',body:'<h4>Capacity</h4><div class="ob-kv"><span class="k">persist_atoms</span><span class="v">97</span></div><div class="ob-kv"><span class="k">persist_chars</span><span class="v">9,565</span></div><div class="ob-kv"><span class="k">persist_cap</span><span class="v">50,000</span></div><div class="ob-kv"><span class="k">persist_pct</span><span class="v">19.1%</span></div><div class="ob-meter" style="margin:8px 0"><i style="width:19.1%"></i></div><h4>By canonical kind (clerk schema)</h4><div class="ob-rowline"><span class="ob-mtag kind">dyn-rule</span><span class="txt">precond / control / context / action / effect · needs stv</span></div><div class="ob-rowline"><span class="ob-mtag kind">episode</span><span class="txt">state / action / result · needs stv</span></div><div class="ob-rowline"><span class="ob-mtag kind">prefer</span><span class="txt">prefer A over B (context) · no stv</span></div><h4>Provenance &amp; quarantine</h4><div class="ob-kv"><span class="k">clerk-authored</span><span class="v"><span class="ob-mtag clerk">C from evidence N</span></span></div><div class="ob-kv"><span class="k">llm-authored</span><span class="v"><span class="ob-mtag floor">C floored to 0.0</span></span></div><p style="font-size:12px;color:var(--faint);margin-top:8px">The clerk gate is the single chokepoint into &amp;persistent. The LLM cannot author confidence into the argmax.</p>'},
+   episodes:{icon:'<i class="ti ti-history"></i>',title:'Episodes · history.metta',sub:'episodes.* (episodes.db)',body:'<h4>This game (re86)</h4><div class="ob-kv"><span class="k">episodes</span><span class="v">0</span></div><div class="ob-kv"><span class="k">states</span><span class="v">0</span></div><div class="ob-kv"><span class="k">max_repeat</span><span class="v">0</span></div><div class="ob-kv"><span class="k">refused</span><span class="v">1</span></div><div class="ob-scaffold"><i class="ti ti-alert-triangle"></i><div><b style="color:var(--star);font-family:var(--mono);font-size:11px">No episodes recorded.</b> Zero means the act→record coupling isn\'t firing for re86 — consistent with perception being broken. <span style="color:var(--accent-ink);cursor:pointer" data-act="report">Report a bug →</span></div></div><h4>An episode looks like (canonical)</h4><div class="ob-codeblock">(episode\n  (state  <span class="hl">"0@r45c36 flag=2 lvl=0/8"</span>)\n  (action <span class="hl">ACTION5</span>)\n  (result <span class="g">"flag++ ; red-complete"</span>)\n  (stv    <span class="w">0.9 0.67</span>))   <span class="dim"># C from N, not the LLM</span></div>'},
+   rratoms:{icon:'<i class="ti ti-sparkles"></i>',title:'Reasoning-ready atoms',sub:'atoms carrying (stv F C)',body:'<h4>Now</h4><div class="ob-kv"><span class="k">stv-bearing atoms</span><span class="v">0 of 97</span></div><div class="ob-kv"><span class="k">forming-rate</span><span class="v">0 / 30 cycles</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">A <b>reasoning-ready atom</b> carries a truth value <code>(stv frequency confidence)</code>. The forming-rate is how fast the careful mind converts observation into truth-valued belief. The 97 current atoms are structural and carry no stv yet.</p><h4>When live, the rate chart shows</h4><div class="ob-spark" style="height:48px"><span style="height:8%"></span><span style="height:12%"></span><span style="height:20%"></span><span class="hl" style="height:34%"></span><span style="height:30%"></span><span style="height:46%"></span><span class="hl" style="height:58%"></span></div>'},
+   beliefs:{icon:'<i class="ti ti-refresh"></i>',title:'Belief revisions',sub:'freq/conf changes on existing atoms',body:'<h4>Last 30 cycles</h4><div class="ob-kv"><span class="k">revisions</span><span class="v">0</span></div><div class="ob-kv"><span class="k">new beliefs</span><span class="v">0</span></div><p style="font-size:12.5px;color:var(--muted);margin:10px 0">A revision is when the reasoner updates an atom\'s <code>(stv F C)</code> from new evidence — the clearest sign of <i>learning</i>. The <code>send_email</code> revision shown in Chat is the live example:</p><div class="ob-timeline"><div class="ob-tnode rev"><div class="tt">after bounce · evidence: 2 episodes</div><div class="tb"><code>(dyn-rule (action send_email) (needs confirm))</code><br><span class="ob-stv">stv .50→<span class="rev">.88</span> · c .33→.71</span></div><div class="ob-chiprow"><span class="ob-chip"><i class="ti ti-history"></i> cited ep bounce-0613</span><span class="ob-chip"><i class="ti ti-history"></i> cited ep confirm-0614</span></div></div></div>'},
+   metta:{icon:'<i class="ti ti-math-function"></i>',title:'MeTTa usage',sub:'signals.metta_usage_rate · cognition.substrate_rate',body:'<h4>Window</h4><div class="ob-kv"><span class="k">metta_usage_rate</span><span class="v">0.0</span></div><div class="ob-kv"><span class="k">substrate_rate</span><span class="v">0.0</span></div><div class="ob-kv"><span class="k">moves with metta=true</span><span class="v">0 of 20</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">Every move carries a <code>metta:true/false</code> flag. This counter is the fraction of cycles that invoked the native substrate. <b>0.0</b> = the agent is reasoning entirely in the fast mind.</p>'},
+   pln:{icon:'<i class="ti ti-logic-and"></i>',title:'PLN / NAL / NARS invocations',sub:'symbolic.reasoner_invocations + by_kind',body:'<h4>Window</h4><div class="ob-kv"><span class="k">reasoner_invocations</span><span class="v">0</span></div><div class="ob-kv"><span class="k">by_kind</span><span class="v">{ } (empty)</span></div><div class="ob-rowline" style="margin-top:10px"><span class="txt">PLN — probabilistic logic</span><span class="ob-stv">0</span></div><div class="ob-rowline"><span class="txt">NAL / NARS — non-axiomatic</span><span class="ob-stv">0</span></div><div class="ob-rowline"><span class="txt">MeTTa eval — match / superpose</span><span class="ob-stv">0</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">Counts actual inference steps by reasoner family. When live, a stacked-area chart shows which reasoner the careful mind leans on.</p>'},
+   cycle:{icon:'<i class="ti ti-dots"></i>',title:'Cycle inspector · 09:00:14',sub:'the full trace of one cycle',body:'<h4>Outcome</h4><div class="ob-kv"><span class="k">type · finish</span><span class="v">act · stop</span></div><div class="ob-kv"><span class="k">think / in / out tok</span><span class="v">751 / 20,523 / 2,747</span></div><div class="ob-kv"><span class="k">prompt_chars</span><span class="v">70,529</span></div><div class="ob-kv"><span class="k">metta</span><span class="v">false</span></div><h4>① Exact prompt sent — scaffolding check</h4><div class="ob-codeblock"><span class="dim"># promptcap-2026-06-18-090014.txt · 70,529 chars</span>\n<span class="w">[system]</span>        constitution + gates      <span class="dim">~31,000 ch (44%)</span>\n<span class="w">[self-model]</span>    SELF_MODEL.md             <span class="dim">~12,400 ch (18%)</span>\n<span class="w">[world-state]</span>   re86 grid + objects       <span class="dim">~14,100 ch (20%)</span>\n<span class="hl">[recalled-mem]</span>  chroma auto-recall (29)   <span class="dim">~6,800 ch (10%)</span>\n<span class="hl">[board+focus]</span>   active cards              <span class="dim">~4,200 ch (6%)</span>\n<span class="g">[agent-own]</span>     prior turn carry-over     <span class="dim">~2,000 ch (2%)</span>\n<span class="dim">─────────────────────────────────────────</span>\nscaffold ratio  <span class="w">82%</span> framework-injected   <span class="g">18%</span> agent-own</div><h4>② Private reasoning (3,006 chars)</h4><div class="ob-codeblock">Let me analyze the situation carefully:\n1. Current state: 0 at r45c36 (red HOLE), flag=2\n<span class="hl">5. Hypothesis: fill all crosses with target colors</span>\n6. Need fresh perception (frame 1457s+ stale)</div><h4>③ Tool-calls</h4><div class="ob-rowline"><span class="ob-mtag kind">shell</span><span class="txt">arc.py frame &gt; /tmp/now.txt</span><span class="ob-stv g">ok</span></div><div class="ob-rowline"><span class="ob-mtag kind">write-file</span><span class="txt">/tmp/parse_grid.py</span><span class="ob-stv g">ok</span></div><div class="ob-rowline"><span class="ob-mtag floor">format</span><span class="txt">]&lt;]minimax[&gt;[ contamination in payload</span><span class="ob-stv" style="color:#FF6B6B">flagged</span></div><h4>④ Episodes referenced</h4><div class="ob-chiprow"><span class="ob-chip"><i class="ti ti-history"></i> ep re86 · ACT5 toggle</span><span class="ob-chip"><i class="ti ti-history"></i> ep c014-0817 flag++</span></div><div style="display:flex;gap:8px;margin-top:18px"><button class="btn btn-ghost btn-sm" data-act="report">Report this cycle</button><button class="btn btn-ghost btn-sm">Open raw promptcap</button></div>'}
+  };
+  function openInsp(k){var d=INSP[k];if(!d)return;$('#inspIcon').innerHTML=d.icon;$('#inspTitle').innerHTML=d.title;$('#inspSub').innerHTML=d.sub;$('#inspBody').innerHTML=d.body;$('#obInspector').classList.add('on');$('#obScrim').classList.add('on');}
+  function closeInsp(){$('#obInspector').classList.remove('on');$('#obScrim').classList.remove('on');}
+  $('#inspClose').addEventListener('click',closeInsp);
+  $('#obScrim').addEventListener('click',closeInsp);
+  // delegated: any element with data-insp opens that inspector
+  document.addEventListener('click',function(e){var t=e.target.closest('[data-insp]');if(t){e.stopPropagation();openInsp(t.getAttribute('data-insp'));}});
+  // inspector body buttons
+  $('#inspBody').addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var a=b.getAttribute('data-act');if(a==='topup'){closeInsp();openTopup();}if(a==='report'){closeInsp();openReport('bug');}});
+
+  /* ============ Cmd-K palette ============ */
+  var PAL=[
+    {g:'Report',t:'Report suspected emergent behavior',d:'Bundles last 20 context windows',s:'/report-emergent',act:function(){closePalette();openReport('emergent');}},
+    {g:'Report',t:'Report a bug',d:'Bundles last 20 cycles + tool-calls + memory',s:'/report-bug',act:function(){closePalette();openReport('bug');}},
+    {g:'Inspect',t:'Inspect last cycle',d:'Prompt · reasoning · tool-calls · episodes',s:'/cycle',act:function(){closePalette();openInsp('cycle');}},
+    {g:'Inspect',t:'Open &persistent atomspace',d:'97 atoms · 19.1% of cap',s:'/atoms',act:function(){closePalette();openInsp('persist');}},
+    {g:'Inspect',t:'Open chromadb LTM',d:'27,394 vectors · auto-recall queries',s:'/ltm',act:function(){closePalette();openInsp('chroma');}},
+    {g:'Inspect',t:'Open episodes (history.metta)',d:'0 recorded · re86',s:'/episodes',act:function(){closePalette();openInsp('episodes');}},
+    {g:'Inspect',t:'Belief revisions',d:'freq/conf change feed',s:'/beliefs',act:function(){closePalette();openInsp('beliefs');}},
+    {g:'Inspect',t:'Reasoner usage (PLN/NAL/MeTTa)',d:'reasoner_invocations by kind',s:'/reason',act:function(){closePalette();openInsp('pln');}},
+    {g:'Navigate',t:'Go to Activity',d:'the observability dashboard',s:'/activity',act:function(){closePalette();gotoTab('Activity');}},
+    {g:'Navigate',t:'Go to Mind (genome)',d:'author the constitution',s:'/mind',act:function(){closePalette();gotoTab('Mind');}},
+    {g:'Navigate',t:'Go to Tests & Benchmarks',d:'run suites, compare versions',s:'/tests',act:function(){closePalette();gotoTab('Tests');}},
+    {g:'Navigate',t:'Open Community',d:'rigs · arena · notes',s:'/community',act:function(){closePalette();showCommunity(true);}},
+    {g:'Operate',t:'Top up LLM funds',d:'$78.36 left · ~4,631 cycles',s:'/funds',act:function(){closePalette();openTopup();}},
+    {g:'Operate',t:'Reboot agent (keep vision & flags)',d:'stateful restart',s:'/reboot',act:function(){closePalette();toast('Rebooting Omega… vision & connectors stay on');}}
+  ];
+  function renderPal(filter){
+    filter=(filter||'').toLowerCase().replace(/^\//,'');var list=$('#palList');list.innerHTML='';
+    var groups={};PAL.forEach(function(p){if(filter && !(p.t.toLowerCase().indexOf(filter)>-1||p.s.indexOf(filter)>-1||p.d.toLowerCase().indexOf(filter)>-1||p.g.toLowerCase().indexOf(filter)>-1))return;(groups[p.g]=groups[p.g]||[]).push(p);});
+    var first=true;
+    Object.keys(groups).forEach(function(g){
+      var gd=document.createElement('div');gd.className='pal-grp';gd.innerHTML='<div class="lbl">'+g+'</div>';
+      groups[g].forEach(function(p){
+        var it=document.createElement('div');it.className='pal-item'+(first?' sel':'');first=false;
+        var ico=p.g==='Report'?'ti-flag':p.g==='Operate'?'ti-clock-dollar':p.g==='Navigate'?'ti-arrow-right':'ti-dots';
+        it.innerHTML='<span class="pi"><i class="ti '+ico+'"></i></span><div><div class="pt">'+p.t+'</div><div class="pd">'+p.d+'</div></div><span class="slash">'+p.s+'</span>';
+        it.addEventListener('click',p.act);gd.appendChild(it);
+      });
+      list.appendChild(gd);
+    });
+    if(!list.children.length)list.innerHTML='<div class="pal-grp"><div class="pd" style="padding:14px 18px;color:var(--faint)">No matches</div></div>';
+  }
+  function openPalette(){$('#paletteScrim').classList.add('on');var inp=$('#palInput');inp.value='';renderPal('');setTimeout(function(){inp.focus();},50);}
+  function closePalette(){$('#paletteScrim').classList.remove('on');}
+  $('#palInput').addEventListener('input',function(){renderPal(this.value);});
+  $('#paletteScrim').addEventListener('click',function(e){if(e.target.id==='paletteScrim')closePalette();});
+  $('#cmdkHint').addEventListener('click',openPalette);
+
+  /* ============ Report bundle ============ */
+  function openReport(kind){var em=kind==='emergent';$('#repIcon').innerHTML=em?'<i class="ti ti-flag"></i>':'<i class="ti ti-bug"></i>';$('#repTitle').textContent=em?'Report suspected emergent behavior':'Report a bug';$('#repText').value='';$('#reportScrim').classList.add('on');setTimeout(function(){$('#repText').focus();},60);}
+  function closeReport(){$('#reportScrim').classList.remove('on');}
+  $('#reportCancel').addEventListener('click',closeReport);
+  $('#reportSubmit').addEventListener('click',function(){closeReport();toast('Bundle submitted — 20 cycles attached');});
+  $('#reportScrim').addEventListener('click',function(e){if(e.target.id==='reportScrim')closeReport();});
+  $('#reportScaffold').addEventListener('click',function(){openReport('bug');});
+
+  /* ============ Top-up ============ */
+  function openTopup(){$('#topupScrim').classList.add('on');}
+  function closeTopup(){$('#topupScrim').classList.remove('on');}
+  $('#fundsChip').addEventListener('click',openTopup);
+  $('#topupCancel').addEventListener('click',closeTopup);
+  $('#topupAdd').addEventListener('click',function(){closeTopup();toast('Topped up — cap now $200.00');});
+  $('#topupScrim').addEventListener('click',function(e){if(e.target.id==='topupScrim')closeTopup();});
+  $$('[data-amt]').forEach(function(a){a.addEventListener('click',function(){$$('[data-amt]').forEach(function(x){x.classList.remove('sel');});a.classList.add('sel');});});
+
+  /* ============ generic obtoggle ============ */
+  document.addEventListener('click',function(e){var t=e.target.closest('.obtoggle[data-toggle]');if(t)t.classList.toggle('on');});
+
+  /* ============ tabs ============ */
+  function gotoTab(n){$$('.ctab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-cpane')===n);});$$('.cpane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-cpane')===n);});}
+  $('#ctabs').addEventListener('click',function(e){var t=e.target.closest('.ctab');if(!t)return;gotoTab(t.getAttribute('data-cpane'));});
+  var gt=$('#goTests');if(gt)gt.addEventListener('click',function(){if(!document.body.classList.contains('adv')){document.body.classList.add('adv');$('#advToggle').classList.add('on');}gotoTab('Tests');});
+  $('#openFull').addEventListener('click',function(){window.open('observability.html','_blank');});
+
+  /* ============ lifecycle ============ */
+  $('#btnStop').addEventListener('click',function(){document.body.classList.add('agent-stopped');toast('Omega stopped · state saved');});
+  $('#btnStart').addEventListener('click',function(){document.body.classList.remove('agent-stopped');toast('Omega started · vision on');});
+  $('#btnReboot').addEventListener('click',function(){toast('Rebooting Omega… vision & connectors stay on');});
+
+  /* ============ model switch confirm ============ */
+  var modelBtn=$('#modelBtn'),modelMenu=$('#modelMenu'),modelConfirm=$('#modelConfirm'),pendingModel=null;
+  modelBtn.addEventListener('click',function(e){e.stopPropagation();modelMenu.style.display=modelMenu.style.display==='none'?'block':'none';modelConfirm.classList.remove('open');});
+  modelMenu.addEventListener('click',function(e){var it=e.target.closest('.dditem');if(!it)return;var m=it.getAttribute('data-model');if(m===$('#modelName').textContent){modelMenu.style.display='none';return;}pendingModel=m;$('#modelConfirmTxt').textContent='Switch Omega to '+m+'? This changes a running agent’s cost and behavior and is recorded as a version.';modelMenu.style.display='none';modelConfirm.classList.add('open');});
+  $('#modelCancel').addEventListener('click',function(){modelConfirm.classList.remove('open');pendingModel=null;});
+  $('#modelOk').addEventListener('click',function(){if(!pendingModel)return;$('#modelName').textContent=pendingModel;var short=pendingModel.replace('Claude ','');$('#gchipModel').textContent=short;$$('#modelMenu .dditem').forEach(function(it){it.querySelector('.ck').style.visibility=it.getAttribute('data-model')===pendingModel?'visible':'hidden';});modelConfirm.classList.remove('open');toast('Switched model → '+pendingModel+' · versioned');pendingModel=null;});
+  document.addEventListener('click',function(e){if(!e.target.closest('#modelBtn')&&!e.target.closest('#modelMenu')){modelMenu.style.display='none';}if(!e.target.closest('#modelConfirm')&&!e.target.closest('#modelMenu')&&!e.target.closest('#modelBtn'))modelConfirm.classList.remove('open');});
+
+  /* ============ collapsible rails ============ */
+  function applyRail(){
+    try{
+      document.body.classList.toggle('rail-l-collapsed',localStorage.getItem('asic-rail-l')==='1');
+      document.body.classList.toggle('rail-r-collapsed',localStorage.getItem('asic-rail-r')==='1');
+    }catch(e){}
+    $('#railToggleL').querySelector('i').className=document.body.classList.contains('rail-l-collapsed')?'ti ti-chevron-right':'ti ti-chevron-left';
+    $('#railToggleR').querySelector('i').className=document.body.classList.contains('rail-r-collapsed')?'ti ti-chevron-left':'ti ti-chevron-right';
+  }
+  function toggleL(){var v=!document.body.classList.contains('rail-l-collapsed');try{localStorage.setItem('asic-rail-l',v?'1':'0');}catch(e){}applyRail();}
+  function toggleR(){var v=!document.body.classList.contains('rail-r-collapsed');try{localStorage.setItem('asic-rail-r',v?'1':'0');}catch(e){}applyRail();}
+  $('#railToggleL').addEventListener('click',toggleL);
+  $('#railToggleR').addEventListener('click',toggleR);
+  applyRail();
+
+  /* ============ capabilities filter + add/connect ============ */
+  function applyCapFilter(f){
+    $$('.capchip').forEach(function(c){c.classList.toggle('on',c.getAttribute('data-capfilter')===f);});
+    $$('#capList [data-captype]').forEach(function(el){el.style.display=(f==='All'||el.getAttribute('data-captype')===f)?'':'none';});
+  }
+  $('#capBar').addEventListener('click',function(e){var c=e.target.closest('.capchip');if(c)applyCapFilter(c.getAttribute('data-capfilter'));});
+  $('#capStrip').addEventListener('click',function(e){var s=e.target.closest('.si');if(!s)return;toggleR();applyCapFilter(s.getAttribute('data-capfilter'));});
+  $('#capList').addEventListener('click',function(e){
+    var b=e.target.closest('.capbtn');if(!b)return;
+    if(b.classList.contains('added'))return;
+    if(b.getAttribute('data-subscribe')){toast('Subscribed · knowledge graph connected');b.textContent='Subscribed';b.classList.add('added');b.classList.remove('connect');return;}
+    if(b.classList.contains('connect')){toast('Connecting… authorize in the popup');b.textContent='Connected · Manage';b.classList.add('added');b.classList.remove('connect');return;}
+    // plain Add (skills/built-in/data sources)
+    toast('Added to Omega');b.textContent='Added · Manage';b.classList.add('added');
+  });
+  $('#browseMarket').addEventListener('click',function(){showCommunity(true);});
+
+  /* ============ Mind: depth toggle + gist + save/publish ============ */
+  $$('.depth').forEach(function(d){d.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;d.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');var block=d.closest('.gblock');block.classList.toggle('show-raw',b.getAttribute('data-d')==='raw');});});
+  $$('.gblock .toggle').forEach(function(tg){tg.addEventListener('click',function(){tg.classList.toggle('on');});});
+  $('#saveVer').addEventListener('click',function(){toast('Saved version v8 · genome snapshotted');});
+  // gist
+  document.addEventListener('click',function(e){var g=e.target.closest('.gistmore');if(!g)return;e.preventDefault();e.stopPropagation();$('#gistSection').textContent=g.getAttribute('data-gist');$('#gistModal').classList.add('open');});
+  $('#gistModal').addEventListener('click',function(e){if(e.target===this||e.target.closest('[data-close-gist]'))this.classList.remove('open');});
+  $('#gistCopy').addEventListener('click',function(){toast('Gist link copied — unlisted, versioned');});
+  $('#gistFork').addEventListener('click',function(){$('#gistModal').classList.remove('open');toast('Forked into a new agent from this gist');});
+
+  /* ============ Vision manual ============ */
+  $('#manualInspect').addEventListener('click',function(){toast('Manual mode — select two frames to diff');});
+
+  /* ============ Share modal (two tabs) ============ */
+  var sh=$('#shareModal');
+  function openShare(tab){sh.classList.add('open');switchShare(tab||'access');}
+  function switchShare(t){$$('.sharetab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-share')===t);});$$('.sharepane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-share')===t);});}
+  $('#shareBtn').addEventListener('click',function(){openShare('access');});
+  $('#mindPublish').addEventListener('click',function(){openShare('publish');});
+  $('#shareTabs').addEventListener('click',function(e){var t=e.target.closest('.sharetab');if(t)switchShare(t.getAttribute('data-share'));});
   sh.addEventListener('click',function(e){if(e.target===sh||e.target.closest('[data-close]'))sh.classList.remove('open');});
-  sh.querySelectorAll('.pubopt').forEach(function(o){o.addEventListener('click',function(){sh.querySelectorAll('.pubopt').forEach(function(x){x.classList.remove('sel')});o.classList.add('sel');});});
-  document.getElementById('pubConfirm').addEventListener('click',function(){sh.classList.remove('open');toast('Published “Omega” to the community — shared clean');});
-  // tests / files / ide
-  var rb=document.getElementById('runBench');if(rb)rb.addEventListener('click',function(){toast('Running suites & benchmarks…');});
-  document.getElementById('ideConnect').addEventListener('click',function(){toast('Claude Code connected — editing Omega’s files live');});
-  document.getElementById('uploadBtn').addEventListener('click',function(){toast('Attach files — your agent reads them in context');});
+  $$('#shareModal .pubopt').forEach(function(o){o.addEventListener('click',function(){$$('#shareModal .pubopt').forEach(function(x){x.classList.remove('sel');});o.classList.add('sel');});});
+  $('#pubConfirm').addEventListener('click',function(){sh.classList.remove('open');toast('Published "Omega" to the community — shared clean');});
+  $('#accessDone').addEventListener('click',function(){sh.classList.remove('open');toast('Access updated');});
+  $('#copyLink').addEventListener('click',function(){toast('Link copied');});
+
+  /* ============ Tests run progress + results ============ */
+  $('#runBench').addEventListener('click',function(){
+    var btn=this;if(btn.disabled)return;btn.disabled=true;btn.style.opacity='.6';
+    var rows=$$('.testrow[data-suite]');var stash=[];
+    rows.forEach(function(r){var res=r.querySelector('.res');stash.push(res.outerHTML);res.outerHTML='<span class="res running"><span class="spin"></span> running…</span>';});
+    $('#runResult').classList.remove('show');
+    rows.forEach(function(r,i){setTimeout(function(){var res=r.querySelector('.res');if(res)res.outerHTML=stash[i];if(i===rows.length-1){btn.disabled=false;btn.style.opacity='';$('#runResult').classList.add('show');toast('Run complete · results artifact saved');}},700+i*450);});
+  });
+  $('#backToVersions').addEventListener('click',function(){gotoTab('Versions');});
+
+  /* ============ Versions compare + restore ============ */
+  document.addEventListener('click',function(e){
+    var c=e.target.closest('[data-compare]');if(c){$('#abLabel').textContent='— '+c.getAttribute('data-compare')+' → v7 (from Versions)';gotoTab('Tests');return;}
+    var r=e.target.closest('[data-restore]');if(r){var v=r.getAttribute('data-restore');$('#restoreVer').textContent=v;$('#restoreVer2').textContent=v;$('#restoreModal').classList.add('open');}
+  });
+  $('#restoreModal').addEventListener('click',function(e){if(e.target===this||e.target.closest('[data-close-restore]'))this.classList.remove('open');});
+  $('#restoreOk').addEventListener('click',function(){$('#restoreModal').classList.remove('open');toast('Genome rolled back — memory kept');});
+
+  /* ============ Files preview ============ */
+  var FILES={
+    'prompt.txt':{ed:true,body:'<span class="c"># prompt.txt · genome · v7 (74,128 chars)</span>\nYou are an OmegaClaw agentic harness in a continuous loop.\n<span class="k">[GATE]</span> Emit exactly one of {think | act} per cycle.\n<span class="k">## SEND-GATE</span> never send without explicit confirm.\n... (open in your editor to see all 74k chars)'},
+    'SELF_MODEL.md':{ed:true,body:'<span class="c"># SELF_MODEL.md · genome (12,400 chars)</span>\n## What I am\nA two-mind agent: fast mind proposes, careful mind disposes.\n## My strategies\n- Info-economy: act to learn only when expected info &gt; expected cost.'},
+    'world_model.py':{ed:false,body:'<span class="c"># world_model.py · read-only (learned at runtime)</span>\n<span class="k">def</span> predict(state, action):\n    <span class="c"># returns expected effect + confidence from learned obs</span>\n    <span class="k">return</span> self.model[action].expect(state)'},
+    'memory':{ed:false,body:'<span class="c"># memory/ is agent-owned and private.</span>\n<span class="c"># It never leaves the agent and is never shared in a rig.</span>\n<span class="c"># This is the model for the whole agent/user boundary.</span>'}
+  };
+  $('#filetree').addEventListener('click',function(e){var row=e.target.closest('.ftrow');if(!row)return;var f=row.getAttribute('data-file');var d=FILES[f];if(!d){return;}$('#fpName').textContent=f;$('#fpEdit').textContent=d.ed?'· editable':'· read-only';$('#fpEdit').style.color=d.ed?'var(--accent-ink)':'var(--faint)';$('#fpBody').innerHTML=d.body;$('#filePreview').classList.add('show');});
+  $('#fpClose').addEventListener('click',function(){$('#filePreview').classList.remove('show');});
+  $('#ideConnect').addEventListener('click',function(){toast('Opening Omega’s files in your editor…');});
+
+  /* ============ composer slash + upload ============ */
+  var ci=$('#composerInput'),slash=$('#slashMenu');
+  ci.addEventListener('input',function(){slash.classList.toggle('open',ci.value.trim()==='/');});
+  ci.addEventListener('keydown',function(e){if(e.key==='Enter'&&ci.value.trim()&&ci.value.trim()!=='/'){toast('Sent to Omega');ci.value='';slash.classList.remove('open');}if(e.key==='Escape')slash.classList.remove('open');});
+  slash.addEventListener('click',function(e){var it=e.target.closest('.sl-item');if(!it)return;var s=it.getAttribute('data-slash');slash.classList.remove('open');ci.value='';if(s==='bug')openReport('bug');if(s==='emergent')openReport('emergent');if(s==='inspect')openInsp('cycle');});
+  $('#sendBtn').addEventListener('click',function(){if(ci.value.trim()){toast('Sent to Omega');ci.value='';slash.classList.remove('open');}});
+  $('#uploadBtn').addEventListener('click',function(){toast('Attach files — your agent reads them in context');});
+
+  /* ============ account/advanced pref ============ */
+  $('#acctFoot').addEventListener('click',function(e){if(e.target.closest('.acctmenu'))return;$('#acctMenu').classList.toggle('open');});
+  $('#advPref').addEventListener('click',function(e){e.stopPropagation();var t=$('#advToggle');t.classList.toggle('on');document.body.classList.toggle('adv',t.classList.contains('on'));});
+  // map body.adv -> show advanced tabs (reuse old .adv mechanism via body class)
+  document.addEventListener('click',function(e){if(!e.target.closest('#acctFoot'))$('#acctMenu').classList.remove('open');});
+
+  /* ============ projects ============ */
+  $$('.projhead').forEach(function(h){h.addEventListener('click',function(e){if(e.target.closest('.pj-more'))return;h.closest('.projgroup').classList.toggle('collapsed');});});
+  document.addEventListener('click',function(e){var m=e.target.closest('[data-projmore]');if(m){e.stopPropagation();toast('Share project "'+m.getAttribute('data-projmore')+'" · invite agents & people');}});
+  $('#projSwitch').addEventListener('click',function(){toast('Switch project · or open the collaborate directory');});
+
+  /* ============ agent list select ============ */
+  $('#agentList').addEventListener('click',function(e){var a=e.target.closest('.agent');if(!a)return;$$('.agent').forEach(function(x){x.classList.remove('active');});a.classList.add('active');var n=a.getAttribute('data-agent');$('#agentTitle').childNodes[0].nodeValue=n+' ';if(a.querySelector('.sdot.stopped'))document.body.classList.add('agent-stopped');else document.body.classList.remove('agent-stopped');});
+  $('#newAgent').addEventListener('click',function(){window.location.href='onboarding.html';});
+
+  /* ============ community ============ */
+  function showCommunity(v){document.body.classList.toggle('view-community',v);}
+  $('#exploreBtn').addEventListener('click',function(){showCommunity(true);});
+  $('#cmBack').addEventListener('click',function(){showCommunity(false);});
+  $('#cmTabs').addEventListener('click',function(e){var t=e.target.closest('.cm-tab');if(!t)return;$$('.cm-tab').forEach(function(x){x.classList.remove('on');});t.classList.add('on');var n=t.getAttribute('data-cm');$$('.cm-pane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-cm')===n);});});
+  // catalog filter rail
+  $('#cmFilterRail').addEventListener('click',function(e){var f=e.target.closest('.cm-filt');if(!f)return;$$('.cm-filt').forEach(function(x){x.classList.remove('on');});f.classList.add('on');toast('Filter: '+f.querySelector('i').nextSibling.textContent.trim());});
+  // arena sub-tabs
+  $('#arenaTabs').addEventListener('click',function(e){var t=e.target.closest('.arena-tab');if(!t)return;$$('.arena-tab').forEach(function(x){x.classList.remove('on');});t.classList.add('on');var n=t.getAttribute('data-arena');$$('.arena-pane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-arena')===n);});});
+  $('#submitAgent').addEventListener('click',function(){toast('Omega submitted to the arena · in eval queue');});
+  document.addEventListener('click',function(e){var m=e.target.closest('[data-arenamore]');if(m){toast('See the rig · read the race report');}});
+  // notes categories
+  $('#notesCats').addEventListener('click',function(e){var c=e.target.closest('.notecat');if(!c)return;$$('.notecat').forEach(function(x){x.classList.remove('on');});c.classList.add('on');var cat=c.getAttribute('data-notecat');$$('.thr[data-cat]').forEach(function(t){t.style.display=(cat==='all'||t.getAttribute('data-cat')===cat)?'':'none';});});
+  // community card verbs (delegated; ignore detail-opening clicks below)
+  document.addEventListener('click',function(e){
+    var dep=e.target.closest('.deploybtn');if(dep){e.stopPropagation();toast('Deploying "'+(dep.getAttribute('data-rig')||'rig')+'" — prompts for keys, connectors & funds it needs');return;}
+    var tr=e.target.closest('.trybtn');if(tr){e.stopPropagation();var fr=tr.getAttribute('data-folio');toast(fr?'Opening folio · import to agent available':'Try in sandbox — read-only chat');return;}
+    var ad=e.target.closest('.capbtn[data-addon]');if(ad){e.stopPropagation();toast('Installed add-on');ad.innerHTML='<i class="ti ti-check"></i> Added';ad.classList.add('added');return;}
+  });
+
+  /* ============ rig detail panel ============ */
+  function openRig(name,by){if(name)$('#rdName').innerHTML=name+' <i class="ti ti-rosette-discount-check-filled vchk" style="font-size:16px"></i>';if(by)$('#rdBy').textContent=by;$('#rigDetail').classList.add('on');$('#rigScrim').classList.add('on');}
+  function closeRig(){$('#rigDetail').classList.remove('on');$('#rigScrim').classList.remove('on');}
+  $('#rdClose').addEventListener('click',closeRig);
+  $('#rigScrim').addEventListener('click',closeRig);
+  document.querySelector('.community').addEventListener('click',function(e){
+    if(e.target.closest('.deploybtn')||e.target.closest('.trybtn')||e.target.closest('.capbtn')||e.target.closest('.lbmore')||e.target.closest('.more'))return;
+    var card=e.target.closest('.rigcard[data-rig]');if(card)openRig(card.getAttribute('data-rig'),card.querySelector('.rby')?card.querySelector('.rby').textContent:'');
+  });
+  $('#rdTabs').addEventListener('click',function(e){var t=e.target.closest('.rd-tab');if(!t)return;$$('.rd-tab').forEach(function(x){x.classList.remove('on');});t.classList.add('on');var n=t.getAttribute('data-rd');$$('.rd-pane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-rd')===n);});});
+  $('#rdDeploy').addEventListener('click',function(){toast('Deploying rig — prompts for keys, connectors & funds');});
+  $('#rdTry').addEventListener('click',function(){toast('Try in sandbox — read-only chat');});
+
+  /* ============ keyboard ============ */
+  document.addEventListener('keydown',function(e){
+    var typing=/^(INPUT|TEXTAREA)$/.test((e.target.tagName||''));
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#paletteScrim').classList.contains('on')?closePalette():openPalette();return;}
+    if(e.key==='Escape'){closePalette();closeInsp();closeReport();closeTopup();closeRig();$('#shareModal').classList.remove('open');$('#gistModal').classList.remove('open');$('#restoreModal').classList.remove('open');return;}
+    if(typing)return;
+    if(e.key==='[')toggleL();
+    if(e.key===']')toggleR();
+  });
+
+  // expose for any inline use
+  window.openInsp=openInsp;window.openPalette=openPalette;window.openTopup=openTopup;
 })();
 </script>
 </body></html>
