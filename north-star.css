@@ -736,3 +736,11 @@ body.adv .ctab.adv{display:inline-flex}
 .proom .prow .pa.claw{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent-soft-bd)}
 .proom .prow .pb{color:var(--muted);line-height:1.5}
 .proom .prow .pb b{color:var(--ink);font-weight:500}
+
+/* ===================================================================
+   FIX: pin the cockpit to ONE viewport-tall grid row, so the chat thread
+   scrolls and the composer stays visible in ANY rail/drawer state
+   (collapsing the drawer was letting the row grow past 100vh → clipped chat).
+   =================================================================== */
+.appfull{grid-template-rows:100vh}
+.appfull>aside,.appfull>main{min-height:0}
