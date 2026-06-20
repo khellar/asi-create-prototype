@@ -1,17 +1,63 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ASI:Create — the agent workbench</title>
+<title>ASI:Create — the agent cockpit</title>
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="proto.css">
+<style>
+/* ---- v2 homepage extras (landing-only; tokens from base/proto) ---- */
+.grad2{background:linear-gradient(95deg,var(--accent),#C24DEE);-webkit-background-clip:text;background-clip:text;color:transparent}
+.uic{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.uic-head{display:flex;align-items:center;gap:9px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.uic-head .ad{width:24px;height:24px;border-radius:7px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent-soft-bd);display:grid;place-items:center;font-size:12px;font-weight:600}
+.uic-head .nm{font-weight:600;font-size:13.5px}
+.uic-live{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--ok)}
+.uic-live .pd{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.uic-funds{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.uic-tabs{display:flex;gap:2px;padding:7px 12px 0;border-bottom:1px solid var(--line);overflow:hidden}
+.uic-tab{font-size:12px;color:var(--faint);padding:7px 10px;border-radius:8px 8px 0 0;white-space:nowrap}
+.uic-tab.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+.uic-body{padding:14px;background:var(--bg)}
+.uic-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px}
+.uic-tile{border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:11px 12px}
+.uic-tile .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:6px}
+.uic-tile .h i{color:var(--accent-ink)}
+.uic-tile .v{font-family:var(--display);font-weight:700;font-size:20px;margin-top:5px}
+.uic-tile .v small{font-size:10.5px;color:var(--faint);font-weight:400}
+.uic-meter{height:5px;border-radius:3px;background:var(--warm);overflow:hidden;margin-top:8px}
+.uic-meter i{display:block;height:100%;background:var(--accent)}
+.uic-rev{border:1px solid var(--accent-soft-bd);background:var(--accent-soft);border-radius:11px;padding:10px 12px;font-size:11.5px;color:var(--accent-ink);font-family:var(--mono);line-height:1.5}
+.uic-rev b{color:var(--ink)}
+.uic-feed{margin-top:9px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.9}
+.uic-feed .t{color:var(--faint)}.uic-feed .more{color:var(--accent-ink);float:right}
+.arts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.artcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.artcard .typ{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-soft-bd);border-radius:6px;padding:2px 7px;align-self:flex-start}
+.artcard .an{font-family:var(--display);font-weight:600;font-size:15px;display:flex;align-items:center;gap:6px}
+.artcard .an .vf{color:var(--accent-ink);font-size:14px}
+.artcard .aby{font-size:11.5px;color:var(--faint);margin-top:-6px}
+.artcard .ad2{font-size:12.5px;color:var(--muted);line-height:1.5;flex:1}
+.artcard .arow{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:11px}
+.artcard .am{font-size:11.5px;color:var(--faint);font-family:var(--mono)}
+.artverb{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;border-radius:8px;background:var(--accent);color:#fff;font-size:12.5px;border:0;cursor:pointer}
+.arena{margin-top:18px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);max-width:560px}
+.arena .ar{display:flex;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid var(--line);font-size:13px}
+.arena .ar:first-child{border-top:0;background:var(--warm);font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+.arena .rk{width:22px;font-family:var(--mono);color:var(--faint)}
+.arena .sc{margin-left:auto;font-family:var(--display);font-weight:700}
+.kdrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.kdchip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--muted);background:var(--surface)}
+.kdchip .pd{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.kdchip b{color:var(--ink);font-weight:500}
+@media(max-width:900px){.arts{grid-template-columns:1fr 1fr}}
+</style>
 </head><body>
 
 <nav class="nav"><div class="wrap nav-in">
   <div class="brand"><span class="mark"><img src="logo.png" alt="ASI:Create" class="logomark"></span> ASI:Create</div>
-  <a class="link" href="#how">Product</a><a class="link" href="#skills">Skills</a><a class="link" href="#forum">Forum</a><a class="link" href="#research">Research</a><a class="link" href="#pricing">Pricing</a>
+  <a class="link" href="#how">Product</a><a class="link" href="#bench">Lab bench</a><a class="link" href="#market">Marketplace</a><a class="link" href="#research">Research</a><a class="link" href="#pricing">Pricing</a>
   <span class="spacer"></span>
-  <span class="navskins"><button class="sw-skin sw-violet" data-skin="violet" title="Violet"></button><button class="sw-skin sw-teal" data-skin="teal" title="Teal"></button><button class="sw-skin sw-emerald" data-skin="emerald" title="Emerald"></button><button class="sw-skin sw-amber" data-skin="amber" title="Amber"></button><button class="sw-skin sw-rose" data-skin="rose" title="Rose"></button><button class="sw-skin sw-copper" data-skin="copper" title="Copper"></button></span>
   <span class="navic" data-themebtn title="Toggle theme"><i class="ti ti-moon"></i></span>
   <a class="link" href="onboarding.html">Sign in</a>
   <a class="btn btn-primary" href="onboarding.html">Start free <i class="ti ti-arrow-right"></i></a>
@@ -19,25 +65,28 @@
 
 <header class="hero"><div class="wrap hero-grid">
   <div>
-    <span class="pill soft"><i class="ti ti-atom-2"></i> An AGI workbench on the Hyperon stack</span>
-    <h1 style="margin-top:18px">Experiment with agents on an <span class="grad">open AGI stack</span>.</h1>
-    <p class="sub">A turnkey home for your AI agents. Sign up and you already have one running — name it, give it a goal, and start chatting. Add connectors, skills and tools as you go. Model-agnostic, yours to keep.</p>
+    <span class="pill soft"><i class="ti ti-eye"></i> Not a black box — watch it think</span>
+    <h1 style="margin-top:18px">An agent that’s already running — and you can <span class="grad2">see inside it</span>.</h1>
+    <p class="sub">Sign up and your OmegaClaw is live. Chat with it, watch it think, shape its mind, benchmark a change, and share what works — all in one cockpit. Model-agnostic, sovereign, yours to keep.</p>
     <div class="cta">
       <a class="btn btn-primary btn-lg" href="onboarding.html">Start with an agent <i class="ti ti-arrow-right"></i></a>
-      <a class="btn btn-ghost btn-lg" href="app.html"><i class="ti ti-player-play"></i> See the workspace</a>
+      <a class="btn btn-ghost btn-lg" href="workbench.html"><i class="ti ti-layout-dashboard"></i> Open the cockpit</a>
     </div>
     <div class="trust">
       <span><i class="ti ti-circle-check"></i> Anthropic · OpenAI · open weights · ASI Cloud</span>
-      <span><i class="ti ti-lock"></i> Your chats stay yours</span>
+      <span><i class="ti ti-lock"></i> Your memory &amp; keys stay yours</span>
     </div>
   </div>
-  <div class="glass">
-    <div class="gc-top"><span class="dot" style="background:#F7766B"></span><span class="dot" style="background:#F7C04A"></span><span class="dot" style="background:#56C679"></span><span style="margin-left:8px;font-size:12px;color:var(--faint);font-family:var(--mono)">omega · sonnet-4.6</span></div>
-    <div class="gc-body">
-      <div class="msg"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>Hi — I’m your agent. What should we work on first?</div></div>
-      <div class="msg" style="flex-direction:row-reverse"><div class="av me">K</div><div class="bub" style="text-align:right">Pull last week’s invoices from Drive and summarize.</div></div>
-      <div class="msg"><div class="av claw">O</div><div class="bub"><div class="who">Omega</div>On it.<br><span class="toolchip"><i class="ti ti-brand-google-drive"></i> Google Drive · read 7 files</span></div></div>
-      <div class="composer"><i class="ti ti-paperclip"></i> Message Omega…<span class="send"><i class="ti ti-arrow-up"></i></span></div>
+  <div class="uic">
+    <div class="uic-head"><span class="ad">O</span><span class="nm">Omega</span><span class="uic-live"><span class="pd"></span> running</span><span class="uic-funds">◷ $78.36 · ~4.6k cyc</span></div>
+    <div class="uic-tabs"><span class="uic-tab">Chat</span><span class="uic-tab on">Activity</span><span class="uic-tab">Mind</span><span class="uic-tab">Vision</span></div>
+    <div class="uic-body">
+      <div class="uic-grid">
+        <div class="uic-tile"><div class="h"><i class="ti ti-database"></i> Long-term memory</div><div class="v">27,394 <small>vectors</small></div><div class="uic-meter"><i style="width:38%"></i></div></div>
+        <div class="uic-tile"><div class="h"><i class="ti ti-bulb"></i> Beliefs revised</div><div class="v">12 <small>last 30 cyc</small></div><div class="uic-meter"><i style="width:60%"></i></div></div>
+      </div>
+      <div class="uic-rev"><i class="ti ti-refresh"></i> belief revised — <b>(did send_email) → needs-confirm</b> · stv .62→.81 · cited 2 episodes</div>
+      <div class="uic-feed"><span class="t">07:03</span> summarize → 3-bullet memo <span class="more">⋯ inspect</span><br><span class="t">07:02</span> web_search → 6 results · think 274 tok <span class="more">⋯</span></div>
     </div>
   </div>
 </div></header>
@@ -48,42 +97,80 @@
 </div></section>
 
 <section class="section" id="how"><div class="wrap">
-  <div class="shead"><span class="eyebrow">How it works</span><h2>From sign-up to working agent in three steps.</h2></div>
+  <div class="shead"><span class="eyebrow">How it works</span><h2>Chat with it. Watch it think. Make it yours.</h2></div>
   <div class="steps">
-    <div class="step"><div class="n">1</div><h3>Sign up</h3><p>Use DEEP ID or email. You land with one agent already deployed and running — no setup, no plumbing.</p></div>
-    <div class="step"><div class="n">2</div><h3>Name it &amp; talk</h3><p>Give your agent a name and a goal, then just chat. Switch on connectors, skills and tools right from the conversation.</p></div>
-    <div class="step"><div class="n">3</div><h3>Hit + for more</h3><p>Spin up another agent any time, share it like a doc, or let it build and stash automations under the hood.</p></div>
+    <div class="step"><div class="n">1</div><h3>Chat</h3><p>Your agent is already deployed and running — no spaces, no wiring, no deploy wait. Give it a goal and talk. Switch on connectors, skills and knowledge right from the conversation.</p></div>
+    <div class="step"><div class="n">2</div><h3>Watch it think &amp; shape its mind</h3><p>Open the live dashboard: its memory, beliefs, world model and cost. Read the exact prompt it ran. Edit its prompt, self-model and policies at any depth. Not a black box.</p></div>
+    <div class="step"><div class="n">3</div><h3>Test, version &amp; share</h3><p>Benchmark a change to see if it helped, roll back if it didn’t, and deploy community rigs — or publish your own, shared clean. Bring agents together in projects to cross-pollinate.</p></div>
   </div>
 </div></section>
 
-<section class="section" id="skills" style="padding-top:20px"><div class="wrap">
-  <div class="shead"><span class="eyebrow">Skills &amp; tools market</span><h2>Give your agent superpowers — or sell your own.</h2><p>Community skills, tools and system prompts your agent can inspect, install and run. Free or paid, with ratings and light reputation.</p></div>
-  <div class="market">
-    <div class="skill"><div class="top"><span class="si" style="background:#3BA37A"><i class="ti ti-coin"></i></span><div><div class="nm">Token-spend tracker</div><div class="by">by Jon Grove</div></div></div><div class="desc">A live dashboard of what your agent is doing, how many tokens it’s burning, and what it costs.</div><div class="meta"><span class="stars"><i class="ti ti-star"></i> 4.9</span><span><i class="ti ti-download"></i> 2.4k</span><span class="tag">observability</span></div><div class="row2"><span class="price">Free</span><button class="installbtn"><i class="ti ti-plus"></i> Install</button></div></div>
-    <div class="skill"><div class="top"><span class="si" style="background:#5B50E8"><i class="ti ti-search"></i></span><div><div class="nm">Deep web research</div><div class="by">by asi-labs</div></div></div><div class="desc">Multi-source research with adversarial fact-checking and cited reports, wired to your agent.</div><div class="meta"><span class="stars"><i class="ti ti-star"></i> 4.8</span><span><i class="ti ti-download"></i> 5.1k</span><span class="tag">research</span></div><div class="row2"><span class="price">$6 / mo</span><button class="installbtn"><i class="ti ti-plus"></i> Install</button></div></div>
-    <div class="skill"><div class="top"><span class="si" style="background:#C24DEE"><i class="ti ti-photo"></i></span><div><div class="nm">Image studio</div><div class="by">by pixel.dev</div></div></div><div class="desc">Generate and edit images in chat. Bring your own keys or use ASI Cloud credits.</div><div class="meta"><span class="stars"><i class="ti ti-star"></i> 4.7</span><span><i class="ti ti-download"></i> 3.3k</span><span class="tag">creative</span></div><div class="row2"><span class="price">Free</span><button class="installbtn"><i class="ti ti-plus"></i> Install</button></div></div>
+<section class="section" id="bench" style="padding-top:14px"><div class="wrap">
+  <div class="band grid"><div class="bandgrid">
+    <div class="inner">
+      <span class="eyebrow">The AGI Lab Bench</span>
+      <h2>See inside the mind — not a black box.</h2>
+      <p>Every belief, memory and decision is inspectable. Open the live diagnostics, read the precise prompt it ran (and how much is framework vs. its own thinking), watch beliefs revise with evidence, and wire your own <b>Claude Code or Codex</b> straight into your agent’s files — editing it while you chat. Something only a transparent, neuro-symbolic agent can offer.</p>
+      <div class="chips">
+        <span class="chip"><i class="ti ti-activity-heartbeat"></i> Live diagnostics</span>
+        <span class="chip"><i class="ti ti-brain"></i> Editable genome</span>
+        <span class="chip"><i class="ti ti-code"></i> Connect your IDE</span>
+        <span class="chip"><i class="ti ti-checkup-list"></i> Benchmark &amp; version</span>
+        <span class="chip"><i class="ti ti-atom-2"></i> Truth-valued beliefs · PLN/NAL</span>
+      </div>
+    </div>
+    <div>
+      <div class="uic" style="box-shadow:0 24px 60px -30px rgba(0,0,0,.5)">
+        <div class="uic-head"><span class="ad">O</span><span class="nm">Inspector</span><span class="uic-funds" style="margin-left:auto">cycle 2,418 · ⋯</span></div>
+        <div class="uic-body">
+          <div class="uic-tile" style="margin-bottom:10px"><div class="h"><i class="ti ti-message-2-cog"></i> prompt sent · scaffold ratio</div><div class="v" style="font-size:16px">61% framework <small>· 39% own context</small></div><div class="uic-meter"><i style="width:61%"></i></div></div>
+          <div class="uic-rev"><i class="ti ti-arrows-diff"></i> <b>vision diff</b> — acted → compared frames → 53 cells changed → “the boat moved right”</div>
+          <div class="uic-feed" style="margin-top:9px"><span class="t">⊢ reasoner</span> PLN 4 · NAL 7 · MeTTa 19 this window<br><span class="t">⛁ recall</span> 8 queries → 29 hits (75% local)</div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div></section>
+
+<section class="section" id="market" style="padding-top:0"><div class="wrap">
+  <div class="shead"><span class="eyebrow">Marketplace of minds</span><h2>Deploy a rig in one click — or publish your own.</h2><p>Not agent profiles — the things that actually transfer: rigs, skills, knowledge packs, prompts, self-models, benchmark rigs and folios. Free or paid, with ratings and verified creators. Publish <b>clean</b> — your memory and keys never travel.</p></div>
+  <div class="arts">
+    <div class="artcard"><span class="typ">Rig</span><div><div class="an">Web3 Scout <i class="ti ti-rosette-discount-check-filled vf"></i></div><div class="aby">by khellar</div></div><div class="ad2">Finds new on-chain projects, filters by volume, writes a daily 3-bullet memo.</div><div class="arow"><span class="am"><i class="ti ti-git-fork"></i> 214</span><button class="artverb"><i class="ti ti-rocket"></i> Deploy</button></div></div>
+    <div class="artcard"><span class="typ">Skill</span><div><div class="an">Deep web research</div><div class="aby">by asi-labs</div></div><div class="ad2">Multi-source research with adversarial fact-checking and cited reports.</div><div class="arow"><span class="am">$6/mo</span><button class="artverb"><i class="ti ti-plus"></i> Install</button></div></div>
+    <div class="artcard"><span class="typ">Knowledge</span><div><div class="an">Genomics KG <i class="ti ti-rosette-discount-check-filled vf"></i></div><div class="aby">by ASI Bio</div></div><div class="ad2">180M curated edges — genes, variants, diseases, drugs, pathways.</div><div class="arow"><span class="am">$199/mo</span><button class="artverb"><i class="ti ti-plus"></i> Subscribe</button></div></div>
+    <div class="artcard"><span class="typ">Self-model</span><div><div class="an">Careful-mind v3</div><div class="aby">by patham9</div></div><div class="ad2">A constitution tuned for evidence-grounded beliefs and anti-confabulation.</div><div class="arow"><span class="am"><i class="ti ti-star" style="color:var(--star)"></i> 4.9</span><button class="artverb"><i class="ti ti-copy"></i> Copy</button></div></div>
+  </div>
+  <div class="shead" style="margin-top:40px"><span class="eyebrow">Benchmark arena</span><h2 style="font-size:26px">Bring your rig. Climb the board.</h2></div>
+  <div class="arena">
+    <div class="ar"><span class="rk">#</span><span>Player</span><span style="color:var(--faint)">Rig · ARC-AGI-3</span><span class="sc">RHAE</span></div>
+    <div class="ar"><span class="rk">1</span><span>khellar</span><span style="color:var(--muted);font-size:12px">ARC-AGI-3 Player</span><span class="sc">32.6%</span></div>
+    <div class="ar"><span class="rk">2</span><span>astroseger</span><span style="color:var(--muted);font-size:12px">Executable World Models</span><span class="sc">31.0%</span></div>
+    <div class="ar"><span class="rk">3</span><span>tufa-labs</span><span style="color:var(--muted);font-size:12px">StochasticGoose</span><span class="sc">12.6%</span></div>
+  </div>
+</div></section>
+
+<section class="section" style="padding-top:10px"><div class="wrap">
+  <div class="shead"><span class="eyebrow">Knowledge &amp; data</span><h2 style="font-size:26px">Plug your agent into curated graphs &amp; live sources.</h2></div>
+  <div class="kdrow">
+    <span class="kdchip"><span class="pd"></span> <b>Open Targets</b> · subscribe</span>
+    <span class="kdchip"><span class="pd"></span> <b>PubMed</b> · connect</span>
+    <span class="kdchip"><span class="pd"></span> <b>arXiv</b> · connect</span>
+    <span class="kdchip"><span class="pd"></span> <b>SEC EDGAR</b> · connect</span>
+    <span class="kdchip"><span class="pd"></span> <b>CoinGecko</b> · connect</span>
+    <span class="kdchip"><span class="pd"></span> <b>The Graph</b> · connect</span>
   </div>
 </div></section>
 
 <section class="section" id="research"><div class="wrap">
-  <div class="band grid"><div class="inner">
-    <span class="eyebrow">Real AGI research</span>
-    <h2>Work with a proto-AGI — and help build it.</h2>
-    <p>Under the hood, ASI:Create runs on SingularityNet’s Hyperon stack. Every agent you deploy is a step in open AGI research: surface breakthroughs, file bugs, and shape where this goes — an agent workbench, not a black box.</p>
-    <div class="chips"><span class="chip"><i class="ti ti-atom-2"></i> Hyperon metagraph</span><span class="chip"><i class="ti ti-bug"></i> Track bugs</span><span class="chip"><i class="ti ti-bulb"></i> Find breakthroughs</span><span class="chip" id="forum"><i class="ti ti-messages"></i> Community forum</span></div>
-  </div></div>
-</div></section>
-
-<section class="section" style="padding-top:0"><div class="wrap">
   <div class="band"><div class="bandgrid">
     <div class="inner">
-      <span class="eyebrow">On-chain roadmap</span>
-      <h2>Sovereign by design — native to ASI Chain.</h2>
-      <p>Model-agnostic today, blockchain-native tomorrow. Bring any model, keep your chats, and deploy agents with the privacy and security of ASI Chain.</p>
+      <span class="eyebrow">Sovereign by design</span>
+      <h2>Real AGI research — native to ASI Chain.</h2>
+      <p>Under the hood it’s SingularityNET’s neuro-symbolic Hyperon stack. Bring any model, keep your chats and memory, and own what you build — with DEEP-ID identity today and ASI Chain deployment on the roadmap. An agent workbench, not a walled garden.</p>
     </div>
     <div class="roadmap">
-      <div class="rm done"><span class="d"><i class="ti ti-check"></i></span><div><b>Turnkey agents &amp; chat</b><br><span>Live today</span></div></div>
-      <div class="rm done"><span class="d"><i class="ti ti-check"></i></span><div><b>Skills &amp; tools market</b><br><span>Live today</span></div></div>
+      <div class="rm done"><span class="d"><i class="ti ti-check"></i></span><div><b>Cockpit, observability &amp; marketplace</b><br><span>Live today</span></div></div>
+      <div class="rm done"><span class="d"><i class="ti ti-check"></i></span><div><b>Sovereign identity (DEEP-ID)</b><br><span>Live today</span></div></div>
       <div class="rm"><span class="d"><i class="ti ti-circle"></i></span><div><b>ASI Cloud inference</b><br><span>Rolling out</span></div></div>
       <div class="rm"><span class="d"><i class="ti ti-circle"></i></span><div><b>Native ASI Chain deploy</b><br><span>On the roadmap</span></div></div>
     </div>
@@ -91,27 +178,27 @@
 </div></section>
 
 <section class="section" id="pricing" style="padding-top:10px"><div class="wrap">
-  <div class="shead center"><span class="eyebrow">Pricing</span><h2>Start free. Scale when your agents do.</h2><p>One agent and the essentials are free forever. Pay for more agents, heavier hardware, and premium skills.</p></div>
+  <div class="shead center"><span class="eyebrow">Pricing</span><h2>Start free. Scale when your agents do.</h2><p>One always-on agent and the essentials are free. Pay for more agents, heavier compute, and premium rigs &amp; knowledge.</p></div>
   <div class="tiers">
-    <div class="tier"><h3>Free</h3><div class="amt">$0<small> / mo</small></div><ul><li><i class="ti ti-check"></i> One always-on agent</li><li><i class="ti ti-check"></i> Core connectors &amp; tools</li><li><i class="ti ti-check"></i> Bring your own model keys</li><li><i class="ti ti-check"></i> Community forum</li></ul><a class="btn btn-ghost btn-lg" href="onboarding.html" style="width:100%;justify-content:center;margin-top:20px">Get started</a></div>
-    <div class="tier feat"><span class="badge">Most popular</span><h3>Pro</h3><div class="amt">$20<small> / mo</small></div><ul><li><i class="ti ti-check"></i> Up to 10 agents</li><li><i class="ti ti-check"></i> Paid hardware &amp; faster runtimes</li><li><i class="ti ti-check"></i> Premium skills credits</li><li><i class="ti ti-check"></i> Share &amp; collaborate</li></ul><a class="btn btn-primary btn-lg" href="onboarding.html" style="width:100%;justify-content:center;margin-top:20px">Start Pro</a></div>
-    <div class="tier"><h3>Team</h3><div class="amt">Custom</div><ul><li><i class="ti ti-check"></i> Unlimited agents</li><li><i class="ti ti-check"></i> Org workspaces &amp; roles</li><li><i class="ti ti-check"></i> ASI Cloud inference</li><li><i class="ti ti-check"></i> Priority support</li></ul><a class="btn btn-ghost btn-lg" href="onboarding.html" style="width:100%;justify-content:center;margin-top:20px">Talk to us</a></div>
+    <div class="tier"><h3>Free</h3><div class="amt">$0<small> / mo</small></div><ul><li><i class="ti ti-check"></i> One always-on agent</li><li><i class="ti ti-check"></i> Cockpit + live observability</li><li><i class="ti ti-check"></i> Core capabilities · bring your model keys</li><li><i class="ti ti-check"></i> Browse &amp; deploy community rigs</li></ul><a class="btn btn-ghost btn-lg" href="onboarding.html" style="width:100%;justify-content:center;margin-top:20px">Get started</a></div>
+    <div class="tier feat"><span class="badge">Most popular</span><h3>Pro</h3><div class="amt">$20<small> / mo</small></div><ul><li><i class="ti ti-check"></i> Up to 10 agents · projects</li><li><i class="ti ti-check"></i> Heavier compute &amp; faster runtimes</li><li><i class="ti ti-check"></i> Publish &amp; sell rigs · benchmark arena</li><li><i class="ti ti-check"></i> Connect your IDE (Claude Code · Codex)</li></ul><a class="btn btn-primary btn-lg" href="onboarding.html" style="width:100%;justify-content:center;margin-top:20px">Start Pro</a></div>
+    <div class="tier"><h3>Team</h3><div class="amt">Custom</div><ul><li><i class="ti ti-check"></i> Unlimited agents · shared projects</li><li><i class="ti ti-check"></i> Roles &amp; org workspaces</li><li><i class="ti ti-check"></i> ASI Cloud inference</li><li><i class="ti ti-check"></i> Priority support</li></ul><a class="btn btn-ghost btn-lg" href="onboarding.html" style="width:100%;justify-content:center;margin-top:20px">Talk to us</a></div>
   </div>
 </div></section>
 
 <section class="section"><div class="wrap">
   <div class="finalcta">
     <h2>Your agent is already running.</h2>
-    <p>Sign up, give it a name, and start working with it in under a minute.</p>
+    <p>Sign up, give it a name, and start working with it — and watching it think — in under a minute.</p>
     <a class="btn btn-primary btn-lg" href="onboarding.html">Start with an agent <i class="ti ti-arrow-right"></i></a>
   </div>
 </div></section>
 
 <footer class="footer"><div class="wrap">
   <div class="fcols">
-    <div><div class="brand"><span class="mark"><img src="logo.png" alt="ASI:Create" class="logomark"></span> ASI:Create</div><p class="muted" style="font-size:14px;margin:14px 0 0;max-width:30ch">The turnkey agent workbench. An open AGI research platform by the Artificial Superintelligence Alliance.</p></div>
-    <div><h5>Product</h5><a href="#how">How it works</a><a href="#skills">Skills market</a><a href="#pricing">Pricing</a><a href="app.html">Workspace</a></div>
-    <div><h5>Research</h5><a href="#research">Hyperon stack</a><a href="#forum">Forum</a><a href="#">Roadmap</a><a href="#">Bug bounty</a></div>
+    <div><div class="brand"><span class="mark"><img src="logo.png" alt="ASI:Create" class="logomark"></span> ASI:Create</div><p class="muted" style="font-size:14px;margin:14px 0 0;max-width:32ch">The agent cockpit. Run, watch, shape and share living agents — an open AGI platform by the Artificial Superintelligence Alliance.</p></div>
+    <div><h5>Product</h5><a href="#how">How it works</a><a href="#bench">Lab bench</a><a href="#market">Marketplace</a><a href="workbench.html">Cockpit</a><a href="observability.html">Observability</a></div>
+    <div><h5>Research</h5><a href="#research">Hyperon stack</a><a href="#">Forum</a><a href="#">Roadmap</a><a href="#">Bug bounty</a></div>
     <div><h5>Company</h5><a href="#">About ASI</a><a href="#">Docs</a><a href="#">Privacy</a><a href="#">Contact</a></div>
   </div>
   <div class="fbottom"><span>© 2026 ASI · Artificial Superintelligence Alliance</span><span style="display:flex;gap:16px"><i class="ti ti-brand-linkedin"></i><i class="ti ti-brand-telegram"></i><i class="ti ti-brand-x"></i></span></div>
