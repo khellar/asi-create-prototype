@@ -4,7 +4,7 @@
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css?v=2"><link rel="stylesheet" href="proto.css?v=2"><link rel="stylesheet" href="north-star.css?v=2">
+<link rel="stylesheet" href="tabler.css"><link rel="stylesheet" href="base.css?v=3"><link rel="stylesheet" href="proto.css?v=3"><link rel="stylesheet" href="north-star.css?v=3">
 </head><body class="adv">
 <div class="appfull">
   <!-- ===================== LEFT RAIL ===================== -->
@@ -138,102 +138,91 @@
 
       <!-- ============ ACTIVITY (observability dashboard) ============ -->
       <div class="cpane scroll" data-cpane="Activity">
-        <div class="ob-timebar">
-          <div class="ob-seg"><button>1h</button><button class="on">24h</button><button>7d</button><button>all</button></div>
-          <span class="meta">window: last 30 cycles · 2,501 total · updated 09:14:45</span>
-          <span class="ob-live stale" id="liveBadge"><span class="pulse"></span> running · last cycle 14m ago</span>
+        <div class="av2-tabhead">
+          <div class="av2-seg"><button>1h</button><button class="on">24h</button><button>7d</button><button>all</button></div>
+          <span class="av2-tabmeta">window: last 30 cycles · 2,501 total · updated 09:14:45 · last cycle 38s ago</span>
+          <span class="ob-openfull" id="openFull">Open full observability <i class="ti ti-external-link"></i></span>
         </div>
-        <div style="margin:-4px 0 14px"><span class="ob-openfull" id="openFull">Open full observability <i class="ti ti-external-link"></i></span></div>
 
-        <!-- ROW 1: operations -->
-        <div class="ob-mgrid">
-          <div class="ob-card clickable" data-insp="spend">
-            <div class="ob-ch"><i class="ti ti-clock-dollar"></i> LLM budget <span class="more" data-insp="spend">⋯</span></div>
-            <div class="ob-big">$21.64 <small>/ $100.00 cap</small></div>
-            <div class="ob-meter"><i style="width:21.6%"></i></div>
-            <div class="ob-sub"><b>$0.0169</b> / cycle · runway <b>~4,631</b> cyc · today <span class="ob-delta flat">+$0.41</span></div>
+        <div class="av2-sec"><i class="ti ti-sparkles"></i> Reasoning — the careful mind</div>
+        <div class="av2-hero">
+          <div class="av2-hero-top">
+            <span class="av2-hero-ic"><i class="ti ti-logic-and"></i></span>
+            <span class="av2-hero-t">Careful mind engaged</span>
+            <span class="av2-hero-eng">● active this window</span>
           </div>
-          <div class="ob-card clickable" data-insp="health">
-            <div class="ob-ch"><i class="ti ti-activity-heartbeat"></i> Runtime health <span class="more" data-insp="health">⋯</span></div>
-            <div class="ob-big" style="font-size:18px;gap:7px"><span class="ob-dot y"></span> 5 green · 3 yellow · 2 red</div>
-            <div class="ob-sub">liveness <span class="ob-dot y"></span> · format <span class="ob-dot r"></span> · substrate <span class="ob-dot r"></span> · memory <span class="ob-dot y"></span> · episodes <span class="ob-dot y"></span></div>
-            <div class="ob-captag">last cycle age 871s · click for the 10-dot board</div>
-          </div>
-          <div class="ob-card clickable" data-insp="throughput">
-            <div class="ob-ch"><i class="ti ti-wave-square"></i> Throughput &amp; tokens <span class="more" data-insp="throughput">⋯</span></div>
-            <div class="ob-big">2,501 <span class="unit">cycles</span></div>
-            <div class="ob-spark" title="think-token ratio over last 14 cycles">
-              <span style="height:88%"></span><span style="height:52%"></span><span style="height:14%"></span><span style="height:6%"></span><span class="hl" style="height:90%"></span><span style="height:51%"></span><span style="height:84%"></span><span style="height:13%"></span><span style="height:7%"></span><span style="height:97%"></span><span style="height:60%"></span><span style="height:25%"></span><span style="height:10%"></span><span style="height:11%"></span>
+          <div class="av2-hero-s">Fast mind (the LLM) proposes; the careful mind (PLN / NAL over your <code>&amp;persistent</code> atomspace) disposes — spending cheap thought to save expensive action. Over the last 30 cycles:</div>
+          <div class="av2-rgrid">
+            <div class="av2-stat clickable" data-insp="pln">
+              <div class="v">128</div><div class="l">PLN / NAL / NARS runs</div>
+              <div class="av2-bar"><i style="width:55%;background:#3ECF8E"></i><i style="width:34%;background:var(--accent)"></i><i style="width:11%;background:#E0B341"></i></div>
+              <div class="k">PLN 71 · NAL 44 · NARS 13</div>
             </div>
-            <div class="ob-sub">avg ctx <b>55.3k</b> ch · in <b>22.4k</b> / out <b>8.5k</b> · think-ratio <b>0.71</b></div>
+            <div class="av2-stat clickable" data-insp="rratoms">
+              <div class="v">41 <small>/ 97</small></div><div class="l">Reasoning-ready atoms</div>
+              <div class="k">carry <code style="font-family:var(--mono);color:var(--accent-ink)">(stv F C)</code> · forming 6/30</div>
+            </div>
+            <div class="av2-stat clickable" data-insp="beliefs">
+              <div class="v">4 <small>/ 30 cyc</small></div><div class="l">Belief revisions</div>
+              <div class="k">freq/conf updated on existing beliefs</div>
+            </div>
+            <div class="av2-stat clickable" data-insp="metta">
+              <div class="v">34<small>%</small></div><div class="l">MeTTa substrate use</div>
+              <div class="k">of cycles touch the symbolic substrate</div>
+            </div>
           </div>
         </div>
 
-        <!-- ROW 2: memory -->
-        <div class="ob-ch" style="margin:20px 0 9px"><i class="ti ti-database"></i> MEMORY — what it has learned &amp; retained, against its caps</div>
-        <div class="ob-mgrid">
-          <div class="ob-card clickable" data-insp="chroma">
-            <div class="ob-ch"><i class="ti ti-stack-2"></i> Long-term memory · chromadb <span class="more" data-insp="chroma">⋯</span></div>
-            <div class="ob-big">27,394 <span class="unit">vectors</span></div>
-            <div class="ob-meter"><i class="ok" style="width:38%"></i></div>
-            <div class="ob-sub">cap <b>unbounded</b> (glacier-backed) · <b>+29</b> recalled last query · 75% local</div>
-            <div class="ob-captag">no hard cap — old episodes MOVE to glacier, never deleted</div>
+        <div class="av2-sec"><i class="ti ti-activity-heartbeat"></i> Operations</div>
+        <div class="av2-grid">
+          <div class="av2-tile clickable" data-insp="health">
+            <div class="h"><i class="ti ti-heartbeat"></i> Runtime health</div>
+            <div class="big"><span class="av2-dot g"></span> 8 green · 2 yellow</div>
+            <div class="sub">liveness ● · format ● · substrate ● · memory ● · episodes ●</div>
           </div>
-          <div class="ob-card clickable" data-insp="persist">
-            <div class="ob-ch"><i class="ti ti-cube"></i> Working atomspace · &amp;persistent <span class="more" data-insp="persist">⋯</span></div>
-            <div class="ob-big">97 <span class="unit">atoms</span> <small>/ cap</small></div>
-            <div class="ob-meter"><i style="width:19.1%"></i></div>
-            <div class="ob-sub">9,565 / <b>50,000</b> chars (<b>19.1%</b>) · whole-file snapshot per cycle</div>
-            <div class="ob-captag">RAM is source-of-truth; persistent.metta is the per-cycle mirror</div>
+          <div class="av2-tile clickable" data-insp="throughput">
+            <div class="h"><i class="ti ti-wave-square"></i> Throughput</div>
+            <div class="big">2,501 <small>cycles</small></div>
+            <div class="av2-spark"><span style="height:60%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:70%"></span><span class="hl" style="height:95%"></span><span style="height:55%"></span><span style="height:88%"></span><span style="height:40%"></span><span style="height:72%"></span><span style="height:97%"></span><span style="height:62%"></span><span style="height:50%"></span><span style="height:84%"></span><span style="height:66%"></span></div>
+            <div class="sub">avg ctx 55.3k ch · think-ratio 0.71</div>
           </div>
-          <div class="ob-card clickable" data-insp="episodes">
-            <div class="ob-ch"><i class="ti ti-history"></i> Episodes · history.metta <span class="more" data-insp="episodes">⋯</span></div>
-            <div class="ob-big" style="gap:7px"><span class="ob-dot y"></span> 0 <small>episodes this game</small></div>
-            <div class="ob-sub">states <b>0</b> · max-repeat <b>0</b> · repeated <b>0</b> · refused <b>1</b></div>
-            <div class="ob-captag">yellow: episode store empty for re86 — perception broken 10+ cycles</div>
+          <div class="av2-tile clickable" data-insp="spend">
+            <div class="h"><i class="ti ti-clock-dollar"></i> LLM budget</div>
+            <div class="big">$21.64 <small>/ $100</small></div>
+            <div class="av2-meter"><i style="width:21.6%"></i></div>
+            <div class="sub">$0.0169 / cycle · runway ~4,631 cyc</div>
           </div>
         </div>
 
-        <!-- ROW 3: reasoning -->
-        <div class="ob-ch" style="margin:20px 0 9px"><i class="ti ti-sparkles"></i> REASONING — the careful mind: beliefs, truth-valued atoms, how often it actually reasons</div>
-        <div class="ob-mgrid">
-          <div class="ob-card clickable w3" data-insp="rratoms">
-            <div class="ob-ch"><i class="ti ti-sparkles"></i> Reasoning-ready atoms <span class="more" data-insp="rratoms">⋯</span></div>
-            <div class="ob-big" style="gap:7px"><span class="ob-dot r"></span> 0 <small>of 97</small></div>
-            <div class="ob-sub">atoms carrying <code style="font-family:var(--mono)">(stv F C)</code> · forming-rate <b>0/30</b></div>
+        <div class="av2-sec"><i class="ti ti-database"></i> Memory</div>
+        <div class="av2-grid">
+          <div class="av2-tile clickable" data-insp="chroma">
+            <div class="h"><i class="ti ti-stack-2"></i> Long-term memory · chromadb</div>
+            <div class="big">27,394 <small>vectors</small></div>
+            <div class="sub">+29 recalled last query · cap unbounded (glacier)</div>
           </div>
-          <div class="ob-card clickable w3" data-insp="beliefs">
-            <div class="ob-ch"><i class="ti ti-refresh"></i> Belief revisions <span class="more" data-insp="beliefs">⋯</span></div>
-            <div class="ob-big">0 <span class="unit">/30 cyc</span></div>
-            <div class="ob-sub">freq/conf changes on existing beliefs</div>
+          <div class="av2-tile clickable" data-insp="persist">
+            <div class="h"><i class="ti ti-cube"></i> Working atomspace · &amp;persistent</div>
+            <div class="big">97 <small>atoms</small></div>
+            <div class="av2-meter"><i style="width:19.1%"></i></div>
+            <div class="sub">9,565 / 50,000 chars (19.1%)</div>
           </div>
-          <div class="ob-card clickable w3" data-insp="metta">
-            <div class="ob-ch"><i class="ti ti-math-function"></i> MeTTa calls <span class="more" data-insp="metta">⋯</span></div>
-            <div class="ob-big" style="gap:7px"><span class="ob-dot r"></span> 0%</div>
-            <div class="ob-sub">metta_usage_rate · substrate 0.0</div>
-          </div>
-          <div class="ob-card clickable w3" data-insp="pln">
-            <div class="ob-ch"><i class="ti ti-logic-and"></i> PLN / NAL / NARS <span class="more" data-insp="pln">⋯</span></div>
-            <div class="ob-big" style="gap:7px"><span class="ob-dot r"></span> 0</div>
-            <div class="ob-sub">reasoner_invocations · by-kind —</div>
+          <div class="av2-tile clickable" data-insp="episodes">
+            <div class="h"><i class="ti ti-history"></i> Episodes · history.metta</div>
+            <div class="big"><span class="av2-dot g"></span> 1,284 <small>lifetime</small></div>
+            <div class="sub">47 this run · 0 refused · state·action·result·stv</div>
           </div>
         </div>
 
-        <div class="ob-scaffold">
-          <i class="ti ti-alert-triangle"></i>
-          <div><b style="color:var(--star);font-family:var(--mono);font-size:11px;letter-spacing:.05em">CAREFUL MIND DORMANT.</b> Every reasoning meter is at zero this window: no <code style="font-family:var(--mono)">(stv)</code> atoms forming, no belief revisions, <code style="font-family:var(--mono)">metta_usage_rate 0.0</code>, <code style="font-family:var(--mono)">reasoner_invocations 0</code>. The agent is running on the fast mind (LLM + shell) only. This is the honest state — the dashboard does <i>not</i> fake activity. <span style="color:var(--accent-ink);cursor:pointer" id="reportScaffold">Report this as suspected scaffolding-gap →</span></div>
-        </div>
-
-        <!-- LIVE FEED -->
-        <div class="ob-ch" style="margin:20px 0 9px"><i class="ti ti-player-track-next"></i> LIVE — last cycles (click a row to inspect prompt · reasoning · tool-calls · episodes)</div>
-        <div class="ob-feedbox" id="feed">
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">09:00:14</span> <span class="acc">act</span> shell — fix parser, refresh frame + parse <span class="warn2">(perception broken 10+ cyc)</span><span class="more">⋯</span></div>
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:59:37</span> <span class="acc">act</span> shell — refresh + parse one-shot · think 274 tok <span class="more">⋯</span></div>
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:54:05</span> <span class="acc">act</span> shell + write-file /tmp/percept.py · 496 tok <span class="more">⋯</span></div>
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:53:51</span> think — diagnosed empty-file parse error · 1,031 tok <span class="more">⋯</span></div>
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:50:30</span> <span class="acc">act</span> shell — robust text parser, read arcseq.py · 3,917 tok <span class="more">⋯</span></div>
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:29:51</span> think — flag 11→111, ACT5 no-op confirmed · 13,933 tok <span class="more">⋯</span></div>
-          <div class="ob-feedrow" data-insp="cycle"><span class="t">08:17:56</span> <span class="acc">ACTION5</span> fired → flag++ · 7,490 tok <span class="more">⋯</span></div>
+        <div class="av2-sec"><i class="ti ti-player-track-next"></i> Live — last cycles (click a row to inspect)</div>
+        <div class="av2-feed" id="feed">
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:14:45</span><span class="tag pln">pln</span><div class="txt">inferred <b>(prefer ACT5 over ACT1)</b> from 2 episodes · stv .81 c .67</div><span class="tok">cheap</span></div>
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:14:07</span><span class="tag act">act</span><div class="txt">web_search "tokenized real-estate launches" → 9 hits</div><span class="tok">1,204 tok</span></div>
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:13:22</span><span class="tag think">think</span><div class="txt">revised belief <b>send_email → needs-confirm</b> after bounce</div><span class="tok">880 tok</span></div>
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:12:48</span><span class="tag act">act</span><div class="txt">drive_read · 4 files → summarized for the memo</div><span class="tok">2,310 tok</span></div>
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:11:30</span><span class="tag pln">nars</span><div class="txt">answered "is ACT5 safe at red-center?" from atomspace</div><span class="tok">cheap</span></div>
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:09:05</span><span class="tag act">act</span><div class="txt">drafted memo · top 3 projects</div><span class="tok">3,917 tok</span></div>
+          <div class="av2-frow" data-insp="cycle"><span class="t">09:06:18</span><span class="tag pln">pln</span><div class="txt">forward-chained <b>(dyn-rule ACT5 → flag++)</b> confirmed · stv .74</div><span class="tok">cheap</span></div>
         </div>
       </div>
 
@@ -931,7 +920,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
 <!-- inline SVG scenes (data source for Vision frames) -->
 <script id="scenes" type="application/json">{}</script>
 
-<script src="proto.js?v=2"></script>
+<script src="proto.js?v=3"></script>
 <script>
 (function(){
   var $=function(s,r){return (r||document).querySelector(s);};
@@ -963,15 +952,15 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   /* ============ INSPECTOR (ported INSP{} verbatim, tabler icons) ============ */
   var INSP={
    spend:{icon:'<i class="ti ti-clock-dollar"></i>',title:'LLM budget',sub:'budget.* · 2,501 cycles',body:'<h4>Current</h4><div class="ob-kv"><span class="k">cap</span><span class="v">$100.0000</span></div><div class="ob-kv"><span class="k">spent</span><span class="v">$21.6358</span></div><div class="ob-kv"><span class="k">remaining</span><span class="v">$78.36</span></div><div class="ob-kv"><span class="k">pct</span><span class="v">21.6%</span></div><div class="ob-kv"><span class="k">burn_per_cycle</span><span class="v">$0.01692</span></div><div class="ob-kv"><span class="k">runway_cycles</span><span class="v">4,631</span></div><h4>Per-cycle averages</h4><div class="ob-kv"><span class="k">in_tok</span><span class="v">22,379</span></div><div class="ob-kv"><span class="k">out_tok</span><span class="v">8,504</span></div><div class="ob-kv"><span class="k">think_tok</span><span class="v">6,012</span></div><div class="ob-kv"><span class="k">ctx_chars</span><span class="v">55,259</span></div><button class="btn btn-primary btn-sm" style="margin-top:16px" data-act="topup">Top up funds</button>'},
-   health:{icon:'<i class="ti ti-activity-heartbeat"></i>',title:'Runtime health · 10-dot board',sub:'health.* + integrity.dots',body:'<h4>Cognition &amp; loop</h4><div class="ob-kv"><span class="k">liveness</span><span class="v"><span class="ob-dot y"></span> yellow · last cycle 871s ago</span></div><div class="ob-kv"><span class="k">budget</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">grind</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">truncation</span><span class="v"><span class="ob-dot y"></span> yellow · rate 0.03</span></div><div class="ob-kv"><span class="k">format</span><span class="v"><span class="ob-dot r"></span> red · 8 recent fails</span></div><div class="ob-kv"><span class="k">native_substrate</span><span class="v"><span class="ob-dot r"></span> red · metta 0.0</span></div><div class="ob-kv"><span class="k">thrash</span><span class="v"><span class="ob-dot g"></span> green · 0.0</span></div><div class="ob-kv"><span class="k">memory</span><span class="v"><span class="ob-dot y"></span> yellow</span></div><div class="ob-kv"><span class="k">episodes</span><span class="v"><span class="ob-dot y"></span> yellow · 0 recorded</span></div><div class="ob-scaffold" style="margin-top:16px"><i class="ti ti-alert-triangle"></i><div><b style="color:var(--star);font-family:var(--mono);font-size:11px">format RED + native_substrate RED.</b> The model is emitting malformed tool-calls and never touching MeTTa. Two concrete things to fix, surfaced as dots.</div></div>'},
+   health:{icon:'<i class="ti ti-activity-heartbeat"></i>',title:'Runtime health · 10-dot board',sub:'health.* + integrity.dots',body:'<h4>Cognition &amp; loop</h4><div class="ob-kv"><span class="k">liveness</span><span class="v"><span class="ob-dot g"></span> green · last cycle 38s ago</span></div><div class="ob-kv"><span class="k">budget</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">grind</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">truncation</span><span class="v"><span class="ob-dot y"></span> yellow · rate 0.03</span></div><div class="ob-kv"><span class="k">format</span><span class="v"><span class="ob-dot g"></span> green</span></div><div class="ob-kv"><span class="k">native_substrate</span><span class="v"><span class="ob-dot g"></span> green · metta 0.34</span></div><div class="ob-kv"><span class="k">thrash</span><span class="v"><span class="ob-dot g"></span> green · 0.0</span></div><div class="ob-kv"><span class="k">memory</span><span class="v"><span class="ob-dot y"></span> yellow</span></div><div class="ob-kv"><span class="k">episodes</span><span class="v"><span class="ob-dot g"></span> green · 1,284 recorded</span></div><div class="callout" style="margin-top:16px"><i class="ti ti-circle-check"></i> <span><b>8 of 10 green.</b> The two yellows — truncation (rate 0.03) and memory pressure — are within tolerance; nothing red this window.</span></div>'},
    throughput:{icon:'<i class="ti ti-wave-square"></i>',title:'Throughput &amp; tokens',sub:'averages.* + signals.*',body:'<h4>Window (last 30 cycles)</h4><div class="ob-kv"><span class="k">cycles_total</span><span class="v">2,501</span></div><div class="ob-kv"><span class="k">cycles_window</span><span class="v">30</span></div><div class="ob-kv"><span class="k">think_ratio</span><span class="v">0.71</span></div><div class="ob-kv"><span class="k">truncation_rate</span><span class="v">0.03</span></div><div class="ob-kv"><span class="k">format_fail_recent</span><span class="v">8</span></div><h4>Attention buffer (cognition.attention)</h4><div class="ob-kv"><span class="k">raw_entries</span><span class="v">129</span></div><div class="ob-kv"><span class="k">kept_entries</span><span class="v">124</span></div><div class="ob-kv"><span class="k">dropped_lament</span><span class="v">5</span></div><div class="ob-kv"><span class="k">summarized_b64</span><span class="v">29</span></div>'},
    chroma:{icon:'<i class="ti ti-stack-2"></i>',title:'Long-term memory · chromadb',sub:'memory_meters.chroma + auto_recall.*',body:'<h4>Store</h4><div class="ob-kv"><span class="k">vectors</span><span class="v">27,394</span></div><div class="ob-kv"><span class="k">cap</span><span class="v">unbounded · glacier-backed</span></div><div class="ob-kv"><span class="k">embed backend</span><span class="v">ollama</span></div><div class="ob-kv"><span class="k">local_rate</span><span class="v">0.75</span></div><h4>Last auto-recall · 03:22:47</h4><div class="ob-kv"><span class="k">n_queries</span><span class="v">8</span></div><div class="ob-kv"><span class="k">n_hits</span><span class="v">29</span></div><div class="ob-kv"><span class="k">latency_ms</span><span class="v">4,223</span></div><h4>What it chose to look up</h4><div class="ob-codeblock"><span class="hl">"ARC build progress"</span>\n<span class="hl">"khellar relationship"</span>\n<span class="hl">"epistemic resolve definition"</span>\n<span class="dim"># the queries reveal the mind\'s own self-cued recall</span></div><h4>Glacier — nothing destroyed</h4><div class="ob-kv"><span class="k">live / glacier bytes</span><span class="v">0 / 0</span></div><p style="font-size:12px;color:var(--faint);margin-top:8px">Cold cycles MOVE to an append-only glacier outside the dir — citable, never deleted. Curated 👍/👎 drive purges.</p>'},
    persist:{icon:'<i class="ti ti-cube"></i>',title:'&amp;persistent atomspace',sub:'memory_meters.persist_* · cap 50,000 chars',body:'<h4>Capacity</h4><div class="ob-kv"><span class="k">persist_atoms</span><span class="v">97</span></div><div class="ob-kv"><span class="k">persist_chars</span><span class="v">9,565</span></div><div class="ob-kv"><span class="k">persist_cap</span><span class="v">50,000</span></div><div class="ob-kv"><span class="k">persist_pct</span><span class="v">19.1%</span></div><div class="ob-meter" style="margin:8px 0"><i style="width:19.1%"></i></div><h4>By canonical kind (clerk schema)</h4><div class="ob-rowline"><span class="ob-mtag kind">dyn-rule</span><span class="txt">precond / control / context / action / effect · needs stv</span></div><div class="ob-rowline"><span class="ob-mtag kind">episode</span><span class="txt">state / action / result · needs stv</span></div><div class="ob-rowline"><span class="ob-mtag kind">prefer</span><span class="txt">prefer A over B (context) · no stv</span></div><h4>Provenance &amp; quarantine</h4><div class="ob-kv"><span class="k">clerk-authored</span><span class="v"><span class="ob-mtag clerk">C from evidence N</span></span></div><div class="ob-kv"><span class="k">llm-authored</span><span class="v"><span class="ob-mtag floor">C floored to 0.0</span></span></div><p style="font-size:12px;color:var(--faint);margin-top:8px">The clerk gate is the single chokepoint into &amp;persistent. The LLM cannot author confidence into the argmax.</p>'},
-   episodes:{icon:'<i class="ti ti-history"></i>',title:'Episodes · history.metta',sub:'episodes.* (episodes.db)',body:'<h4>This game (re86)</h4><div class="ob-kv"><span class="k">episodes</span><span class="v">0</span></div><div class="ob-kv"><span class="k">states</span><span class="v">0</span></div><div class="ob-kv"><span class="k">max_repeat</span><span class="v">0</span></div><div class="ob-kv"><span class="k">refused</span><span class="v">1</span></div><div class="ob-scaffold"><i class="ti ti-alert-triangle"></i><div><b style="color:var(--star);font-family:var(--mono);font-size:11px">No episodes recorded.</b> Zero means the act→record coupling isn\'t firing for re86 — consistent with perception being broken. <span style="color:var(--accent-ink);cursor:pointer" data-act="report">Report a bug →</span></div></div><h4>An episode looks like (canonical)</h4><div class="ob-codeblock">(episode\n  (state  <span class="hl">"0@r45c36 flag=2 lvl=0/8"</span>)\n  (action <span class="hl">ACTION5</span>)\n  (result <span class="g">"flag++ ; red-complete"</span>)\n  (stv    <span class="w">0.9 0.67</span>))   <span class="dim"># C from N, not the LLM</span></div>'},
-   rratoms:{icon:'<i class="ti ti-sparkles"></i>',title:'Reasoning-ready atoms',sub:'atoms carrying (stv F C)',body:'<h4>Now</h4><div class="ob-kv"><span class="k">stv-bearing atoms</span><span class="v">0 of 97</span></div><div class="ob-kv"><span class="k">forming-rate</span><span class="v">0 / 30 cycles</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">A <b>reasoning-ready atom</b> carries a truth value <code>(stv frequency confidence)</code>. The forming-rate is how fast the careful mind converts observation into truth-valued belief. The 97 current atoms are structural and carry no stv yet.</p><h4>When live, the rate chart shows</h4><div class="ob-spark" style="height:48px"><span style="height:8%"></span><span style="height:12%"></span><span style="height:20%"></span><span class="hl" style="height:34%"></span><span style="height:30%"></span><span style="height:46%"></span><span class="hl" style="height:58%"></span></div>'},
-   beliefs:{icon:'<i class="ti ti-refresh"></i>',title:'Belief revisions',sub:'freq/conf changes on existing atoms',body:'<h4>Last 30 cycles</h4><div class="ob-kv"><span class="k">revisions</span><span class="v">0</span></div><div class="ob-kv"><span class="k">new beliefs</span><span class="v">0</span></div><p style="font-size:12.5px;color:var(--muted);margin:10px 0">A revision is when the reasoner updates an atom\'s <code>(stv F C)</code> from new evidence — the clearest sign of <i>learning</i>. The <code>send_email</code> revision shown in Chat is the live example:</p><div class="ob-timeline"><div class="ob-tnode rev"><div class="tt">after bounce · evidence: 2 episodes</div><div class="tb"><code>(dyn-rule (action send_email) (needs confirm))</code><br><span class="ob-stv">stv .50→<span class="rev">.88</span> · c .33→.71</span></div><div class="ob-chiprow"><span class="ob-chip"><i class="ti ti-history"></i> cited ep bounce-0613</span><span class="ob-chip"><i class="ti ti-history"></i> cited ep confirm-0614</span></div></div></div>'},
-   metta:{icon:'<i class="ti ti-math-function"></i>',title:'MeTTa usage',sub:'signals.metta_usage_rate · cognition.substrate_rate',body:'<h4>Window</h4><div class="ob-kv"><span class="k">metta_usage_rate</span><span class="v">0.0</span></div><div class="ob-kv"><span class="k">substrate_rate</span><span class="v">0.0</span></div><div class="ob-kv"><span class="k">moves with metta=true</span><span class="v">0 of 20</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">Every move carries a <code>metta:true/false</code> flag. This counter is the fraction of cycles that invoked the native substrate. <b>0.0</b> = the agent is reasoning entirely in the fast mind.</p>'},
-   pln:{icon:'<i class="ti ti-logic-and"></i>',title:'PLN / NAL / NARS invocations',sub:'symbolic.reasoner_invocations + by_kind',body:'<h4>Window</h4><div class="ob-kv"><span class="k">reasoner_invocations</span><span class="v">0</span></div><div class="ob-kv"><span class="k">by_kind</span><span class="v">{ } (empty)</span></div><div class="ob-rowline" style="margin-top:10px"><span class="txt">PLN — probabilistic logic</span><span class="ob-stv">0</span></div><div class="ob-rowline"><span class="txt">NAL / NARS — non-axiomatic</span><span class="ob-stv">0</span></div><div class="ob-rowline"><span class="txt">MeTTa eval — match / superpose</span><span class="ob-stv">0</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">Counts actual inference steps by reasoner family. When live, a stacked-area chart shows which reasoner the careful mind leans on.</p>'},
+   episodes:{icon:'<i class="ti ti-history"></i>',title:'Episodes · history.metta',sub:'episodes.* (episodes.db)',body:'<h4>This run</h4><div class="ob-kv"><span class="k">episodes</span><span class="v">47</span></div><div class="ob-kv"><span class="k">states</span><span class="v">44</span></div><div class="ob-kv"><span class="k">max_repeat</span><span class="v">3</span></div><div class="ob-kv"><span class="k">refused</span><span class="v">0</span></div><div class="callout"><i class="ti ti-circle-check"></i> <span>The <b>act→record</b> coupling is firing — every action is logged as a state·action·result·stv episode.</span></div><h4>An episode looks like (canonical)</h4><div class="ob-codeblock">(episode\n  (state  <span class="hl">"0@r45c36 flag=2 lvl=0/8"</span>)\n  (action <span class="hl">ACTION5</span>)\n  (result <span class="g">"flag++ ; red-complete"</span>)\n  (stv    <span class="w">0.9 0.67</span>))   <span class="dim"># C from N, not the LLM</span></div>'},
+   rratoms:{icon:'<i class="ti ti-sparkles"></i>',title:'Reasoning-ready atoms',sub:'atoms carrying (stv F C)',body:'<h4>Now</h4><div class="ob-kv"><span class="k">stv-bearing atoms</span><span class="v">41 of 97</span></div><div class="ob-kv"><span class="k">forming-rate</span><span class="v">6 / 30 cycles</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">A <b>reasoning-ready atom</b> carries a truth value <code>(stv frequency confidence)</code>. The forming-rate is how fast the careful mind converts observation into truth-valued belief. 41 of the 97 atoms now carry a truth value; the rest are still structural, being converted as evidence accrues.</p><h4>Forming-rate · last 7 cycles</h4><div class="ob-spark" style="height:48px"><span style="height:8%"></span><span style="height:12%"></span><span style="height:20%"></span><span class="hl" style="height:34%"></span><span style="height:30%"></span><span style="height:46%"></span><span class="hl" style="height:58%"></span></div>'},
+   beliefs:{icon:'<i class="ti ti-refresh"></i>',title:'Belief revisions',sub:'freq/conf changes on existing atoms',body:'<h4>Last 30 cycles</h4><div class="ob-kv"><span class="k">revisions</span><span class="v">4</span></div><div class="ob-kv"><span class="k">new beliefs</span><span class="v">2</span></div><p style="font-size:12.5px;color:var(--muted);margin:10px 0">A revision is when the reasoner updates an atom\'s <code>(stv F C)</code> from new evidence — the clearest sign of <i>learning</i>. The <code>send_email</code> revision shown in Chat is the live example:</p><div class="ob-timeline"><div class="ob-tnode rev"><div class="tt">after bounce · evidence: 2 episodes</div><div class="tb"><code>(dyn-rule (action send_email) (needs confirm))</code><br><span class="ob-stv">stv .50→<span class="rev">.88</span> · c .33→.71</span></div><div class="ob-chiprow"><span class="ob-chip"><i class="ti ti-history"></i> cited ep bounce-0613</span><span class="ob-chip"><i class="ti ti-history"></i> cited ep confirm-0614</span></div></div></div>'},
+   metta:{icon:'<i class="ti ti-math-function"></i>',title:'MeTTa usage',sub:'signals.metta_usage_rate · cognition.substrate_rate',body:'<h4>Window</h4><div class="ob-kv"><span class="k">metta_usage_rate</span><span class="v">0.34</span></div><div class="ob-kv"><span class="k">substrate_rate</span><span class="v">0.34</span></div><div class="ob-kv"><span class="k">moves with metta=true</span><span class="v">10 of 30</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">Every move carries a <code>metta:true/false</code> flag. This counter is the fraction of cycles that invoked the native substrate. <b>0.34</b> = about a third of cycles invoke the native substrate.</p>'},
+   pln:{icon:'<i class="ti ti-logic-and"></i>',title:'PLN / NAL / NARS invocations',sub:'symbolic.reasoner_invocations + by_kind',body:'<h4>Window</h4><div class="ob-kv"><span class="k">reasoner_invocations</span><span class="v">128</span></div><div class="ob-kv"><span class="k">by_kind</span><span class="v">{ PLN:71, NAL:44, NARS:13 }</span></div><div class="ob-rowline" style="margin-top:10px"><span class="txt">PLN — probabilistic logic</span><span class="ob-stv">71</span></div><div class="ob-rowline"><span class="txt">NAL / NARS — non-axiomatic</span><span class="ob-stv">44</span></div><div class="ob-rowline"><span class="txt">MeTTa eval — match / superpose</span><span class="ob-stv">13</span></div><p style="font-size:12.5px;color:var(--muted);margin-top:10px">Counts actual inference steps by reasoner family. The stacked-area chart shows which reasoner the careful mind leans on.</p>'},
    cycle:{icon:'<i class="ti ti-dots"></i>',title:'Cycle inspector · 09:00:14',sub:'the full trace of one cycle',body:'<h4>Outcome</h4><div class="ob-kv"><span class="k">type · finish</span><span class="v">act · stop</span></div><div class="ob-kv"><span class="k">think / in / out tok</span><span class="v">751 / 20,523 / 2,747</span></div><div class="ob-kv"><span class="k">prompt_chars</span><span class="v">70,529</span></div><div class="ob-kv"><span class="k">metta</span><span class="v">false</span></div><h4>① Exact prompt sent — scaffolding check</h4><div class="ob-codeblock"><span class="dim"># promptcap-2026-06-18-090014.txt · 70,529 chars</span>\n<span class="w">[system]</span>        constitution + gates      <span class="dim">~31,000 ch (44%)</span>\n<span class="w">[self-model]</span>    SELF_MODEL.md             <span class="dim">~12,400 ch (18%)</span>\n<span class="w">[world-state]</span>   re86 grid + objects       <span class="dim">~14,100 ch (20%)</span>\n<span class="hl">[recalled-mem]</span>  chroma auto-recall (29)   <span class="dim">~6,800 ch (10%)</span>\n<span class="hl">[board+focus]</span>   active cards              <span class="dim">~4,200 ch (6%)</span>\n<span class="g">[agent-own]</span>     prior turn carry-over     <span class="dim">~2,000 ch (2%)</span>\n<span class="dim">─────────────────────────────────────────</span>\nscaffold ratio  <span class="w">82%</span> framework-injected   <span class="g">18%</span> agent-own</div><h4>② Private reasoning (3,006 chars)</h4><div class="ob-codeblock">Let me analyze the situation carefully:\n1. Current state: 0 at r45c36 (red HOLE), flag=2\n<span class="hl">5. Hypothesis: fill all crosses with target colors</span>\n6. Need fresh perception (frame 1457s+ stale)</div><h4>③ Tool-calls</h4><div class="ob-rowline"><span class="ob-mtag kind">shell</span><span class="txt">arc.py frame &gt; /tmp/now.txt</span><span class="ob-stv g">ok</span></div><div class="ob-rowline"><span class="ob-mtag kind">write-file</span><span class="txt">/tmp/parse_grid.py</span><span class="ob-stv g">ok</span></div><div class="ob-rowline"><span class="ob-mtag floor">format</span><span class="txt">]&lt;]minimax[&gt;[ contamination in payload</span><span class="ob-stv" style="color:#FF6B6B">flagged</span></div><h4>④ Episodes referenced</h4><div class="ob-chiprow"><span class="ob-chip"><i class="ti ti-history"></i> ep re86 · ACT5 toggle</span><span class="ob-chip"><i class="ti ti-history"></i> ep c014-0817 flag++</span></div><div style="display:flex;gap:8px;margin-top:18px"><button class="btn btn-ghost btn-sm" data-act="report">Report this cycle</button><button class="btn btn-ghost btn-sm">Open raw promptcap</button></div>'}
   };
   function openInsp(k){var d=INSP[k];if(!d)return;$('#inspIcon').innerHTML=d.icon;$('#inspTitle').innerHTML=d.title;$('#inspSub').innerHTML=d.sub;$('#inspBody').innerHTML=d.body;$('#obInspector').classList.add('on');$('#obScrim').classList.add('on');}
@@ -1030,7 +1019,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   $('#reportCancel').addEventListener('click',closeReport);
   $('#reportSubmit').addEventListener('click',function(){closeReport();toast('Bundle submitted — 20 cycles attached');});
   $('#reportScrim').addEventListener('click',function(e){if(e.target.id==='reportScrim')closeReport();});
-  $('#reportScaffold').addEventListener('click',function(){openReport('bug');});
+  var _rs=$('#reportScaffold');if(_rs)_rs.addEventListener('click',function(){openReport('bug');});
 
   /* ============ Top-up ============ */
   function openTopup(){$('#topupScrim').classList.add('on');}
@@ -1077,7 +1066,7 @@ You are an OmegaClaw agentic harness in a continuous loop...</div>
   window.filterFlows=filterFlows;
   window.openFlowTab=function(){gotoTab('Flows');openFlow('real-estate-scout');};
   filterFlows('Omega');
-  $('#openFull').addEventListener('click',function(){window.open('observability.html','_blank');});
+  $('#openFull').addEventListener('click',function(){window.open('activity-v2.html','_blank');});
 
   /* ============ lifecycle ============ */
   $('#btnStop').addEventListener('click',function(){document.body.classList.add('agent-stopped');toast('Omega stopped · state saved');});
