@@ -484,7 +484,7 @@ body.agent-stopped #btnReboot,body.agent-stopped #btnStop{display:none}
 .bundle-stat .ti{color:var(--accent-ink)}
 .bundle-stat b{color:var(--ink)}
 .bundle-stat .pick{margin-left:auto}
-.obtoggle{width:38px;height:22px;border-radius:999px;background:var(--line2);position:relative;cursor:pointer;flex:none}
+.obtoggle{display:inline-flex;vertical-align:middle;width:38px;height:22px;border-radius:999px;background:var(--line2);position:relative;cursor:pointer;flex:none}
 .obtoggle.on{background:var(--accent)}
 .obtoggle b{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
 .obtoggle.on b{left:18px}
